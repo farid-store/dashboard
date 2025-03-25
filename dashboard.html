@@ -217,15 +217,11 @@
 
 /* Tombol */
 .rounded-button {
-    display: inline-block;
-    background: #007bff;
-    color: white;
-    padding: 10px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
-    transition: background 0.3s ease;
+    width: 100%; /* Tombol mengambil lebar penuh layar */
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px; /* Memberikan efek rounded pada tombol */
+    font-size: 16px; /* Ukuran font standar */ background 0.3s ease;
 }
 
 /* Memberi jarak antar kartu */
@@ -276,10 +272,17 @@
         padding: 0 10px; /* Biar nggak terlalu mepet ke tepi */
     }
 
+    @media (max-width: 600px) {
     .rounded-button {
-        width: 100%; /* Biar tombol menyesuaikan layar */
-        padding: 12px;
-        text-align: center;
+        padding: 10px; /* Mengurangi padding pada layar kecil */
+        font-size: 14px; /* Menyesuaikan ukuran font pada layar kecil */
+    }
+}
+
+@media (max-width: 400px) {
+    .rounded-button {
+        padding: 8px; /* Mengurangi padding lebih pada layar lebih kecil */
+        font-size: 12px; /* Mengurangi ukuran font pada perangkat yang lebih kecil */
     }
 
 
