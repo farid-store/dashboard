@@ -1,8 +1,8 @@
 <?php
-include "includes/common.php";
+include "includes/common.html";
 
 if (!isset($_SESSION['email'])) {
-    header('location: index.php');
+    header('location: index.html');
 }
 ?>
 <!DOCTYPE html>
@@ -45,8 +45,8 @@ if (!isset($_SESSION['email'])) {
     </head>
     <body>
         <?php
-        include 'includes/header.php';
-        include 'includes/check-if-added.php';
+        include 'includes/header.html';
+        include 'includes/check-if-added.html';
         ?>
         
         <br><br><br><br><br>
@@ -279,7 +279,7 @@ if (!isset($_SESSION['email'])) {
                   <br><br><br>
                       
                   <div>
-                  <a href="Products.php" class="rounded-button">Lihat Lebih Banyak</a>
+                  <a href="Products.html" class="rounded-button">Lihat Lebih Banyak</a>
                 </div>
                   
               </div>
