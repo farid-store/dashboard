@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farid Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .dropdown-menu.show {
+            max-height: 500px;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 16rem;
+            background: white;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            left: -16rem;
+            top: 0;
+            transition: left 0.3s ease-in-out;
+        }
+        .sidebar.show {
+            left: 0;
+        }
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            height: 100vh;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        /* Responsif: Sidebar selalu terlihat di layar besar */
+        @media (min-width: 768px) {
+            .sidebar {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 16rem;
+            }
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#424675] to-indigo-900 min-h-screen flex">
+
+    <!-- Tombol Toggle Sidebar (Mobile) -->
+    <button id="menu-toggle" class="md:hidden fixed top-4 left-4 bg-white p-2 rounded shadow-lg z-50">
+        <i class="fas fa-bars text-black"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar shadow-md">
+        <div class="p-4 text-xl font-bold text-sky-950"><a href="index.php"><i class="fas fa-store mr-2"></i> FARID STORE </a></div>
+        <nav class="mt-4">
+            <ul>
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+                    <a href="dashboard.php" target="main-frame"><i class="fas fa-store mr-2"></i>Dashboard</a>
+                </li>
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+                    <a href="https://portofoliofarid.carrd.co/" target="main-frame"><i class="fas fa-globe mr-2"></i>Jasa Edit</a>
+                </li>
+                <!-- Dropdown Join -->
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer dropdown">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown('join-menu')">
+                        <span><i class="fas fa-user mr-2"></i>Join</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul id="join-menu" class="ml-4 mt-2 dropdown-menu">
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="https://discord.gg/XwEzSNz2" target="_blank">Discord</a></li>
+                        <li class="p-2 bg-purple-200 hover:bg-purple-300 cursor-pointer"><a href="https://whatsapp.com/0029VaoU7Wa59PwLluk20G" target="_blank">Whatsapp</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="https://t.me/AirdropHunterX04" target="_blank">Telegram</a></li>
+                    </ul>
+                </li>
+                <!-- Dropdown Prabayar -->
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer dropdown">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown('prabayar-menu')">
+                        <span><i class="fas fa-wallet mr-2"></i>Prabayar</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul id="prabayar-menu" class="ml-4 mt-2 dropdown-menu">
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="token-pln.html" target="main-frame">Token PLN</a></li>
+                        <li class="p-2 bg-purple-200 hover:bg-purple-300 cursor-pointer"><a href="game.php" target="main-frame">Topup Game</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="paket-data.html" target="main-frame">Paket Data Internet</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="e-money.html" target="main-frame">E-Money</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="pulsa-reguler.html" target="main-frame">Pulsa Reguler</a></li>
+                    </ul>
+                </li>
+                <!-- Dropdown Pascabayar -->
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer dropdown">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown('pascabayar-menu')">
+                        <span><i class="fas fa-shopping-cart mr-2"></i>Pascabayar</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul id="pascabayar-menu" class="ml-4 mt-2 dropdown-menu">
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="tagihan-listrik.html" target="main-frame">Tagihan Listrik</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="air-pdam.html" target="main-frame">Air PDAM</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="telepon-internet.html" target="main-frame">Telepon & Internet</a></li>
+                    </ul>
+                </li>
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+    <a href="crypto.php" target="main-frame"><i class="fab fa-btc mr-2"></i>Top Up Crypto</a>
+</li>
+
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+                    <a href="payment.php" target="main-frame"><i class="fas fa-wallet mr-2"></i>Opsi Pembayaran</a>
+                </li>
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+                    <a href="admin.php" target="main-frame"><i class="fas fa-user-shield mr-2"></i>Admin Page</a>
+                </li>
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
+                    <a href="logout_script.php" target="main-frame"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Konten Utama -->
+    <div class="main-content text-white">
+        <iframe name="main-frame" src="dashboard.php"></iframe>
+    </div>
+
+    <!-- Script Toggle Sidebar & Dropdown -->
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", function() {
+            document.querySelector(".sidebar").classList.toggle("show");
+        });
+
+        function toggleDropdown(menuId) {
+            let menu = document.getElementById(menuId);
+            menu.classList.toggle("show");
+        }
+    </script>
+
+</body>
+</html>
