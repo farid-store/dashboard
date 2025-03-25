@@ -312,7 +312,7 @@
         <div id="banner_content">
             <h1>DARI KITA UNTUK SEMUA</h1>
             <p>Temukan Promo dan Diskon Hingga 70%.</p>
-            <a href="home.php"> 
+            <a href="home.html"> 
                 <button class="btn btn-danger btn-lg active">Belanja Sekarang</button>
             </a>
         </div>
@@ -370,7 +370,7 @@
         <div class="content">
             <h2>Promo Langganan Netflix</h2>
             <p>Nikmati promo Ramadhan bersama Farid Store, dapatkan diskon hingga 20% selama bulan Ramadhan.</p>
-            <a href="iklan.php" class="rounded-button">Hubungi Penjual</a>
+            <a href="iklan.html" class="rounded-button">Hubungi Penjual</a>
         </div>
     </div>
 </div>
