@@ -196,4 +196,81 @@
                     <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Top Up Game</h4></div></a>
                 </div>
             </div>
-            <div class="
+            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+                <div class="thumbnail">
+                    <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Produk Digital</h4></div></a>
+                </div>
+            </div>
+            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+                <div class="thumbnail">
+                    <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Booster Sosmed</h4></div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Iklan -->
+    <div class="container">
+        <div class="ad">
+            <div class="thumbnail thumbnail-1"></div>
+            <div class="content">
+                <h2>Jelajahi Kuliner Spektakuler</h2>
+                <p>Nikmati kuliner andalanmu bersama GoFood, jadikan moment bersama keluarga jadi lebih ceria. Promo ceria hingga 30% dari kita untuk semua.</p>
+                <a href="https://gofood.co.id/pekanbaru/restaurants/near_me" class="rounded-button">Buka GoFood</a>
+            </div>
+        </div>
+
+        <div class="ad">
+            <div class="thumbnail thumbnail-2"></div>
+            <div class="content">
+                <h2>Promo Liburan Bersama Traveloka</h2>
+                <p>Deskripsi singkat tentang produk B. Hubungi penjual untuk informasi lebih lanjut.</p>
+                <a href="https://www.traveloka.com/en-id?id" class="rounded-button">Pesan Sekarang</a>
+            </div>
+        </div>
+
+        <div class="ad">
+            <div class="content">
+                <h2>Membangun Bisnis Dari Nol</h2>
+                <p>Shoutout ‪@ErikaRichardo‬ 2:05 buat bisnisnya @by.painters</p>
+                <p>Kalo kalian mau belajar keuangan + Investasi saham, pake kode promo gw: “RAYMOND” (Diskon 15%)</p>
+                <p>Jadi Member UsahaKita di <a href="http://ternakuang.id">BelajarBisnis.Com</a></p>
+                <a href="https://www.youtube.com/@RaymondChins" class="rounded-button">Kunjungi Channel</a>
+            </div>
+            <iframe width="540" height="280" src="https://www.youtube.com/embed/8g1H3ipDNOs" title="Cara Bangun Bisnis dari Nol" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; USAHAKITA | UNIVERSITAS MUHAMMADIYAH RIAU</p>
+        </div>
+    </footer>
+
+    <!-- Script Slider -->
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+        setInterval(function() {
+            plusSlides(1);
+        }, 3000);
+    </script>
+</body>
+</html>
