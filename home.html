@@ -2,125 +2,282 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <title>Farid Store | Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farid Store | Produk</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h4 {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .rounded-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .rounded-button:hover {
+            background-color: #45a049;
+        }
+
+        .jumbotron {
+            background-color: #f7f7f7;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
+            position: relative;
+            width: 100%;
+            height: 540px;
+            overflow: hidden;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ad {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .thumbnail {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 10px;
+        }
+
+        .thumbnail-1 { background-image: url('img/GOJEK.jpg'); }
+        .thumbnail-2 { background-image: url('img/Traveloka.webp'); }
+        .thumbnail-3 { background-image: url('img/3.jpg'); }
+        .thumbnail-4 { background-image: url('img/4.jpg'); }
+        .thumbnail-5 { background-image: url('img/5.jpg'); }
+        .thumbnail-6 { background-image: url('img/6.jpg'); }
+
+        .content {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        .content h2, .content p {
+            margin-bottom: 10px;
+        }
+
+        iframe {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .ad {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .thumbnail {
+                max-width: 600px;
+                height: 300px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
     <!-- HEADER -->
-    <header>
-        <div class="container">
-            <h1>Farid Store</h1>
-            <nav>
-                <ul>
-                    <li><a href="#">Beranda</a></li>
-                    <li><a href="#">Produk</a></li>
-                    <li><a href="#">Tentang</a></li>
-                    <li><a href="#">Kontak</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- Include PHP if running in local/server environment -->
+    <!-- <?php include 'includes/header.php'; include 'includes/check-if-added.php'; ?> -->
 
-    <!-- JUMBOTRON -->
-    <section class="jumbotron">
-        <div class="container">
-            <h2>Selamat Datang di Farid Store!</h2>
-            <p>Temukan berbagai produk digital terbaik di sini.</p>
+    <!-- Jumbotron -->
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Selamat Datang Di Farid Store!</h1>
         </div>
-    </section>
+    </div>
 
-    <!-- SLIDER -->
-    <section class="slider">
+    <!-- Banner Slides -->
+    <div class="container" style="background-color:#ECEBDE;padding:15px 0;">
         <div class="slides">
-            <img src="produk/banner1.webp" alt="Banner 1">
-            <img src="produk/banner2.png" alt="Banner 2">
-            <img src="produk/banner3.jpg" alt="Banner 3">
+            <div class="slide"><img src="produk/banner1.webp" alt=""></div>
+            <div class="slide"><img src="produk/banner2.png" alt=""></div>
+            <div class="slide"><img src="produk/banner2.jpg" alt=""></div>
+            <div class="slide"><img src="produk/COKLAT APEL.jpg" alt=""></div>
+            <div class="navigation">
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
         </div>
-    </section>
+    </div>
 
-    <!-- PRODUK TERPOPULER -->
-    <section class="produk-terpopuler">
-        <div class="container">
-            <h2>Produk Terpopuler</h2>
-            <div class="produk-list">
-                <div class="produk-item">
+    <br>
+
+    <!-- Produk Terpopuler -->
+    <div class="container">
+        <h1 class="text-center">Produk Terpopuler</h1>
+        <div class="row text-center">
+            <div class="col" style="display: inline-block; width: 23%; padding: 10px;">
+                <div class="thumbnail">
                     <img src="produk/ml.jpg" alt="Game Online">
-                    <h3>Game Online</h3>
+                    <div class="caption"><h5>Game Online</h5></div>
                 </div>
-                <div class="produk-item">
+            </div>
+            <div class="col" style="display: inline-block; width: 23%; padding: 10px;">
+                <div class="thumbnail">
                     <img src="produk/ig.jpg" alt="Follower Sosmed">
-                    <h3>Follower Sosmed</h3>
+                    <div class="caption"><h5>Follower Sosmed</h5></div>
                 </div>
-                <div class="produk-item">
+            </div>
+            <div class="col" style="display: inline-block; width: 23%; padding: 10px;">
+                <div class="thumbnail">
                     <img src="produk/capcut.jpg" alt="Editing">
-                    <h3>Editing</h3>
+                    <div class="caption"><h5>Editing</h5></div>
                 </div>
-                <div class="produk-item">
+            </div>
+            <div class="col" style="display: inline-block; width: 23%; padding: 10px;">
+                <div class="thumbnail">
                     <img src="produk/streaming.jpg" alt="Streaming">
-                    <h3>Streaming</h3>
-                </div>
-            </div>
-            <a href="produk.html" class="btn">Lihat Lebih Banyak</a>
-        </div>
-    </section>
-
-    <!-- KATEGORI PRODUK -->
-    <section class="kategori-produk">
-        <div class="container">
-            <h2>Kategori Produk</h2>
-            <div class="kategori-list">
-                <div class="kategori-item">
-                    <img src="img/topup.png" alt="Top Up Game">
-                    <h3>Top Up Game</h3>
-                </div>
-                <div class="kategori-item">
-                    <img src="img/premium.jpg" alt="Produk Digital">
-                    <h3>Produk Digital</h3>
-                </div>
-                <div class="kategori-item">
-                    <img src="img/sosmed.jpg" alt="Booster Sosmed">
-                    <h3>Booster Sosmed</h3>
+                    <div class="caption"><h5>Streaming</h5></div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- IKLAN -->
-    <section class="iklan">
-        <div class="container">
-            <h2>Promo Menarik</h2>
-            <div class="iklan-list">
-                <div class="iklan-item">
-                    <img src="img/GOJEK.jpg" alt="GoFood">
-                    <h3>Jelajahi Kuliner Spektakuler</h3>
-                    <p>Nikmati kuliner andalanmu bersama GoFood, promo ceria hingga 30%.</p>
-                    <a href="https://gofood.co.id" class="btn">Buka GoFood</a>
+        <div class="text-center">
+            <a href="Products.php" class="rounded-button">Lihat Lebih Banyak</a>
+        </div>
+    </div>
+
+    <!-- Kategori Produk -->
+    <div class="container">
+        <div class="row text-center">
+            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+                <div class="thumbnail">
+                    <a href="#"><img src="img/topup.png" alt=""><div class="caption"><h4>Top Up Game</h4></div></a>
                 </div>
-                <div class="iklan-item">
-                    <img src="img/Traveloka.webp" alt="Traveloka">
-                    <h3>Promo Liburan Bersama Traveloka</h3>
-                    <p>Deskripsi singkat tentang promo liburan.</p>
-                    <a href="https://www.traveloka.com" class="btn">Pesan Sekarang</a>
+            </div>
+            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+                <div class="thumbnail">
+                    <a href="#"><img src="img/premium.jpg" alt=""><div class="caption"><h4>Produk Digital</h4></div></a>
                 </div>
-                <div class="iklan-item">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/8g1H3ipDNOs" title="Cara Bangun Bisnis dari Nol" allowfullscreen></iframe>
-                    <h3>Membangun Bisnis Dari Nol</h3>
-                    <p>Shoutout ‪@ErikaRichardo‬ 2:05 buat bisnisnya @by.painters</p>
-                    <a href="https://www.youtube.com/@RaymondChins" class="btn">Kunjungi Channel</a>
+            </div>
+            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+                <div class="thumbnail">
+                    <a href="#"><img src="img/sosmed.jpg" alt=""><div class="caption"><h4>Booster Sosmed</h4></div></a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- FOOTER -->
+    <!-- Iklan -->
+    <div class="container">
+        <div class="ad">
+            <div class="thumbnail thumbnail-1"></div>
+            <div class="content">
+                <h2>Jelajahi Kuliner Spektakuler</h2>
+                <p>Nikmati kuliner andalanmu bersama GoFood, jadikan moment bersama keluarga jadi lebih ceria. Promo ceria hingga 30% dari kita untuk semua.</p>
+                <a href="https://gofood.co.id/pekanbaru/restaurants/near_me" class="rounded-button">Buka GoFood</a>
+            </div>
+        </div>
+
+        <div class="ad">
+            <div class="thumbnail thumbnail-2"></div>
+            <div class="content">
+                <h2>Promo Liburan Bersama Traveloka</h2>
+                <p>Deskripsi singkat tentang produk B. Hubungi penjual untuk informasi lebih lanjut.</p>
+                <a href="https://www.traveloka.com/en-id?id" class="rounded-button">Pesan Sekarang</a>
+            </div>
+        </div>
+
+        <div class="ad">
+            <div class="content">
+                <h2>Membangun Bisnis Dari Nol</h2>
+                <p>Shoutout ‪@ErikaRichardo‬ 2:05 buat bisnisnya @by.painters</p>
+                <p>Kalo kalian mau belajar keuangan + Investasi saham, pake kode promo gw: “RAYMOND” (Diskon 15%)</p>
+                <p>Jadi Member UsahaKita di <a href="http://ternakuang.id">BelajarBisnis.Com</a></p>
+                <a href="https://www.youtube.com/@RaymondChins" class="rounded-button">Kunjungi Channel</a>
+            </div>
+            <iframe width="540" height="280" src="https://www.youtube.com/embed/8g1H3ipDNOs" title="Cara Bangun Bisnis dari Nol" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Farid Store | Universitas Muhammadiyah Riau</p>
+            <p>&copy; USAHAKITA | UNIVERSITAS MUHAMMADIYAH RIAU</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Script Slider -->
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+        setInterval(function() {
+            plusSlides(1);
+        }, 3000);
+    </script>
 </body>
 </html>
