@@ -28,57 +28,44 @@
             text-align: center;
         }
 
-        .rounded-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .rounded-button:hover {
-            background-color: #45a049;
-        }
-
         /* Row untuk produk terpopuler */
         .row {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* Atur elemen agar terpisah */
-            gap: 15px; /* Menambahkan jarak antar kolom */
+            gap: 20px; /* Menambahkan jarak antar kotak */
+            justify-content: center; /* Menyusun elemen-elemen di tengah */
         }
 
         /* Kolom untuk produk */
         .col {
-            flex: 1 1 23%; /* Membuat kolom dengan lebar fleksibel */
+            flex: 1 1 22%; /* Membuat kolom dengan lebar fleksibel */
             padding: 10px;
             box-sizing: border-box;
+            border: 2px solid #ddd; /* Menambahkan border untuk kotak */
+            border-radius: 8px;
+            background-color: #fff; /* Memberi latar belakang putih */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
+            text-align: center; /* Menyusun isi kotak di tengah */
         }
 
         /* Thumbnail dan Caption */
-        .thumbnail {
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
         .thumbnail img {
             width: 100%;
             height: auto;
             border-bottom: 1px solid #ddd;
+            border-radius: 8px 8px 0 0;
         }
 
         .caption h5 {
             margin: 10px 0;
             font-size: 16px;
             font-weight: bold;
+        }
+
+        /* Mengatur ukuran gambar agar responsif */
+        .thumbnail img {
+            max-height: 250px;
+            object-fit: cover;
         }
 
         /* Responsif untuk layar kecil */
@@ -169,10 +156,10 @@
         </div>
     </div>
 
-    <!-- Produk Terpopuler -->
+   <!-- Produk Terpopuler -->
     <div class="container">
         <h1 class="text-center">Produk Terpopuler</h1>
-        <div class="row text-center">
+        <div class="row">
             <div class="col">
                 <div class="thumbnail">
                     <img src="https://via.placeholder.com/400" alt="Game Online">
@@ -197,10 +184,6 @@
                     <div class="caption"><h5>Streaming</h5></div>
                 </div>
             </div>
-        </div>
-
-        <div class="text-center">
-            <a href="#" class="rounded-button">Lihat Lebih Banyak</a>
         </div>
     </div>
 
