@@ -6,43 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-
-/* Row untuk produk terpopuler */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Atur elemen agar terpisah */
-}
-
-/* Kolom untuk produk */
-.col {
-    flex: 1 1 23%; /* Membuat kolom dengan lebar fleksibel */
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-/* Thumbnail dan Caption */
-.thumbnail {
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.thumbnail img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
-}
-
-.caption h5 {
-    margin: 10px 0;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-
         /* Global Styles */
         body {
             font-family: Arial, sans-serif;
@@ -82,27 +45,56 @@
             background-color: #45a049;
         }
 
-        .jumbotron {
-            background-color: #f7f7f7;
-            padding: 30px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* Row untuk produk terpopuler */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Atur elemen agar terpisah */
+            gap: 15px; /* Menambahkan jarak antar kolom */
         }
 
-        .slides {
-            position: relative;
-            width: 100%;
-            height: 540px;
+        /* Kolom untuk produk */
+        .col {
+            flex: 1 1 23%; /* Membuat kolom dengan lebar fleksibel */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Thumbnail dan Caption */
+        .thumbnail {
+            border-radius: 8px;
             overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        .slide img {
+        .thumbnail img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            border-bottom: 1px solid #ddd;
         }
 
+        .caption h5 {
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .col {
+                flex: 1 1 48%; /* Setiap kolom akan mengambil 48% lebar pada layar kecil */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .col {
+                flex: 1 1 100%; /* Setiap kolom akan mengambil 100% lebar pada layar lebih kecil */
+            }
+        }
+
+        /* Iklan (Ad) */
         .ad {
             display: flex;
             flex-wrap: wrap;
@@ -111,15 +103,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: #fff;
-        }
-
-        .thumbnail {
-            width: 100%;
-            max-width: 400px;
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 10px;
         }
 
         .thumbnail-1 { background-image: url('https://via.placeholder.com/400'); }
@@ -150,18 +133,20 @@
             margin-top: 20px;
         }
 
-        @media (min-width: 768px) {
-            .ad {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-
-            .thumbnail {
-                max-width: 600px;
-                height: 300px;
-            }
+        /* Banner Slides */
+        .slides {
+            position: relative;
+            width: 100%;
+            height: 540px;
+            overflow: hidden;
         }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 
@@ -181,101 +166,41 @@
             <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
             <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
             <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
-            <div class="navigation">
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
         </div>
     </div>
-
-    <br>
 
     <!-- Produk Terpopuler -->
-<div class="container">
-    <h1 class="text-center">Produk Terpopuler</h1>
-    <div class="row text-center">
-        <div class="col" style="flex: 1 1 23%; padding: 10px;">
-            <div class="thumbnail">
-                <img src="https://via.placeholder.com/400" alt="Game Online">
-                <div class="caption"><h5>Game Online</h5></div>
-            </div>
-        </div>
-        <div class="col" style="flex: 1 1 23%; padding: 10px;">
-            <div class="thumbnail">
-                <img src="https://via.placeholder.com/400" alt="Follower Sosmed">
-                <div class="caption"><h5>Follower Sosmed</h5></div>
-            </div>
-        </div>
-        <div class="col" style="flex: 1 1 23%; padding: 10px;">
-            <div class="thumbnail">
-                <img src="https://via.placeholder.com/400" alt="Editing">
-                <div class="caption"><h5>Editing</h5></div>
-            </div>
-        </div>
-        <div class="col" style="flex: 1 1 23%; padding: 10px;">
-            <div class="thumbnail">
-                <img src="https://via.placeholder.com/400" alt="Streaming">
-                <div class="caption"><h5>Streaming</h5></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="text-center">
-        <a href="#" class="rounded-button">Lihat Lebih Banyak</a>
-    </div>
-</div>
-
-
-    <!-- Kategori Produk -->
     <div class="container">
+        <h1 class="text-center">Produk Terpopuler</h1>
         <div class="row text-center">
-            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+            <div class="col">
                 <div class="thumbnail">
-                    <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Top Up Game</h4></div></a>
+                    <img src="https://via.placeholder.com/400" alt="Game Online">
+                    <div class="caption"><h5>Game Online</h5></div>
                 </div>
             </div>
-            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+            <div class="col">
                 <div class="thumbnail">
-                    <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Produk Digital</h4></div></a>
+                    <img src="https://via.placeholder.com/400" alt="Follower Sosmed">
+                    <div class="caption"><h5>Follower Sosmed</h5></div>
                 </div>
             </div>
-            <div class="col" style="display: inline-block; width: 30%; padding: 10px;">
+            <div class="col">
                 <div class="thumbnail">
-                    <a href="#"><img src="https://via.placeholder.com/400" alt=""><div class="caption"><h4>Booster Sosmed</h4></div></a>
+                    <img src="https://via.placeholder.com/400" alt="Editing">
+                    <div class="caption"><h5>Editing</h5></div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="thumbnail">
+                    <img src="https://via.placeholder.com/400" alt="Streaming">
+                    <div class="caption"><h5>Streaming</h5></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Iklan -->
-    <div class="container">
-        <div class="ad">
-            <div class="thumbnail thumbnail-1"></div>
-            <div class="content">
-                <h2>Jelajahi Kuliner Spektakuler</h2>
-                <p>Nikmati kuliner andalanmu bersama GoFood, jadikan moment bersama keluarga jadi lebih ceria. Promo ceria hingga 30% dari kita untuk semua.</p>
-                <a href="https://gofood.co.id/pekanbaru/restaurants/near_me" class="rounded-button">Buka GoFood</a>
-            </div>
-        </div>
-
-        <div class="ad">
-            <div class="thumbnail thumbnail-2"></div>
-            <div class="content">
-                <h2>Promo Liburan Bersama Traveloka</h2>
-                <p>Deskripsi singkat tentang produk B. Hubungi penjual untuk informasi lebih lanjut.</p>
-                <a href="https://www.traveloka.com/en-id?id" class="rounded-button">Pesan Sekarang</a>
-            </div>
-        </div>
-
-        <div class="ad">
-            <div class="content">
-                <h2>Membangun Bisnis Dari Nol</h2>
-                <p>Shoutout ‪@ErikaRichardo‬ 2:05 buat bisnisnya @by.painters</p>
-                <p>Kalo kalian mau belajar keuangan + Investasi saham, pake kode promo gw: “RAYMOND” (Diskon 15%)</p>
-                <p>Jadi Member UsahaKita di <a href="http://ternakuang.id">BelajarBisnis.Com</a></p>
-                <a href="https://www.youtube.com/@RaymondChins" class="rounded-button">Kunjungi Channel</a>
-            </div>
-            <iframe width="540" height="280" src="https://www.youtube.com/embed/8g1H3ipDNOs" title="Cara Bangun Bisnis dari Nol" allowfullscreen></iframe>
+        <div class="text-center">
+            <a href="#" class="rounded-button">Lihat Lebih Banyak</a>
         </div>
     </div>
 
