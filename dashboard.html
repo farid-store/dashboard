@@ -218,15 +218,20 @@
 /* Tombol */
 .rounded-button {
     display: inline-block;
+    width: auto; /* Ubah dari 100% ke auto agar tidak melebar dan terpotong */
+    max-width: 100%; /* Pastikan tidak melebihi lebar kontainer */
+    padding: 10px 16px;
+    text-align: center;
     background: #007bff;
     color: white;
-    padding: 10px 14px;
     border-radius: 6px;
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;
     transition: background 0.3s ease;
+    box-sizing: border-box;
 }
+
 
 /* Memberi jarak antar kartu */
 .row {
