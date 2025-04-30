@@ -2,10 +2,44 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Farid Store | Produk Terpopuler</title>
+    <title>Farid Store | Products</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
+        /* Row untuk produk terpopuler */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Atur elemen agar terpisah */
+        }
+
+        /* Kolom untuk produk */
+        .col {
+            flex: 1 1 23%; /* Membuat kolom dengan lebar fleksibel */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Thumbnail dan Caption */
+        .thumbnail {
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .caption h5 {
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
         /* Global Styles */
         body {
             font-family: Arial, sans-serif;
@@ -28,103 +62,6 @@
             text-align: center;
         }
 
-        /* Row untuk produk terpopuler */
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px; /* Menambahkan jarak antar kotak */
-            justify-content: center; /* Menyusun elemen-elemen di tengah */
-        }
-
-        /* Kolom untuk produk */
-        .col {
-            flex: 1 1 22%; /* Membuat kolom dengan lebar fleksibel */
-            padding: 10px;
-            box-sizing: border-box;
-            border: 2px solid #ddd; /* Menambahkan border untuk kotak */
-            border-radius: 8px;
-            background-color: #fff; /* Memberi latar belakang putih */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
-            text-align: center; /* Menyusun isi kotak di tengah */
-        }
-
-        /* Thumbnail dan Caption */
-        .thumbnail img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
-            border-radius: 8px 8px 0 0;
-        }
-
-        .caption h5 {
-            margin: 10px 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        /* Mengatur ukuran gambar agar responsif */
-        .thumbnail img {
-            max-height: 250px;
-            object-fit: cover;
-        }
-
-        /* Responsif untuk layar kecil */
-        @media (max-width: 768px) {
-            .col {
-                flex: 1 1 48%; /* Setiap kolom akan mengambil 48% lebar pada layar kecil */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .col {
-                flex: 1 1 100%; /* Setiap kolom akan mengambil 100% lebar pada layar lebih kecil */
-            }
-        }
-
-        /* Iklan */
-        .ad {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px; /* Menambahkan jarak antar elemen iklan */
-            margin-top: 30px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fff;
-            padding: 20px;
-        }
-
-        .ad .thumbnail {
-            width: 300px;
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
-        }
-
-        .ad .content {
-            flex: 1;
-            padding-left: 20px;
-        }
-
-        /* Responsif untuk iklan */
-        @media (max-width: 768px) {
-            .ad {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .ad .thumbnail {
-                width: 100%;
-                height: 200px;
-            }
-
-            .ad .content {
-                text-align: center;
-                padding-left: 0;
-            }
-        }
-
-        /* Tombol */
         .rounded-button {
             background-color: #4CAF50;
             color: white;
@@ -142,21 +79,118 @@
             background-color: #45a049;
         }
 
-        /* Styling untuk iframe */
+        .jumbotron {
+            background-color: #f7f7f7;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
+            position: relative;
+            width: 100%;
+            height: 540px;
+            overflow: hidden;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ad {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .thumbnail {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 10px;
+        }
+
+        .thumbnail-1 { background-image: url('https://via.placeholder.com/400'); }
+        .thumbnail-2 { background-image: url('https://via.placeholder.com/400'); }
+        .thumbnail-3 { background-image: url('https://via.placeholder.com/400'); }
+        .thumbnail-4 { background-image: url('https://via.placeholder.com/400'); }
+
+        .content {
+            flex: 1;
+            padding-left: 10px;
+        }
+
+        .content h2, .content p {
+            margin-bottom: 10px;
+        }
+
         iframe {
             max-width: 100%;
             border-radius: 8px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
             margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .ad {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .thumbnail {
+                max-width: 600px;
+                height: 300px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Jumbotron -->
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Selamat Datang Di Farid Store!</h1>
+        </div>
+    </div>
+
+    <!-- Banner Slides -->
+    <div class="container" style="background-color:#ECEBDE;padding:15px 0;">
+        <div class="slides">
+            <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
+            <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
+            <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
+            <div class="slide"><img src="https://via.placeholder.com/1200x540" alt=""></div>
+            <div class="navigation">
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
     <!-- Produk Terpopuler -->
     <div class="container">
         <h1 class="text-center">Produk Terpopuler</h1>
-        <div class="row">
+        <div class="row text-center">
             <div class="col">
                 <div class="thumbnail">
                     <img src="https://via.placeholder.com/400" alt="Game Online">
@@ -182,12 +216,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="text-center">
+            <a href="#" class="rounded-button">Lihat Lebih Banyak</a>
+        </div>
     </div>
 
     <!-- Iklan -->
     <div class="container">
         <div class="ad">
-            <div class="thumbnail" style="background-image: url('https://via.placeholder.com/400');"></div>
+            <div class="thumbnail thumbnail-1"></div>
             <div class="content">
                 <h2>Jelajahi Kuliner Spektakuler</h2>
                 <p>Nikmati kuliner andalanmu bersama GoFood, jadikan moment bersama keluarga jadi lebih ceria. Promo ceria hingga 30% dari kita untuk semua.</p>
@@ -196,7 +234,7 @@
         </div>
 
         <div class="ad">
-            <div class="thumbnail" style="background-image: url('https://via.placeholder.com/400');"></div>
+            <div class="thumbnail thumbnail-2"></div>
             <div class="content">
                 <h2>Promo Liburan Bersama Traveloka</h2>
                 <p>Deskripsi singkat tentang produk B. Hubungi penjual untuk informasi lebih lanjut.</p>
@@ -216,5 +254,36 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; USAHAKITA | UNIVERSITAS MUHAMMADIYAH RIAU</p>
+        </div>
+    </footer>
+
+    <!-- Script Slider -->
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+
+        setInterval(function() {
+            plusSlides(1);
+        }, 3000);
+    </script>
 </body>
 </html>
