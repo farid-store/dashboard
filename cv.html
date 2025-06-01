@@ -75,6 +75,20 @@
         display: block;
         width: 100% !important;
       }
+      .contact-info > div {
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .contact-info {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .contact-info > div {
+    white-space: normal;
+  }
+}
+
     }
   </style>
 </head>
