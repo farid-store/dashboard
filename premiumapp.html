@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Produk dengan Modal & Telegram</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f9f9f9;
+  }
+  .search-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+  }
+  .search-input:focus {
+    outline: none;
+    box-shadow: 0 0 8px #7367f0;
+    border-color: #7367f0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 20px;
+    gap: 15px;
+  }
+
+  @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  .card {
+    opacity: 0; /* mulai dari tidak terlihat */
+    animation: fadeInUp 0.6s ease forwards;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(115, 103, 240, 0.3);
+  }
+  .card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #f1f1f1;
+    margin-bottom: 12px;
+    user-select: none;
+  }
+  .card h4 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    flex-grow: 1;
+    user-select: none;
+  }
+  .status {
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    display: inline-block;
+    font-weight: 600;
+    user-select: none;
+    min-width: 80px;
+  }
+  .status.ready {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  .status.pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  /* Modal General */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 10000;
+  animation: fadeInModal 0.3s ease forwards;
+}
+
+.no-results {
+      text-align: center;
+      color: #999;
+      font-style: italic;
+      grid-column: 1 / -1;
+    }
+
+.modal-content {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 25px;
+  animation: scaleInModal 0.3s ease forwards;
+  position: relative;
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  transition: color 0.2s ease;
+}
+.modal-close:hover {
+  color: #7367f0;
+}
+
+/* Modal Body Flexbox */
+.modal-body {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+/* Image Wrapper */
+.modal-image-wrapper {
+  flex: 1 1 300px;
+  min-width: 250px;
+}
+.modal-image-wrapper img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: contain;
+  max-height: 320px;
+  background: #f8f8f8;
+}
+
+/* Details Section */
+.modal-details {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-details h3 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: #333;
+  user-select: none;
+  margin-bottom: 18px;
+}
+.modal-details label {
+  font-weight: 600;
+  margin-top: 12px;
+  color: #555;
+}
+.modal-details select,
+.modal-details input[type="number"],
+.modal-details input[type="text"] {
+  margin-top: 6px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1.8px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+.modal-details select:focus,
+.modal-details input[type="number"]:focus,
+.modal-details input[type="text"]:focus {
+  outline: none;
+  border-color: #7367f0;
+  box-shadow: 0 0 8px #7367f0;
+}
+
+/* Submit Button */
+.btn-submit {
+  margin-top: 24px;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: #7367f0;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-submit:hover {
+  background: #5a4fcc;
+}
+
+/* Status Message */
+.status-message {
+  margin-top: 16px;
+  font-weight: 600;
+  min-height: 24px;
+}
+
+/* Animations */
+@keyframes fadeInModal {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes scaleInModal {
+  from {transform: scale(0.95);}
+  to {transform: scale(1);}
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modal-body {
+    flex-direction: column;
+  }
+  .modal-image-wrapper, .modal-details {
+    flex: none;
+    min-width: 100%;
+  }
+  .modal-content {
+    padding: 20px 16px;
+  }
+}
+.header {
+      background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
+      padding: 20px;
+      border-radius: 8px 8px 0 0;
+      color: white;
+      user-select: none;
+    }
+    .header h2 { margin: 0; font-size: 1.5rem; }
+.breadcrumb {
+      opacity: 0.8;
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="header">
+    <h2>Premium App</h2>
+    <p class="breadcrumb">Prabayar &gt; Aplikasi & Jasa Premium</p>
+  </div>
+</header>
+<br>
+<input type="text" placeholder="Cari produk..." id="searchInput" class="search-input" />
+
+<div id="productList" class="grid"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <button id="closeModal" class="modal-close">&times;</button>
+    <div class="modal-body">
+      <div class="modal-image-wrapper">
+        <img id="modalImage" src="" alt="Produk" />
+      </div>
+      <div class="modal-details">
+        <h3 id="modalName">Nama Produk</h3>
+
+        <label for="periodSelect">Periode Langganan (bulan):</label>
+        <select id="periodSelect">
+          <option value="1hari">1 Hari</option>
+          <option value="7hari">7 Hari</option>
+          <option value="1bulan">1 bulan</option>
+          <option value="3bulan">3 bulan</option>
+          <option value="12bulan">12 bulan</option>
+        </select>
+
+        <label for="quantityInput">Jumlah Pesanan:</label>
+        <input type="number" id="quantityInput" min="1" value="1" />
+
+        <label for="contactInput">Kontak Anda (WA/Telegram):</label>
+        <input type="text" id="contactInput" placeholder="Masukkan nomor atau ID kontak" />
+
+        <button id="submitOrder" class="btn-submit">Pesan Sekarang</button>
+
+        <p id="statusMessage" class="status-message"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // Data produk (contoh singkat, bisa tambahkan semua produkmu)
+  const items = [
+      { name: "AI CHATGPT+", img: "https://img.icons8.com/ios7/600/chatgpt.png", link: "#", status: "ready" },
+  { name: "AI CLAUDE", img: "https://img.icons8.com/fluent/512/claude.png", link: "#", status: "ready" },
+  { name: "AI GEMINI ADVANCE", img: "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", link: "#", status: "ready" },
+  { name: "AI PERPLEXITY", img: "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp", link: "#", status: "ready" },
+  { name: "AI YOU.COM", img: "https://images.seeklogo.com/logo-png/43/1/you-com-logo-png_seeklogo-435346.png", link: "#", status: "ready" },
+  { name: "ALIGHT MOTION PRO", img: "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp", link: "#", status: "ready" },
+  { name: "AMAZON PRIME VIDEO", img: "https://premy.id/assets/images/games/1741494463_595f35c3057cb28fbcdc.png", link: "#", status: "ready" },
+  { name: "APPLE MUSIC", img: "https://img.freepik.com/free-vector/music-icon_53876-25524.jpg?semt=ais_hybrid&w=740", link: "#", status: "ready" },
+  { name: "APPLE CODE REDEEM ID", img: "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png", link: "#", status: "ready" },
+  { name: "BSTATION PREMIUM", img: "https://epstore.id/file/images/4a8ce6bf7af3432c4b59ab041decb7cf.jpg", link: "#", status: "ready" },
+  { name: "CANVA PRO + DESIGNER", img: "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", link: "#", status: "ready" },
+  { name: "CAPCUT PRO", img: "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp", link: "#", status: "ready" },
+  { name: "CEK PLAGIASI - TURNITIN", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s", link: "#", status: "pending" },
+  { name: "DEEPL PREMIUM", img: "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png", link: "#", status: "ready" },
+  { name: "DISNEY+ HOTSTAR", img: "https://epstore.id/file/images/a5210b6fa02a11a631bd7dcd23eaf74d.jpg", link: "#", status: "pending" },
+  { name: "DRAMABOX PREMIUM", img: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/dramabox-logo-icon.png", link: "#", status: "ready" },
+  { name: "DUOLINGO SUPER", img: "https://logowik.com/content/uploads/images/232_duolingo_logo.jpg", link: "#", status: "ready" },
+  { name: "FIGMA PRO", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9IQCea8hSpiYjBajC-OQu3h1fXr4qesFAog&s", link: "#", status: "ready" },
+  { name: "GOOGLE DRIVE", img: "https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png", link: "#", status: "ready" },
+  { name: "GOOGLE MEET", img: "https://images.seeklogo.com/logo-png/40/1/google-meet-logo-png_seeklogo-406884.png", link: "#", status: "ready" },
+  { name: "GOOGLE ONE", img: "https://images.icon-icons.com/2631/PNG/512/google_one_new_logo_icon_159148.png", link: "#", status: "ready" },
+  { name: "GOOGLE PHOTOS", img: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Google-Photos_icon_logo_%28May-September_2015%29.png", link: "#", status: "ready" },
+  { name: "GETCONTACT PREMIUM", img: "https://iconlogovector.com/uploads/images/2024/11/lg-673aab19909ee-Getcontact-Icon.webp", link: "#", status: "pending" },
+  { name: "HBO GO", img: "https://epstore.id/file/images/fc0569cf7d7676c4292a8bfad0fb1aa8.jpg", link: "#", status: "ready" },
+  { name: "IQIYI", img: "https://img.icons8.com/?size=512&id=d5TXEddDPJaA&format=png", link: "#", status: "ready" },
+  { name: "JASA CTP NETFLIX", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+  { name: "JASPAY", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+  { name: "LIGHTROOM PREMIUM", img: "https://logowik.com/content/uploads/images/adobe-lightroom-cc7429.jpg", link: "#", status: "pending" },
+  { name: "LOKLOK VIP", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zz1QckiTE7E2jcCIBcNOHj3LTFYjyl82Zg&s", link: "#", status: "ready" },
+  { name: "MEITU VIP", img: "https://images.seeklogo.com/logo-png/34/1/meitu-logo-png_seeklogo-347412.png", link: "#", status: "ready" },
+  { name: "MICROSOFT 365", img: "https://images.seeklogo.com/logo-png/16/1/microsoft-office-365-logo-png_seeklogo-168321.png", link: "#", status: "pending" },
+  { name: "NETFLIX PREMIUM UHD", img: "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", link: "#", status: "ready" },
+  { name: "OTP (ONE-TIME PASSWORD) 🇮🇩", img: "https://img.freepik.com/premium-vector/otp-one-time-password-security-illustration_258153-467.jpg", link: "#", status: "pending" },
+  { name: "PICSART PRO", img: "https://images.seeklogo.com/logo-png/37/1/picsart-logo-png_seeklogo-378855.png", link: "#", status: "ready" },
+  { name: "RCTI+ PREMIUM SPORTS", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/17/ef/7a/17ef7a1f-43c4-fab6-c345-45ac9aca4a5e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png", link: "#", status: "pending" },
+  { name: "REMINI PRO", img: "https://dragonflyeditorial.com/wp-content/uploads/2022/04/remini-logo.png", link: "#", status: "ready" },
+  { name: "SCRIBD SUBSCRIPTION", img: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/290_Scribd_logo-512.png", link: "#", status: "ready" },
+  { name: "SPOTIFY PREMIUM", img: "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp", link: "#", status: "ready" },
+  { name: "VIDIO PREMIER", img: "https://premy.id/assets/images/games/1716206019_3a1a9233fd3e2b700f2b.webp", link: "#", status: "ready" },
+  { name: "VISION+ / K-VISION SPORT", img: "https://logowik.com/content/uploads/images/vision-plus-20219005.logowik.com.webp", link: "#", status: "ready" },
+  { name: "VIU PREMIUM", img: "https://premy.id/assets/images/games/1716440566_1d882c4abb76c6aca6c0.webp", link: "#", status: "ready" },
+  { name: "VPN EXPRESS", img: "https://xv.imgix.net/photos/xv/Red-preview-f8f8e432661063d4ffe1a4b96dd9e4be.png?s=9be796d9e09e46e0414cca1653e07c20", link: "#", status: "ready" },
+  { name: "VPN HMA", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8u9DCTp85Mp2EudJRB_9yemL_6VcnTIbY9A&s", link: "#", status: "ready" },
+  { name: "VPN SURFSHARK", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS51GX3mpbu5zhDfiVBMdf99pJ8QkLDM9XsPA&s", link: "#", status: "ready" },
+  { name: "WETV VIP", img: "https://epstore.id/file/images/1e6d73faf08ad3db4eb629b3569cd04a.jpg", link: "#", status: "ready" },
+  { name: "WINK VIP", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/c3/78/6ac37852-6e65-9d37-db77-f74ef4a0dabb/WinkStudio.png/1200x600wa.png", link: "#", status: "ready" },
+  { name: "YOUTUBE PREMIUM", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s", link: "#", status: "ready" },
+  { name: "ZOOM PRO", img: "https://premy.id/assets/images/games/1741494396_03f394b14332a67bc4c4.png", link: "#", status: "ready" }
+];
+
+  const productList = document.getElementById("productList");
+  const searchInput = document.getElementById("searchInput");
+
+  const modal = document.getElementById("modal");
+  const modalImage = document.getElementById("modalImage");
+  const modalName = document.getElementById("modalName");
+  const periodSelect = document.getElementById("periodSelect");
+  const quantityInput = document.getElementById("quantityInput");
+  const contactInput = document.getElementById("contactInput");
+  const submitOrder = document.getElementById("submitOrder");
+  const statusMessage = document.getElementById("statusMessage");
+  const closeModal = document.getElementById("closeModal");
+
+  let currentProduct = null;
+
+  function renderProducts(filter = "") {
+    productList.innerHTML = "";
+    const filtered = items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+    if(filtered.length === 0) {
+      productList.innerHTML = '<p class="no-results">Tidak ada produk yang cocok.</p>';
+      return;
+    }
+    filtered.forEach((item) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.name}" />
+        <h4>${item.name}</h4>
+        <div class="status ${item.status}">${item.status === "ready" ? "Ready" : "Pending"}</div>
+      `;
+      card.addEventListener("click", () => openModal(item));
+      productList.appendChild(card);
+    });
+  }
+
+  function openModal(product) {
+    currentProduct = product;
+    modalImage.src = product.img;
+    modalImage.alt = product.name;
+    modalName.textContent = "Detail: " + product.name;
+    periodSelect.value = "1";
+    quantityInput.value = 1;
+    contactInput.value = "";
+    statusMessage.textContent = "";
+    modal.style.display = "flex";
+  }
+
+  function closeModalFunc() {
+    modal.style.display = "none";
+  }
+
+  closeModal.addEventListener("click", closeModalFunc);
+
+  window.addEventListener("click", e => {
+    if(e.target === modal) {
+      closeModalFunc();
+    }
+  });
+
+  submitOrder.addEventListener("click", () => {
+    const period = periodSelect.value;
+    const quantity = quantityInput.value;
+    const contact = contactInput.value.trim();
+
+    if(contact === "") {
+      statusMessage.style.color = "red";
+      statusMessage.textContent = "Mohon isi kontak Anda.";
+      return;
+    }
+
+      // Fungsi parsePeriod didefinisikan dulu
+  function parsePeriod(value) {
+    const match = value.match(/^(\d+)([a-zA-Z]+)$/);
+    if (!match) return {num: value, unit: ""};
+    return {
+      num: match[1],
+      unit: match[2]
+    };
+  }
+
+  // Contoh penggunaan saat ambil value select
+  const periodValue = document.getElementById('periodSelect').value;
+  const {num, unit} = parsePeriod(periodValue);
+
+
+    // Kirim ke bot Telegram
+    const BOT_TOKEN = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";  // Ganti dengan token bot Telegram-mu
+    const CHAT_ID = "5775563021";      // Ganti dengan chat ID tujuan (bisa grup atau user)
+
+    
+    const message = 
+      `Pesanan baru dari website:\n` +
+      `Produk: ${currentProduct.name}\n` +
+      `Periode: ${num} ${unit}\n` + 
+      `Jumlah: ${quantity}\n` +
+      `Kontak: ${contact}`;
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: message
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.ok) {
+        statusMessage.style.color = "green";
+        statusMessage.textContent = "Pesanan berhasil dikirim,maksimal 1x24 jam!";
+        setTimeout(() => {
+          closeModalFunc();
+        }, 2000);
+      } else {
+        statusMessage.style.color = "red";
+        statusMessage.textContent = "Gagal mengirim pesanan, coba lagi.";
+      }
+    })
+    .catch(() => {
+      statusMessage.style.color = "red";
+      statusMessage.textContent = "Terjadi kesalahan jaringan.";
+    });
+  });
+
+  renderProducts();
+
+  searchInput.addEventListener("input", () => {
+    renderProducts(searchInput.value);
+  });
+</script>
+
+</body>
+</html>
