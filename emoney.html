@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Money</title>
+  <style>
+    .header {
+      background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
+      padding: 20px;
+      border-radius: 8px 8px 0 0;
+      color: white;
+    }
+
+    .header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .game-container {
+      padding: 20px;
+      background-color: #ffffff;
+      max-width: 1100px;
+      margin: auto;
+      border-left: 4px solid #7367f0;
+      min-height: 100vh;
+    }
+
+    .main-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 30px 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #4a4a4a;
+      margin-bottom: 25px;
+    }
+
+    #product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 20px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-card {
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card p {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <section class="game-container">
+    <div class="header">
+      <h2>E-Money</h2>
+      <p class="breadcrumb">Prabayar &gt; E-Money</p>
+    </div>
+    <div class="main-content">
+      <h1>Pilih Layanan E-Money</h1>
+      <div id="product-list"></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        showProducts();
+      });
+
+      function showProducts() {
+        const products = [
+          { name: "OVO", image: "https://epstore.id/file/images/bd9870e2be9e54c80ec7d834b4910b19.jpg", link: "#" },
+          { name: "DANA", image: "https://epstore.id/file/images/1526107e6e37b6cb05eb5aad516e8bca.jpg", link: "#" },
+          { name: "GO PAY", image: "https://epstore.id/file/images/bb62c562bf85b58509be9cfb319c8f67.jpg", link: "#" },
+          { name: "SHOOPE PAY", image: "https://epstore.id/file/images/927cde0aaeaf674cf218c75573a48c2b.jpg", link: "#" },
+          { name: "GRAB (PENUMPANG)", image: "https://epstore.id/file/images/894003bdde2dd916fec75336dd36d4ca.jpg", link: "#" },
+          { name: "DOKU", image: "https://epstore.id/file/images/437fe434aa8688ebc60dfaf93c736aa5.jpg", link: "#" },
+          { name: "SAKUKU", image: "https://epstore.id/file/images/7bb8c47720938103b1b987d4cd001093.png", link: "#" },
+          { name: "MAXIM (CUSTOMER)", image: "https://epstore.id/file/images/79e378cf737bd2d9c75093bd42efdb4c.png", link: "#" },
+          { name: "I.SAKU", image: "https://epstore.id/file/images/0213a8c6260bef57eb342bcb1529a189.png", link: "#" },
+          { name: "LINKAJA", image: "https://epstore.id/file/images/656d86807bbe6e3b343ec919a5538ad1.png", link: "#" },
+          { name: "GRAB (DRIVER)", image: "https://epstore.id/file/images/acf8c2497f6b4fc4015bc65491f615d3.jpg", link: "#" }
+        ];
+
+        const productList = document.getElementById("product-list");
+
+        products.forEach((product, index) => {
+          const productHTML = `
+            <div class="product-card fade-in">
+              <a href="${product.link}">
+                <img src="${product.image}" alt="${product.name}" />
+              </a>
+              <p>${product.name}</p>
+            </div>
+          `;
+          productList.innerHTML += productHTML;
+
+          setTimeout(() => {
+            document.querySelectorAll(".fade-in")[index].classList.add("show");
+          }, index * 150);
+        });
+      }
+    </script>
+  </section>
+</body>
+</html>
