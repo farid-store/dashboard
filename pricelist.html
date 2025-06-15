@@ -1,645 +1,331 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daftar Harga Produk Digital</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f9f9f9;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    #searchInput {
-      display: block;
-      margin: 0 auto 20px auto;
-      padding: 8px 12px;
-      width: 300px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    table {
-      width: 95%;
-      margin: 0 auto;
-      border-collapse: collapse;
-      background: #fff;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-    }
-    th, td {
-      padding: 12px 15px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-      vertical-align: middle;
-    }
-    th {
-      background-color: #007BFF;
-      color: #fff;
-      user-select: none;
-    }
-    tr:hover {
-      background-color: #f1f7ff;
-    }
-    img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-    .status-ready {
-      color: green;
-      font-weight: bold;
-    }
-    .status-pending {
-      color: red;
-      font-weight: bold;
-    }
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      thead tr {
-        display: none;
-      }
-      tbody tr {
-        margin-bottom: 20px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        padding: 15px;
-        border-radius: 8px;
-      }
-      tbody td {
-        text-align: right;
-        padding-left: 50%;
-        position: relative;
-      }
-      tbody td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        width: 45%;
-        padding-left: 10px;
-        font-weight: bold;
-        text-align: left;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Harga Produk Digital</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            color: white;
+            width: 100%;
+            max-width: 1100px;
+            box-sizing: border-box;
+            user-select: none;
+            text-align: left;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .breadcrumb {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border-radius: 0 0 15px 15px;
+            padding: 30px 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-bottom: 25px;
+            text-align: center;
+            width: 100%;
+        }
+
+        #searchInput {
+            width: 100%; 
+            max-width: 300px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+        #searchInput:focus {
+            outline: none;
+            border-color: #7367f0;
+            box-shadow: 0 0 8px rgba(115, 103, 240, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
+            font-size: 0.95rem;
+        }
+        th {
+            background-color: #7367f0;
+            color: #fff;
+            user-select: none;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f7ff;
+            cursor: pointer;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+        .status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+        .status-ready {
+            background-color: #e6ffe6;
+            color: #155724;
+        }
+        .status-pending {
+            background-color: #fff8e6;
+            color: #856404;
+        }
+
+        .status-cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 78px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            #searchInput {
+                max-width: 100%;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tbody tr {
+                margin-bottom: 15px;
+                background: #fff;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+                padding: 15px;
+                border-radius: 10px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+            }
+            tbody td {
+                text-align: left;
+                padding: 8px 0;
+                border-bottom: none;
+                width: 100%;
+                position: relative;
+            }
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                width: 120px;
+                min-width: 120px;
+                display: inline-block;
+                text-align: left;
+                margin-right: 10px;
+                color: #555;
+            }
+            tbody td:first-child {
+                text-align: center;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            tbody td:nth-child(2) {
+                font-size: 1.1rem;
+                font-weight: bold;
+                text-align: center;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            tbody td:nth-child(3) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 40px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            tbody td:nth-child(3)::before {
+                display: none;
+            }
+
+            tbody td:nth-child(n+4) {
+                width: calc(50% - 15px);
+                text-align: right;
+            }
+            tbody td:nth-child(n+4)::before {
+                width: calc(100% - 100px);
+            }
+        }
+        @media (max-width: 480px) {
+            tbody td:nth-child(n+4) {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <h1>Daftar Harga Produk Digital</h1>
-  <input type="text" id="searchInput" placeholder="Cari produk..." />
+    <div class="header">
+        <h2>Daftar Harga</h2>
+        <p class="breadcrumb">Informasi &gt; Harga Produk Digital</p>
+    </div>
+    <div class="main-content">
+        <h1>Daftar Harga Produk Digital</h1>
+        <input type="text" id="searchInput" placeholder="Cari produk..." />
 
-  <table id="priceTable">
-    <thead>
-      <tr>
-        <th>Gambar</th>
-        <th>Produk</th>
-        <th>Status</th>
-        <th>1 Hari</th>
-        <th>7 Hari</th>
-        <th>1 Bulan</th>
-        <th>3 Bulan</th>
-        <th>12 Bulan</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Data produk disisipkan di sini -->
-    </tbody>
-  </table>
+        <table id="priceTable">
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Produk</th>
+                    <th>Status</th>
+                    <th>1 Hari</th>
+                    <th>7 Hari</th>
+                    <th>1 Bulan</th>
+                    <th>3 Bulan</th>
+                    <th>12 Bulan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="8" style="text-align:center; padding: 20px;">Memuat data...</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-  <script>
-    const products = [
-  {
-    name: "AI CHATGPT+",
-    img: "https://img.icons8.com/ios7/600/chatgpt.png",
-    status: "ready",
-    price1d: 5000,
-    price7d: 12000,
-    price1m: 30000,
-    price3m: 80000,
-    price1y: 280000
-  },
-  {
-    name: "AI CLAUDE",
-    img: "https://img.icons8.com/fluent/512/claude.png",
-    status: "ready",
-    price1d: 4000,
-    price7d: 10000,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000
-  },
-  {
-    name: "AI GEMINI ADVANCE",
-    img: "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png",
-    status: "ready",
-    price1d: 4500,
-    price7d: 11000,
-    price1m: 25000,
-    price3m: 60000,
-    price1y: 210000
-  },
-  {
-    name: "AI PERPLEXITY",
-    img: "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9000,
-    price1m: 20000,
-    price3m: 50000,
-    price1y: 170000
-  },
-  {
-    name: "AI YOU.COM",
-    img: "https://images.seeklogo.com/logo-png/43/1/you-com-logo-png_seeklogo-435346.png",
-    status: "ready",
-    price1d: 3600,
-    price7d: 9500,
-    price1m: 21000,
-    price3m: 52000,
-    price1y: 180000
-  },
-  {
-    name: "ALIGHT MOTION PRO",
-    img: "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp",
-    status: "ready",
-    price1d: 2500,
-    price7d: 7000,
-    price1m: 18000,
-    price3m: 46000,
-    price1y: 160000
-  },
-  {
-    name: "AMAZON PRIME VIDEO",
-    img: "https://premy.id/assets/images/games/1741494463_595f35c3057cb28fbcdc.png",
-    status: "ready",
-    price1d: 4000,
-    price7d: 11000,
-    price1m: 27000,
-    price3m: 67000,
-    price1y: 240000
-  },
-  {
-    name: "APPLE MUSIC",
-    img: "https://img.freepik.com/free-vector/music-icon_53876-25524.jpg?semt=ais_hybrid&w=740",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000
-  },
-  {
-    name: "APPLE CODE REDEEM ID",
-    img: "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png",
-    status: "ready",
-    price1d: 5000,
-    price7d: 14000,
-    price1m: 36000,
-    price3m: 90000,
-    price1y: 320000
-  },
-  {
-    name: "BSTATION PREMIUM",
-    img: "https://epstore.id/file/images/4a8ce6bf7af3432c4b59ab041decb7cf.jpg",
-    status: "ready",
-    price1d: 2000,
-    price7d: 6000,
-    price1m: 17000,
-    price3m: 45000,
-    price1y: 160000
-  },
-  {
-    name: "CANVA PRO + DESIGNER",
-    img: "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp",
-    status: "ready",
-    price1d: 4000,
-    price7d: 11000,
-    price1m: 28000,
-    price3m: 70000,
-    price1y: 260000
-  },
-  {
-    name: "CAPCUT PRO",
-    img: "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000
-  },
-  {
-    name: "CEK PLAGIASI - TURNITIN",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "DEEPL PREMIUM",
-    img: "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 9000,
-    price1m: 23000,
-    price3m: 56000,
-    price1y: 200000
-  },
-  {
-    name: "DISNEY+ HOTSTAR",
-    img: "https://epstore.id/file/images/a5210b6fa02a11a631bd7dcd23eaf74d.jpg",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "DRAMABOX PREMIUM",
-    img: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/dramabox-logo-icon.png",
-    status: "ready",
-    price1d: 2000,
-    price7d: 6000,
-    price1m: 17000,
-    price3m: 46000,
-    price1y: 160000
-  },
-  {
-    name: "DUOLINGO SUPER",
-    img: "https://logowik.com/content/uploads/images/232_duolingo_logo.jpg",
-    status: "ready",
-    price1d: 2800,
-    price7d: 8500,
-    price1m: 21000,
-    price3m: 54000,
-    price1y: 180000
-  },
-  {
-    name: "FIGMA PRO",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9IQCea8hSpiYjBajC-OQu3h1fXr4qesFAog&s",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000
-  },
-  {
-    name: "GOOGLE DRIVE",
-    img: "https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000
-  },
-  {
-    name: "GOOGLE MEET",
-    img: "https://images.seeklogo.com/logo-png/40/1/google-meet-logo-png_seeklogo-406884.png",
-    status: "ready",
-    price1d: 2500,
-    price7d: 7000,
-    price1m: 18000,
-    price3m: 47000,
-    price1y: 160000
-  },
-  {
-    name: "GOOGLE ONE",
-    img: "https://images.icon-icons.com/2631/PNG/512/google_one_new_logo_icon_159148.png",
-    status: "ready",
-    price1d: 3200,
-    price7d: 9000,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000
-  },
-  {
-    name: "GOOGLE PHOTOS",
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Google-Photos_icon_logo_%28May-September_2015%29.png",
-    status: "ready",
-    price1d: 2700,
-    price7d: 7500,
-    price1m: 21000,
-    price3m: 54000,
-    price1y: 180000
-  },
-  {
-    name: "GETCONTACT PREMIUM",
-    img: "https://iconlogovector.com/uploads/images/2024/11/lg-673aab19909ee-Getcontact-Icon.webp",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "HBO GO",
-    img: "https://epstore.id/file/images/fc0569cf7d7676c4292a8bfad0fb1aa8.jpg",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 25000,
-    price3m: 60000,
-    price1y: 220000
-  },
-  {
-    name: "IQIYI",
-    img: "https://img.icons8.com/?size=512&id=d5TXEddDPJaA&format=png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000
-  },
-  {
-    name: "JASA CTP NETFLIX",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "JASPAY",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "LIGHTROOM PREMIUM",
-    img: "https://logowik.com/content/uploads/images/adobe-lightroom-cc7429.jpg",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0
-  },
-  {
-    name: "LOKLOK VIP",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zz1QckiTE7E2jcCIBcNOHj3LTFYjyl82Zg&s",
-    status: "ready",
-    price1d: 2800,
-    price7d: 8000,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000
-  },
-  {
-    name: "MEITU VIP",
-    img: "https://images.seeklogo.com/logo-png/34/1/meitu-logo-png_seeklogo-347412.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 23000,
-    price3m: 56000,
-    price1y: 210000
-  },
-  {
-    name: "MICROSOFT 365",
-    img: "https://images.seeklogo.com/logo-png/16/1/microsoft-office-365-logo-png_seeklogo-168321.png",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0,
-  },
-  {
-    name: "NETFLIX PREMIUM UHD",
-    img: "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png",
-    status: "ready",
-    price1d: 4000,
-    price7d: 11000,
-    price1m: 27000,
-    price3m: 67000,
-    price1y: 240000,
-  },
-  {
-    name: "OTP (ONE-TIME PASSWORD) 🇮🇩",
-    img: "https://img.freepik.com/premium-vector/otp-one-time-password-security-illustration_258153-467.jpg",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0,
-  },
-  {
-    name: "PICSART PRO",
-    img: "https://images.seeklogo.com/logo-png/37/1/picsart-logo-png_seeklogo-378855.png",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000,
-  },
-  {
-    name: "RCTI+ PREMIUM SPORTS",
-    img: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/17/ef/7a/17ef7a1f-43c4-fab6-c345-45ac9aca4a5e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png",
-    status: "pending",
-    price1d: 0,
-    price7d: 0,
-    price1m: 0,
-    price3m: 0,
-    price1y: 0,
-  },
-  {
-    name: "REMINI PRO",
-    img: "https://dragonflyeditorial.com/wp-content/uploads/2022/04/remini-logo.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 23000,
-    price3m: 56000,
-    price1y: 210000,
-  },
-  {
-    name: "SCRIBD SUBSCRIPTION",
-    img: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/290_Scribd_logo-512.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "SPOTIFY PREMIUM",
-    img: "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp",
-    status: "ready",
-    price1d: 4000,
-    price7d: 11000,
-    price1m: 27000,
-    price3m: 67000,
-    price1y: 240000,
-  },
-  {
-    name: "VIDIO PREMIER",
-    img: "https://premy.id/assets/images/games/1716206019_3a1a9233fd3e2b700f2b.webp",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000,
-  },
-  {
-    name: "VISION+ / K-VISION SPORT",
-    img: "https://logowik.com/content/uploads/images/vision-plus-20219005.logowik.com.webp",
-    status: "ready",
-    price1d: 3200,
-    price7d: 9000,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000,
-  },
-  {
-    name: "VIU PREMIUM",
-    img: "https://premy.id/assets/images/games/1716440566_1d882c4abb76c6aca6c0.webp",
-    status: "ready",
-    price1d: 3200,
-    price7d: 9000,
-    price1m: 24000,
-    price3m: 60000,
-    price1y: 220000,
-  },
-  {
-    name: "VPN EXPRESS",
-    img: "https://xv.imgix.net/photos/xv/Red-preview-f8f8e432661063d4ffe1a4b96dd9e4be.png?s=9be796d9e09e46e0414cca1653e07c20",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "VPN HMA",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8u9DCTp85Mp2EudJRB_9yemL_6VcnTIbY9A&s",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "VPN SURFSHARK",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS51GX3mpbu5zhDfiVBMdf99pJ8QkLDM9XsPA&s",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "WETV VIP",
-    img: "https://epstore.id/file/images/1e6d73faf08ad3db4eb629b3569cd04a.jpg",
-    status: "ready",
-    price1d: 2800,
-    price7d: 8000,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "WINK VIP",
-    img: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/c3/78/6ac37852-6e65-9d37-db77-f74ef4a0dabb/WinkStudio.png/1200x600wa.png",
-    status: "ready",
-    price1d: 2800,
-    price7d: 8000,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  },
-  {
-    name: "YOUTUBE PREMIUM",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s",
-    status: "ready",
-    price1d: 3500,
-    price7d: 9500,
-    price1m: 25000,
-    price3m: 60000,
-    price1y: 220000,
-  },
-  {
-    name: "ZOOM PRO",
-    img: "https://premy.id/assets/images/games/1741494396_03f394b14332a67bc4c4.png",
-    status: "ready",
-    price1d: 3000,
-    price7d: 8500,
-    price1m: 22000,
-    price3m: 55000,
-    price1y: 190000,
-  }
-];
+    <script>
+        let items = []; // Variabel ini akan menyimpan data dari API
+        const API_URL = 'api/products.php'; // Sesuaikan jika lokasi file PHP berbeda
 
+        const tbody = document.querySelector("#priceTable tbody");
+        const searchInput = document.getElementById("searchInput");
 
-    const tbody = document.querySelector("#priceTable tbody");
-    const searchInput = document.getElementById("searchInput");
+        function formatRupiah(number) {
+            if (number === 0 || number === null || number === undefined) {
+                return "KOSONG";
+            }
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(number);
+        }
 
-    function formatRupiah(number) {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR'
-      }).format(number);
-    }
+        async function fetchProducts() {
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px;">Memuat data...</td></tr>`;
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                items = await response.json(); // Simpan data yang diambil ke variabel 'items'
+                renderTable(searchInput.value); // Render tabel dengan data yang sudah dimuat
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px; color: red;">Gagal memuat data produk. Pastikan file 'api/products.php' tersedia dan berfungsi. Error: ${error.message}</td></tr>`;
+            }
+        }
 
-    function renderTable(filter = "") {
-      tbody.innerHTML = "";
-      const filtered = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
+        function renderTable(filter = "") {
+            tbody.innerHTML = ""; // Bersihkan isi tabel sebelumnya
+            const filtered = items.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
 
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px;">Produk tidak ditemukan.</td></tr>`;
-        return;
-      }
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px;">Produk tidak ditemukan.</td></tr>`;
+                return;
+            }
 
-      filtered.forEach(p => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="Gambar"><img src="${p.img}" alt="${p.name}" /></td>
-          <td data-label="Produk">${p.name}</td>
-          <td data-label="Status" class="status-${p.status}">${p.status.toUpperCase()}</td>
-          <td data-label="1 Hari">${formatRupiah(p.price1d)}</td>
-          <td data-label="7 Hari">${formatRupiah(p.price7d)}</td>
-          <td data-label="1 Bulan">${formatRupiah(p.price1m)}</td>
-          <td data-label="3 Bulan">${formatRupiah(p.price3m)}</td>
-          <td data-label="12 Bulan">${formatRupiah(p.price1y)}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+            filtered.forEach(p => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td data-label="Gambar"><img src="${p.img}" alt="${p.name}" loading="lazy" /></td>
+                    <td data-label="Produk">${p.name}</td>
+                    <td data-label="Status" class="status-cell">
+                        <span class="status ${p.status === "ready" ? "status-ready" : "status-pending"}">${p.status.toUpperCase()}</span>
+                    </td>
+                    <td data-label="1 Hari">${formatRupiah(p.price1d)}</td>
+                    <td data-label="7 Hari">${formatRupiah(p.price7d)}</td>
+                    <td data-label="1 Bulan">${formatRupiah(p.price1m)}</td>
+                    <td data-label="3 Bulan">${formatRupiah(p.price3m)}</td>
+                    <td data-label="12 Bulan">${formatRupiah(p.price1y)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    searchInput.addEventListener("input", () => {
-      renderTable(searchInput.value);
-    });
+        // Panggil fungsi fetchProducts saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', fetchProducts);
 
-    renderTable();
-  </script>
+        searchInput.addEventListener("input", () => {
+            renderTable(searchInput.value);
+        });
+    </script>
 
 </body>
 </html>
