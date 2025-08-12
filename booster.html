@@ -1,333 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daftar Harga Produk SMM</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f2f5;
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
-            color: white;
-            width: 100%;
-            max-width: 1100px;
-            box-sizing: border-box;
-            user-select: none;
-            text-align: left;
-        }
-
-        .header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .breadcrumb {
-            opacity: 0.8;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
-
-        .main-content {
-            width: 100%;
-            max-width: 1100px;
-            background: #ffffff;
-            border-radius: 0 0 15px 15px;
-            padding: 30px 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #4a4a4a;
-            margin-bottom: 25px;
-            text-align: center;
-            width: 100%;
-        }
-
-        #searchInput {
-            width: 100%; 
-            max-width: 300px;
-            padding: 10px 15px;
-            font-size: 1rem;
-            margin-bottom: 25px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-        }
-        #searchInput:focus {
-            outline: none;
-            border-color: #7367f0;
-            box-shadow: 0 0 8px rgba(115, 103, 240, 0.3);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 14px 18px;
-            text-align: center;
-            border-bottom: 1px solid #e0e0e0;
-            vertical-align: middle;
-            font-size: 0.95rem;
-        }
-        th {
-            background-color: #7367f0;
-            color: #fff;
-            user-select: none;
-            font-weight: 600;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f7ff;
-            cursor: pointer;
-        }
-        img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            border-radius: 5px;
-        }
-        .status {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            min-width: 70px;
-            text-align: center;
-        }
-        .status-ready {
-            background-color: #e6ffe6;
-            color: #155724;
-        }
-        .status-pending {
-            background-color: #fff8e6;
-            color: #856404;
-        }
-
-        .status-cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 78px;
-            box-sizing: border-box;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 20px 15px;
-            }
-            h1 {
-                font-size: 1.5rem;
-            }
-            #searchInput {
-                max-width: 100%;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            tbody tr {
-                margin-bottom: 15px;
-                background: #fff;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-                padding: 15px;
-                border-radius: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                align-items: center;
-            }
-            tbody td {
-                text-align: left;
-                padding: 8px 0;
-                border-bottom: none;
-                width: 100%;
-                position: relative;
-            }
-            tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                width: 120px;
-                min-width: 120px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-                color: #555;
-            }
-            tbody td:first-child {
-                text-align: center;
-                margin-bottom: 10px;
-                width: 100%;
-            }
-            tbody td:nth-child(2) {
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-align: center;
-                width: 100%;
-                margin-bottom: 5px;
-            }
-            
-            tbody td:nth-child(3) {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 40px;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            tbody td:nth-child(3)::before {
-                display: none;
-            }
-
-            tbody td:nth-child(n+4) {
-                width: calc(50% - 15px);
-                text-align: right;
-            }
-            tbody td:nth-child(n+4)::before {
-                width: calc(100% - 100px);
-            }
-        }
-        @media (max-width: 480px) {
-            tbody td:nth-child(n+4) {
-                width: 100%;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Harga Produk SMM - Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="booster.css">
 </head>
 <body>
+    <div class="container">
+        <header class="header">
+            <h1 class="header__title">Daftar Harga Produk SMM</h1>
+            <p class="header__subtitle">Informasi &gt; Harga Produk SMM</p>
+        </header>
+        
+        <main class="main-content">
+            <div class="calculator-card">
+                <h2>Kalkulator Profit</h2>
+                <div class="calc-grid">
+                    <div class="input-group">
+                        <label for="productSelect">Pilih Produk:</label>
+                        <select id="productSelect"></select>
+                    </div>
+                    <div class="input-group">
+                        <label for="pcsInput">Jumlah Pcs:</label>
+                        <input type="number" id="pcsInput" value="1" min="1">
+                    </div>
+                </div>
 
-    <div class="header">
-        <h2>Daftar Harga</h2>
-        <p class="breadcrumb">Informasi &gt; Harga Produk SMM</p>
-    </div>
-    <div class="main-content">
-        <h1>Daftar Harga Produk SMM</h1>
-        <input type="text" id="searchInput" placeholder="Cari produk..." />
+                <div class="profit-options">
+                    <label>Pilih Persentase Profit:</label>
+                    <div class="profit-buttons">
+                        <button data-profit="20">20%</button>
+                        <button data-profit="40">40%</button>
+                        <button data-profit="60">60%</button>
+                        <button data-profit="80">80%</button>
+                        <button data-profit="100">100%</button>
+                        <button data-profit="200">200%</button>
+                    </div>
+                    <div class="custom-profit">
+                        <input type="number" id="customProfitInput" placeholder="Custom Profit %" min="0">
+                    </div>
+                </div>
 
-        <table id="priceTable">
-            <thead>
-                <tr>
-                    <th>Gambar</th>
-                    <th>Produk</th>
-                    <th>Harga Beli/1 Pcs</th>
-                    <th>Harga Jual 20%</th>
-                    <th>Harga Jual 40%</th>
-                    <th>Harga Jual 60%</th>
-                    <th>Harga Jual 80%</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td colspan="8" style="text-align:center; padding: 20px;">Memuat data...</td></tr>
-            </tbody>
-        </table>
-    </div>
+                <div class="results-grid">
+                    <div class="result-box">
+                        <span class="result-label">Harga Beli Total:</span>
+                        <span class="result-value" id="buyPriceTotal">Rp0,00</span>
+                    </div>
+                    <div class="result-box">
+                        <span class="result-label">Harga Jual Total:</span>
+                        <span class="result-value" id="sellPriceTotal">Rp0,00</span>
+                    </div>
+                    <div class="result-box">
+                        <span class="result-label">Profit Bersih:</span>
+                        <span class="result-value" id="netProfit">Rp0,00</span>
+                    </div>
+                </div>
+            </div>
 
-    <script>
-        const products_data = [
-            { "name": "TIKTOK LIKES", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 2.88, "sell_20": 3.46, "sell_40": 4.03, "sell_60": 4.61, "sell_80": 5.18 },
-            { "name": "TIKTOK VIEWS", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 0.04, "sell_20": 0.05, "sell_40": 0.06, "sell_60": 0.06, "sell_80": 0.07 },
-            { "name": "TIKTOK SHARES", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 0.29, "sell_20": 0.35, "sell_40": 0.41, "sell_60": 0.46, "sell_80": 0.52 },
-            { "name": "TIKTOK SAVES", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 1.24, "sell_20": 1.49, "sell_40": 1.74, "sell_60": 1.98, "sell_80": 2.23 },
-            { "name": "TIKTOK FOLLOWERS (1009)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 16.98, "sell_20": 20.38, "sell_40": 23.77, "sell_60": 27.17, "sell_80": 30.56 },
-            { "name": "INSTAGRAM LIKES", "img": "https://img.icons8.com/?size=512&id=Xy10Jcu1L2Su&format=png", "buy_price": 1.44, "sell_20": 1.73, "sell_40": 2.02, "sell_60": 2.30, "sell_80": 2.59 },
-            { "name": "INSTAGRAM VIEWS", "img": "https://img.icons8.com/?size=512&id=Xy10Jcu1L2Su&format=png", "buy_price": 0.02, "sell_20": 0.02, "sell_40": 0.03, "sell_60": 0.03, "sell_80": 0.04 },
-            { "name": "YOUTUBE LIKES", "img": "https://img.icons8.com/?size=512&id=19318&format=png", "buy_price": 1.86, "sell_20": 2.23, "sell_40": 2.60, "sell_60": 2.98, "sell_80": 3.35 },
-            { "name": "SHOPEE LIVE - Likes", "img": "https://img.icons8.com/?size=512&id=15830&format=png", "buy_price": 3.30, "sell_20": 3.96, "sell_40": 4.62, "sell_60": 5.28, "sell_80": 5.94 },
-            { "name": "SHOPEE LIVE - Shares", "img": "https://img.icons8.com/?size=512&id=15830&format=png", "buy_price": 3.85, "sell_20": 4.62, "sell_40": 5.39, "sell_60": 6.16, "sell_80": 6.93 },
-            { "name": "SHOPEE LIVE - Views (15 Menit)", "img": "https://img.icons8.com/?size=512&id=15830&format=png", "buy_price": 24.66, "sell_20": 29.59, "sell_40": 34.52, "sell_60": 39.46, "sell_80": 44.39 },
-            { "name": "TIKTOK FOLLOWERS (No Refill)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 20.20, "sell_20": 24.24, "sell_40": 28.28, "sell_60": 32.32, "sell_80": 36.36 },
-            { "name": "TIKTOK FOLLOWERS (Refill 30D)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 21.98, "sell_20": 26.38, "sell_40": 30.77, "sell_60": 35.17, "sell_80": 39.56 },
-            { "name": "TIKTOK LIVE - Likes", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 1.24, "sell_20": 1.49, "sell_40": 1.74, "sell_60": 1.98, "sell_80": 2.23 },
-            { "name": "TIKTOK LIVE - Views (15 Menit)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 8.72, "sell_20": 10.46, "sell_40": 12.21, "sell_60": 13.95, "sell_80": 15.70 },
-            { "name": "TIKTOK LIVE - Views (30 Menit)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 17.44, "sell_20": 20.93, "sell_40": 24.42, "sell_60": 27.90, "sell_80": 31.39 },
-            { "name": "TIKTOK LIVE - Views (60 Menit)", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 34.88, "sell_20": 41.86, "sell_40": 48.83, "sell_60": 55.81, "sell_80": 62.78 },
-            { "name": "FACEBOOK POST - Likes", "img": "https://img.icons8.com/?size=512&id=u02mK3L3h3mI&format=png", "buy_price": 10.05, "sell_20": 12.06, "sell_40": 14.07, "sell_60": 16.08, "sell_80": 18.09 },
-            { "name": "FACEBOOK VIEWS - Reels", "img": "https://img.icons8.com/?size=512&id=u02mK3L3h3mI&format=png", "buy_price": 1.24, "sell_20": 1.49, "sell_40": 1.74, "sell_60": 1.98, "sell_80": 2.23 },
-            { "name": "FACEBOOK PAGE/PROFILE - Followers", "img": "https://img.icons8.com/?size=512&id=u02mK3L3h3mI&format=png", "buy_price": 14.49, "sell_20": 17.39, "sell_40": 20.29, "sell_60": 23.18, "sell_80": 26.08 },
-            { "name": "YOUTUBE LIVE - Views (15 Menit)", "img": "https://img.icons8.com/?size=512&id=19318&format=png", "buy_price": 2.92, "sell_20": 3.50, "sell_40": 4.09, "sell_60": 4.67, "sell_80": 5.26 },
-            { "name": "INSTAGRAM FOLLOWERS", "img": "https://img.icons8.com/?size=512&id=Xy10Jcu1L2Su&format=png", "buy_price": 29.73, "sell_20": 35.68, "sell_40": 41.62, "sell_60": 47.57, "sell_80": 53.51 },
-            { "name": "TIKTOK VIEWS - Indonesia", "img": "https://img.icons8.com/?size=512&id=113495&format=png", "buy_price": 1.39, "sell_20": 1.67, "sell_40": 1.95, "sell_60": 2.22, "sell_80": 2.50 }
-        ];
+            <div class="toolbar">
+                <input type="text" id="searchInput" placeholder="Cari produk..." class="search-input">
+            </div>
 
-        const tbody = document.querySelector("#priceTable tbody");
-        const searchInput = document.getElementById("searchInput");
+            <div class="table-container">
+                <table class="price-table" id="priceTable">
+                    <thead>
+                        <tr>
+                            <th>Gambar</th>
+                            <th>Produk</th>
+                            <th>Harga Beli</th>
+                            <th>Margin 20%</th>
+                            <th>Margin 40%</th>
+                            <th>Margin 60%</th>
+                            <th>Margin 80%</th>
+                            <th>Margin 100%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" class="loading-message">Memuat data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }).format(number);
-        }
+            <div class="not-found-message" id="notFoundMessage" style="display: none;">
+                Produk tidak ditemukan.
+            </div>
+        </main>
+    </div>
 
-        function renderTable(filter = "") {
-            tbody.innerHTML = "";
-            const filtered = products_data.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 20px;">Produk tidak ditemukan.</td></tr>`;
-                return;
-            }
-
-            filtered.forEach(p => {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
-                    <td data-label="Gambar"><img src="${p.img}" alt="${p.name}" loading="lazy" /></td>
-                    <td data-label="Produk">${p.name}</td>
-                    <td data-label="Harga Beli/1 Pcs">${formatRupiah(p.buy_price)}</td>
-                    <td data-label="Harga Jual 20%">${formatRupiah(p.sell_20)}</td>
-                    <td data-label="Harga Jual 40%">${formatRupiah(p.sell_40)}</td>
-                    <td data-label="Harga Jual 60%">${formatRupiah(p.sell_60)}</td>
-                    <td data-label="Harga Jual 80%">${formatRupiah(p.sell_80)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTable("");
-        });
-
-        searchInput.addEventListener("input", () => {
-            renderTable(searchInput.value);
-        });
-    </script>
-
+    <script src="booster.js"></script>
 </body>
 </html>
