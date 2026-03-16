@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Deposit Page</title>
+    <title>Deposit Page | Farid Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        /* Transisi halus untuk notifikasi copy */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 p-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
-        <!-- Kiri Atas: Memilih Metode Pembayaran -->
-        <section class="bg-white p-6 rounded-lg shadow-md">
-            <h1 class="text-lg font-semibold mb-4">Deposit</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <h1 class="text-xl font-bold text-gray-800 mb-5 border-b pb-2">Form Deposit</h1>
 
-            <label class="block text-gray-700 font-semibold mb-2">Tipe <span class="text-red-500">*</span></label>
-            <div class="flex items-center mb-2">
-                <input type="radio" id="otomatis" name="tipe" class="mr-2" onclick="tampilkanQRIS()" />
-                <label for="otomatis">Otomatis</label>
+            <label class="block text-gray-700 font-semibold mb-3">Tipe Pembayaran <span class="text-red-500">*</span></label>
+            <div class="flex items-center mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <input type="radio" id="otomatis" name="tipe" class="mr-2 w-4 h-4 text-blue-600 focus:ring-blue-500" onclick="pilihTipe('otomatis')" />
+                <label for="otomatis" class="mr-6 cursor-pointer select-none">Otomatis (QRIS)</label>
 
-                <input type="radio" id="manual" name="tipe" class="mr-2 ml-4" onclick="toggleDropdown(true)" />
-                <label for="manual">Manual</label>
+                <input type="radio" id="manual" name="tipe" class="mr-2 w-4 h-4 text-blue-600 focus:ring-blue-500" onclick="pilihTipe('manual')" />
+                <label for="manual" class="cursor-pointer select-none">Transfer Manual</label>
             </div>
 
-            <div id="dropdown-payment" class="hidden mb-4">
+            <div id="dropdown-payment" class="hidden mb-4 transition-all">
                 <label for="payment-method" class="block text-gray-700 font-semibold mb-2">
-                    Pilih Pembayaran Manual <span class="text-red-500">*</span>
+                    Pilih Metode Manual <span class="text-red-500">*</span>
                 </label>
-                <select id="payment-method" class="w-full p-2 border border-gray-300 rounded" onchange="tampilkanGambar()">
-                    <option value="">Pilih Metode</option>
+                <select id="payment-method" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" onchange="tampilkanGambar()">
+                    <option value="">-- Pilih Metode --</option>
                     <option value="seabank">SeaBank</option>
                     <option value="gopay">Gopay</option>
                     <option value="dana">Dana</option>
                     <option value="ovo">OVO</option>
                     <option value="shopee-pay">ShopeePay</option>
-                    <option value="qris">QRIS</option>
                     <option value="bank-bsi">Bank BSI</option>
                     <option value="bank-jago">Bank Jago</option>
                     <option value="bank-mandiri">Bank Mandiri</option>
@@ -43,64 +48,83 @@
                 </select>
             </div>
 
-            <label for="jumlah" class="block text-gray-700 font-semibold mb-2">Jumlah <span class="text-red-500">*</span></label>
-            <input type="text" id="jumlah" class="w-full p-2 border border-gray-300 rounded" placeholder="Rp" oninput="formatRupiah(this)" />
+            <label for="jumlah" class="block text-gray-700 font-semibold mb-2">Jumlah Deposit <span class="text-red-500">*</span></label>
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-2.5 text-gray-500 font-semibold">Rp</span>
+                <input type="text" id="jumlah" class="w-full pl-10 p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="0" oninput="formatRupiah(this)" />
+            </div>
 
-            <label for="user-contact" class="block text-gray-700 font-semibold mb-2 mt-4">Email atau No. WhatsApp <span class="text-red-500">*</span></label>
-            <input type="text" id="user-contact" class="w-full p-2 border border-gray-300 rounded mb-4" placeholder="Email atau No WA" />
+            <label for="user-contact" class="block text-gray-700 font-semibold mb-2">Email / No. WhatsApp <span class="text-red-500">*</span></label>
+            <input type="text" id="user-contact" class="w-full p-2.5 border border-gray-300 rounded-lg mb-6 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Contoh: 0812xxxx atau email@anda.com" />
 
-            <div class="flex justify-between mt-4 gap-4">
-                <button class="bg-red-500 text-white px-4 py-2 rounded flex-1" onclick="resetForm()">Ulangi</button>
-                <button class="bg-blue-500 text-white px-4 py-2 rounded flex-1" onclick="cekDanKirimDeposit()">Kirim Deposit</button>
+            <div class="flex justify-between gap-3">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-lg flex-1 transition" onclick="resetForm()">Batal</button>
+                <button id="btn-submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-lg flex-1 transition" onclick="cekDanKirimDeposit()">Kirim Deposit</button>
             </div>
         </section>
 
-        <!-- Kanan Atas: Gambar Metode Pembayaran & Nomor Rekening -->
-        <section class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
-            <h2 class="text-lg font-semibold mb-4">Detail Pembayaran</h2>
-            <img id="payment-image" src="" alt="Metode Pembayaran" class="w-48 h-48 hidden object-contain cursor-pointer" onclick="bukaModal(this.src)" />
-            <h3 class="mt-2">Hanya a/n Farid Ja'far Siddiq</h3>
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center justify-center text-center">
+            <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2 w-full">Detail Pembayaran</h2>
+            
+            <div id="payment-placeholder" class="text-gray-400 my-8 flex flex-col items-center">
+                <i class="fas fa-wallet text-5xl mb-3"></i>
+                <p>Silakan pilih metode pembayaran di samping</p>
+            </div>
 
-            <div class="flex items-center mt-2 select-text cursor-pointer" onclick="copyRekening()">
-                <p id="rekening-number" class="font-semibold text-gray-700"></p>
-                <i class="fas fa-copy text-gray-500 ml-2"></i>
+            <img id="payment-image" src="" alt="Metode Pembayaran" class="w-56 h-56 hidden object-contain cursor-pointer border rounded-lg p-2 shadow-sm hover:shadow-md transition" onclick="bukaModal(this.src)" />
+            
+            <div id="rekening-container" class="hidden mt-4">
+                <h3 class="text-sm text-gray-600 mb-1">Hanya a/n <span class="font-bold text-gray-800">Farid Ja'far Siddiq</span></h3>
+                <div class="flex items-center justify-center mt-2 bg-blue-50 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-100 transition relative" onclick="copyRekening()">
+                    <p id="rekening-number" class="font-bold text-blue-800 text-lg tracking-wider"></p>
+                    <i class="fas fa-copy text-blue-500 ml-3"></i>
+                    <span id="copy-toast" class="absolute -top-6 text-xs bg-gray-800 text-white px-2 py-1 rounded opacity-0">Tersalin!</span>
+                </div>
             </div>
         </section>
 
-        <!-- Modal Preview Gambar -->
-        <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
-            <div class="bg-white p-4 rounded-lg shadow-lg max-w-sm relative">
-                <button class="text-gray-500 text-2xl absolute top-1 right-3" onclick="tutupModal()">&times;</button>
-                <img id="modal-image" src="" alt="Preview" class="w-full h-auto rounded" />
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 col-span-1 lg:col-span-2 overflow-hidden">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 class="text-lg font-bold text-gray-800">Riwayat Transaksi</h2>
+                <button class="text-sm bg-red-100 hover:bg-red-200 text-red-600 font-semibold px-3 py-1.5 rounded transition" onclick="hapusRiwayat()">
+                    <i class="fas fa-trash-alt mr-1"></i> Bersihkan
+                </button>
             </div>
-        </div>
-
-        <!-- Kiri Bawah: Riwayat Pembayaran -->
-        <section class="bg-white p-6 rounded-lg shadow-md col-span-1 lg:col-span-2 overflow-x-auto">
-            <h2 class="text-lg font-semibold mb-4">Riwayat Pembayaran</h2>
-            <table class="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border p-2">Tanggal</th>
-                        <th class="border p-2">Metode</th>
-                        <th class="border p-2">Jumlah</th>
-                        <th class="border p-2">Alamat IP</th>
-                    </tr>
-                </thead>
-                <tbody id="riwayat-pembayaran"></tbody>
-            </table>
-            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto" onclick="hapusRiwayat()">Hapus Riwayat</button>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-left text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-600 border-b">
+                            <th class="p-3 font-semibold">Tanggal</th>
+                            <th class="p-3 font-semibold">Metode</th>
+                            <th class="p-3 font-semibold">Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riwayat-pembayaran" class="divide-y divide-gray-100">
+                        </tbody>
+                </table>
+            </div>
         </section>
 
-        <!-- Kanan Bawah: Announcement -->
-        <section class="bg-white p-6 rounded-lg shadow-md col-span-1 lg:col-span-2">
-            <h2 class="text-lg font-semibold mb-2">Penting:</h2>
-            <ul class="list-disc list-inside text-sm space-y-1">
-                <li>Kesalahan Transfer Nominal Akan <span class="text-red-500 font-bold">Dipotong 1000</span> (<span class="font-bold">PASTIKAN SESUAI NOMINAL</span>)</li>
-                <li>Anda hanya dapat memiliki maksimal 3 permintaan deposit pending, jadi jangan melakukan <span class="font-bold">spam</span> dan segera lunasi pembayaran.</li>
-                <li>Jika permintaan deposit tidak dibayar dalam waktu lebih dari <span class="text-yellow-500 font-bold">24 jam</span>, maka permintaan deposit akan otomatis <span class="font-bold">dibatalkan</span>.</li>
+        <section class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-t-yellow-400 lg:col-span-1">
+            <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i> Perhatian
+            </h2>
+            <ul class="text-sm space-y-3 text-gray-600">
+                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Kesalahan Transfer Nominal Akan <strong>Dipotong Rp 1.000</strong>. Pastikan sesuai nominal!</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Maksimal <strong>3 permintaan pending</strong>. Jangan spam form deposit.</span></li>
+                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Permintaan batal otomatis jika tidak dibayar dalam <strong>24 Jam</strong>.</span></li>
             </ul>
         </section>
+    </div>
+
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center hidden z-50 p-4 transition-opacity" onclick="tutupModal()">
+        <div class="bg-white p-2 rounded-xl shadow-2xl max-w-md relative" onclick="event.stopPropagation()">
+            <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 absolute -top-3 -right-3 hover:bg-red-500 hover:text-white transition" onclick="tutupModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modal-image" src="" alt="Preview" class="w-full h-auto rounded-lg" />
+        </div>
     </div>
 
     <script>
@@ -114,126 +138,133 @@
             "shopee-pay": { img: "bank.png", rekening: "081233014523" },
             "gopay": { img: "bank.png", rekening: "081233014523" },
             "ovo": { img: "bank.png", rekening: "Coming Soon" },
-            "qris": { img: "qris.png", rekening: "Klik Untuk Memperbesar" },
+            "qris": { img: "qris.png", rekening: "Klik QRIS Untuk Memperbesar" },
             "usdt": { img: "crypto.jpg", rekening: "HUBUNGI ADMIN" }
         };
 
-        // Toggle dropdown metode pembayaran manual
-        function toggleDropdown(show) {
-            document.getElementById('dropdown-payment').classList.toggle('hidden', !show);
+        let metodeTerpilih = "";
+
+        // Fungsi mengatur pilihan Otomatis / Manual agar tidak bentrok
+        function pilihTipe(tipe) {
+            const dropdown = document.getElementById('dropdown-payment');
+            const paymentMethodSelect = document.getElementById('payment-method');
+            
+            if (tipe === 'otomatis') {
+                dropdown.classList.add('hidden');
+                paymentMethodSelect.value = ""; // Reset dropdown manual
+                metodeTerpilih = "QRIS";
+                tampilkanInfoPembayaran("qris");
+            } else if (tipe === 'manual') {
+                dropdown.classList.remove('hidden');
+                metodeTerpilih = ""; // Reset sampai user pilih dari dropdown
+                sembunyikanInfoPembayaran();
+            }
+        }
+
+        // Tampilkan detail gambar & rekening
+        function tampilkanGambar() {
+            const method = document.getElementById("payment-method").value;
+            metodeTerpilih = method;
+            
+            if (method && paymentData[method]) {
+                tampilkanInfoPembayaran(method);
+            } else {
+                sembunyikanInfoPembayaran();
+            }
+        }
+
+        function tampilkanInfoPembayaran(kunci) {
+            document.getElementById("payment-placeholder").classList.add("hidden");
+            
+            const img = document.getElementById("payment-image");
+            const rekContainer = document.getElementById("rekening-container");
+            const rekNumber = document.getElementById("rekening-number");
+
+            img.src = paymentData[kunci].img;
+            img.classList.remove("hidden");
+            
+            rekNumber.textContent = paymentData[kunci].rekening;
+            rekContainer.classList.remove("hidden");
+        }
+
+        function sembunyikanInfoPembayaran() {
+            document.getElementById("payment-placeholder").classList.remove("hidden");
+            document.getElementById("payment-image").classList.add("hidden");
+            document.getElementById("rekening-container").classList.add("hidden");
         }
 
         // Reset semua input form
         function resetForm() {
             document.getElementById("jumlah").value = "";
-            document.getElementById("payment-method").value = "";
             document.getElementById("user-contact").value = "";
-            toggleDropdown(false);
-            document.getElementById("payment-image").classList.add("hidden");
-            document.getElementById("rekening-number").textContent = "";
-            // reset tipe radio
+            document.getElementById("payment-method").value = "";
+            
             document.getElementById("otomatis").checked = false;
             document.getElementById("manual").checked = false;
+            document.getElementById('dropdown-payment').classList.add('hidden');
+            
+            metodeTerpilih = "";
+            sembunyikanInfoPembayaran();
         }
 
         // Format input rupiah dengan titik ribuan
         function formatRupiah(input) {
-            let angka = input.value.replace(/[^0-9]/g, ""); // Hapus karakter selain angka
-            let angkaFormatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            input.value = angkaFormatted;
+            let angka = input.value.replace(/[^0-9]/g, ""); 
+            input.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        // Tampilkan QRIS
-        function tampilkanQRIS() {
-            toggleDropdown(false);
-            const img = document.getElementById("payment-image");
-            const rekening = document.getElementById("rekening-number");
-            img.src = paymentData["qris"].img;
-            img.classList.remove("hidden");
-            rekening.textContent = "";
-        }
-
-        // Tampilkan gambar & nomor rekening sesuai metode pembayaran manual
-        function tampilkanGambar() {
-            const paymentMethod = document.getElementById("payment-method").value;
-            const img = document.getElementById("payment-image");
-            const rekening = document.getElementById("rekening-number");
-
-            if (paymentMethod && paymentData[paymentMethod]) {
-                img.src = paymentData[paymentMethod].img;
-                img.classList.remove("hidden");
-                rekening.textContent = paymentData[paymentMethod].rekening;
-            } else {
-                img.classList.add("hidden");
-                rekening.textContent = "";
-            }
-        }
-
-        // Cek input dan kirim deposit
-        function cekDanKirimDeposit() {
+        // Cek input dan kirim deposit (Diubah jadi Async agar UX lebih mulus)
+        async function cekDanKirimDeposit() {
             const jumlah = document.getElementById("jumlah").value.trim();
             const userContact = document.getElementById("user-contact").value.trim();
+            const btnSubmit = document.getElementById("btn-submit");
 
-            if (!jumlah || !userContact) {
-                alert("Silakan Lengkapi Data Anda!");
+            if (!metodeTerpilih) {
+                alert("Mohon pilih metode pembayaran terlebih dahulu!");
                 return;
             }
 
-            alert("Deposit dikonfirmasi!");
+            if (!jumlah || !userContact) {
+                alert("Silakan lengkapi nominal jumlah dan kontak Anda!");
+                return;
+            }
 
+            // Ubah state tombol saat loading
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...`;
+            btnSubmit.classList.add("opacity-75", "cursor-not-allowed");
+
+            // Simpan kontak ke memory sementara browser
             localStorage.setItem("user_contact", userContact);
 
-            rekamRiwayat();
+            // Rekam ke sistem (dan tunggu Telegram selesai)
+            await rekamRiwayat(jumlah, metodeTerpilih, userContact);
+
+            // Berhasil
+            alert("Berhasil! Deposit Anda sedang dikonfirmasi.");
             resetForm();
+
+            // Kembalikan state tombol
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `Kirim Deposit`;
+            btnSubmit.classList.remove("opacity-75", "cursor-not-allowed");
         }
 
-        // Copy nomor rekening ke clipboard
+        // Copy nomor rekening ke clipboard dengan animasi Toast kecil
         function copyRekening() {
             const rekeningText = document.getElementById("rekening-number").textContent;
-            if (rekeningText) {
+            if (rekeningText && rekeningText !== "Klik QRIS Untuk Memperbesar" && rekeningText !== "HUBUNGI ADMIN") {
                 navigator.clipboard.writeText(rekeningText).then(() => {
-                    alert("Nomor rekening berhasil disalin!");
+                    const toast = document.getElementById("copy-toast");
+                    toast.classList.remove("opacity-0", "fade-out");
+                    toast.classList.add("opacity-100");
+                    
+                    setTimeout(() => {
+                        toast.classList.remove("opacity-100");
+                        toast.classList.add("fade-out", "opacity-0");
+                    }, 1500);
                 });
             }
-        }
-
-        // Tampilkan riwayat pembayaran dari localStorage
-        function tampilkanRiwayat() {
-            const riwayat = JSON.parse(localStorage.getItem('riwayat_pembayaran')) || [];
-            const tbody = document.getElementById('riwayat-pembayaran');
-            tbody.innerHTML = riwayat.map(p => `
-                <tr>
-                    <td class="border p-2">${p.tanggal}</td>
-                    <td class="border p-2">${p.metode}</td>
-                    <td class="border p-2">Rp ${p.jumlah}</td>
-                    <td class="border p-2">${p.ip}</td>
-                </tr>
-            `).join('');
-        }
-
-        // Hapus riwayat pembayaran
-        function hapusRiwayat() {
-            if (confirm("Apakah Anda yakin ingin menghapus riwayat?")) {
-                localStorage.removeItem('riwayat_pembayaran');
-                tampilkanRiwayat();
-            }
-        }
-
-        // Modal preview gambar
-        function bukaModal(src) {
-            if (src) {
-                document.getElementById("modal-image").src = src;
-                document.getElementById("image-modal").classList.remove("hidden");
-            }
-        }
-
-        function tutupModal() {
-            document.getElementById("image-modal").classList.add("hidden");
-        }
-
-        // Mendapatkan kontak user dari localStorage
-        function getUserContact() {
-            return localStorage.getItem("user_contact") || "Tidak Tersedia";
         }
 
         // Mendapatkan IP user dari API
@@ -243,61 +274,99 @@
                 const data = await response.json();
                 return data.ip;
             } catch (error) {
-                console.error("Gagal mendapatkan IP:", error);
-                return "Tidak Diketahui";
+                console.warn("Gagal mendapatkan IP:", error);
+                return "IP Tersembunyi";
             }
         }
 
         // Simpan riwayat ke localStorage dan kirim notifikasi Telegram
-        async function rekamRiwayat() {
-            const jumlah = document.getElementById("jumlah").value;
-            const metode = document.getElementById("payment-method").value || "QRIS";
-            const tanggal = new Date().toLocaleString("id-ID");
+        async function rekamRiwayat(jumlah, metode, contact) {
+            const tanggal = new Date().toLocaleString("id-ID", { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
             const ip = await getUserIP();
-            const contact = getUserContact();
+
+            // Format nama metode agar lebih rapi
+            const namaMetode = metode.toUpperCase().replace("-", " ");
 
             let riwayat = JSON.parse(localStorage.getItem("riwayat_pembayaran")) || [];
-            riwayat.push({ tanggal, metode, jumlah, ip, contact });
+            
+            // Simpan ke array (maksimal simpan 10 riwayat terakhir agar storage tidak penuh)
+            riwayat.unshift({ tanggal, metode: namaMetode, jumlah, ip, contact });
+            if(riwayat.length > 10) riwayat.pop(); 
+            
             localStorage.setItem("riwayat_pembayaran", JSON.stringify(riwayat));
 
-            kirimKeTelegram(jumlah, metode, tanggal, ip, contact);
+            // Kirim ke Telegram
+            await kirimKeTelegram(jumlah, namaMetode, tanggal, ip, contact);
+            
+            // Perbarui UI tabel
             tampilkanRiwayat();
         }
 
+        // Tampilkan riwayat pembayaran dari localStorage
+        function tampilkanRiwayat() {
+            const riwayat = JSON.parse(localStorage.getItem('riwayat_pembayaran')) || [];
+            const tbody = document.getElementById('riwayat-pembayaran');
+            
+            if(riwayat.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-400 italic">Belum ada transaksi</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = riwayat.map(p => `
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="p-3 border-b border-gray-100 text-gray-700">${p.tanggal}</td>
+                    <td class="p-3 border-b border-gray-100 font-medium text-blue-600">${p.metode}</td>
+                    <td class="p-3 border-b border-gray-100 font-bold text-gray-800">Rp ${p.jumlah}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Hapus riwayat pembayaran
+        function hapusRiwayat() {
+            if (confirm("Apakah Anda yakin ingin menghapus riwayat di perangkat ini?")) {
+                localStorage.removeItem('riwayat_pembayaran');
+                tampilkanRiwayat();
+            }
+        }
+
+        // Modal preview gambar
+        function bukaModal(src) {
+            if (src && !src.endsWith("unknown")) {
+                document.getElementById("modal-image").src = src;
+                document.getElementById("image-modal").classList.remove("hidden");
+            }
+        }
+
+        function tutupModal() {
+            document.getElementById("image-modal").classList.add("hidden");
+        }
+
         // Kirim pesan ke Telegram Bot
-        function kirimKeTelegram(jumlah, metode, tanggal, ip, contact) {
+        async function kirimKeTelegram(jumlah, metode, tanggal, ip, contact) {
+            // PERINGATAN: Idealnya eksekusi bot Telegram dilakukan di Backend (PHP/NodeJS)
             const TOKEN_BOT = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";
             const CHAT_ID = "5775563021";
 
-            const pesan = `
-📌 *Deposit Baru* 📌
-────────────────────
-📅 *Tanggal*: ${tanggal}
-💰 *Jumlah*: Rp ${jumlah}
-🏦 *Metode*: ${metode}
-🌍 *IP Address*: ${ip}
-📞 *Kontak*: ${contact}
-            `;
+            const pesan = `📌 *Deposit Baru (Farid Store)* 📌\n────────────────────\n📅 *Waktu*: ${tanggal}\n💰 *Jumlah*: Rp ${jumlah}\n🏦 *Metode*: ${metode}\n📞 *Kontak*: \`${contact}\`\n🌍 *IP Address*: ${ip}`;
 
             const url = `https://api.telegram.org/bot${TOKEN_BOT}/sendMessage`;
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: "Markdown" }),
-            })
-            .then(response => response.json())
-            .then(data => console.log("Pesan terkirim:", data))
-            .catch(error => console.error("Gagal mengirim pesan:", error));
+            try {
+                await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: "Markdown" })
+                });
+            } catch (error) {
+                console.error("Gagal mengirim notifikasi ke admin.", error);
+            }
         }
 
-        function resetForm() {
-            document.getElementById("jumlah").value = "";
-            document.getElementById("payment-method").value = "";
-            document.getElementById("user-contact").value = "";
+        // Load kontak tersimpan & riwayat saat halaman pertama kali dibuka
+        window.onload = function() {
+            const savedContact = localStorage.getItem("user_contact");
+            if(savedContact) document.getElementById("user-contact").value = savedContact;
+            tampilkanRiwayat();
         }
-
-        tampilkanRiwayat();
-        
     </script>
 </body>
 </html>
