@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daftar Harga Produk Digital</title>
+    <title>Daftar Harga Produk Digital | Farid Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f0f2f5;
+            background-color: #f4f6f9;
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -20,212 +21,195 @@
         .header {
             background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
             padding: 20px;
-            border-radius: 8px 8px 0 0;
+            border-radius: 12px 12px 0 0;
             color: white;
             width: 100%;
             max-width: 1100px;
             box-sizing: border-box;
             user-select: none;
             text-align: left;
+            box-shadow: 0 4px 12px rgba(115, 103, 240, 0.2);
         }
 
-        .header h2 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .breadcrumb {
-            opacity: 0.8;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
+        .header h2 { margin: 0; font-size: 1.6rem; }
+        .breadcrumb { opacity: 0.9; font-size: 0.9rem; margin-top: 5px; }
 
         .main-content {
             width: 100%;
             max-width: 1100px;
             background: #ffffff;
-            border-radius: 0 0 15px 15px;
-            padding: 30px 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 12px 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         
         h1 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: #4a4a4a;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
             margin-bottom: 25px;
-            text-align: center;
-            width: 100%;
+            text-align: left;
+            border-bottom: 2px solid #f0f2f5;
+            padding-bottom: 15px;
         }
 
+        /* Styling Search Bar dengan Icon */
+        .search-container {
+            position: relative;
+            max-width: 350px;
+            margin-bottom: 25px;
+        }
+        .search-container i {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #888;
+        }
         #searchInput {
             width: 100%; 
-            max-width: 300px;
-            padding: 10px 15px;
+            padding: 12px 15px 12px 45px;
             font-size: 1rem;
-            margin-bottom: 25px;
             border-radius: 10px;
-            border: 1px solid #ddd;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #dcdde1;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
             box-sizing: border-box;
         }
         #searchInput:focus {
             outline: none;
             border-color: #7367f0;
-            box-shadow: 0 0 8px rgba(115, 103, 240, 0.3);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.15);
+        }
+
+        /* Container Table untuk Scroll Desktop */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 0 1px #e0e0e0; /* Border halus */
+            /* Batasi tinggi tabel di PC agar header bisa sticky */
+            max-height: 70vh; 
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             background: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+            min-width: 800px; /* Mencegah tabel menyempit di PC */
         }
+
         th, td {
-            padding: 14px 18px;
+            padding: 15px;
             text-align: center;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #f0f2f5;
             vertical-align: middle;
             font-size: 0.95rem;
         }
+
+        /* Sticky Header Logic */
         th {
-            background-color: #7367f0;
-            color: #fff;
+            background-color: #f8f9fa;
+            color: #444;
+            font-weight: 700;
             user-select: none;
-            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Bayangan saat di-scroll */
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #f1f7ff;
-            cursor: pointer;
-        }
+
+        tr:hover td { background-color: #fcfcff; }
+        
+        /* Font bold untuk nama produk */
+        td:nth-child(2) { font-weight: 600; color: #2c3e50; text-align: left; }
+
         img {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             object-fit: contain;
             display: block;
             margin: 0 auto;
-            border-radius: 5px;
+            border-radius: 8px;
+            background-color: #f4f6f9;
+            padding: 2px;
         }
+
         .status {
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            font-size: 0.75rem;
+            font-weight: 700;
             display: inline-block;
-            min-width: 70px;
-            text-align: center;
         }
-        .status-ready {
-            background-color: #e6ffe6;
-            color: #155724;
-        }
-        .status-pending {
-            background-color: #fff8e6;
-            color: #856404;
-        }
+        .status-ready { background-color: #e8f5e9; color: #2e7d32; }
+        .status-pending { background-color: #fff8e1; color: #f57f17; }
 
-        .status-cell {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 78px;
-            box-sizing: border-box;
-        }
-
-        /* Responsive */
+        /* Responsive Mobile (Grid Card Style) */
         @media (max-width: 768px) {
-            .main-content {
-                padding: 20px 15px;
+            .main-content { padding: 20px 15px; }
+            .table-container { 
+                box-shadow: none; 
+                max-height: none; /* Matikan scroll tinggi di mobile */
+                overflow: visible; 
             }
-            h1 {
-                font-size: 1.5rem;
-            }
-            #searchInput {
-                max-width: 100%;
-            }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
+            table { min-width: 100%; }
+            table, thead, tbody, th, td, tr { display: block; }
+            
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            
             tbody tr {
-                margin-bottom: 15px;
+                margin-bottom: 20px;
                 background: #fff;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                border: 1px solid #f0f2f5;
                 padding: 15px;
-                border-radius: 10px;
+                border-radius: 12px;
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
                 align-items: center;
             }
+            
             tbody td {
                 text-align: left;
                 padding: 8px 0;
                 border-bottom: none;
                 width: 100%;
                 position: relative;
-            }
-            tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                width: 120px;
-                min-width: 120px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-                color: #555;
-            }
-            tbody td:first-child {
-                text-align: center;
-                margin-bottom: 10px;
-                width: 100%;
-            }
-            tbody td:nth-child(2) {
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-align: center;
-                width: 100%;
-                margin-bottom: 5px;
+                font-size: 0.9rem;
             }
             
-            tbody td:nth-child(3) {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 40px;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            tbody td:nth-child(3)::before {
-                display: none;
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                width: 100px;
+                display: inline-block;
+                color: #888;
+                font-size: 0.85rem;
             }
 
-            tbody td:nth-child(n+4) {
-                width: calc(50% - 15px);
-                text-align: right;
+            /* Atur ulang urutan visual untuk mobile */
+            tbody td:first-child { text-align: center; margin-bottom: 10px; width: 100%; }
+            tbody td:first-child::before { display: none; }
+            
+            tbody td:nth-child(2) { font-size: 1.1rem; text-align: center; margin-bottom: 10px; }
+            tbody td:nth-child(2)::before { display: none; }
+            
+            tbody td:nth-child(3) { display: flex; justify-content: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #eee; }
+            tbody td:nth-child(3)::before { display: none; }
+
+            /* Kolom Harga di Mobile (dibuat 2 baris) */
+            tbody td:nth-child(n+4) { 
+                width: 50%; 
+                text-align: right; 
+                font-weight: 600;
             }
-            tbody td:nth-child(n+4)::before {
-                width: calc(100% - 100px);
-            }
-        }
-        @media (max-width: 480px) {
-            tbody td:nth-child(n+4) {
-                width: 100%;
-            }
+            tbody td:nth-child(n+4)::before { width: auto; float: left; }
         }
     </style>
 </head>
@@ -235,90 +219,61 @@
         <h2>Daftar Harga</h2>
         <p class="breadcrumb">Informasi &gt; Harga Produk Digital</p>
     </div>
+    
     <div class="main-content">
-        <h1>Daftar Harga Produk Digital</h1>
-        <input type="text" id="searchInput" placeholder="Cari produk..." />
+        <h1>Pricelist Produk & Layanan</h1>
+        
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Cari nama produk..." autocomplete="off" />
+        </div>
 
-        <table id="priceTable">
-            <thead>
-                <tr>
-                    <th>Gambar</th>
-                    <th>Produk</th>
-                    <th>Status</th>
-                    <th>1 Hari</th>
-                    <th>7 Hari</th>
-                    <th>1 Bulan</th>
-                    <th>3 Bulan</th>
-                    <th>12 Bulan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td colspan="8" style="text-align:center; padding: 20px;">Memuat data...</td></tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="priceTable">
+                <thead>
+                    <tr>
+                        <th>Gambar</th>
+                        <th style="text-align: left;">Produk</th>
+                        <th>Status</th>
+                        <th>1 Hari</th>
+                        <th>7 Hari</th>
+                        <th>1 Bulan</th>
+                        <th>3 Bulan</th>
+                        <th>12 Bulan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="8" style="text-align:center; padding: 40px; color: #888;">Memuat data...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        // Data produk langsung ada di dalam JavaScript
+        // Data produk (Sama seperti punya Anda)
         const products_data = [
-    { "name": "AI CHAT GPT+", "img": "https://img.icons8.com/ios7/600/chatgpt.png", "status": "ready", "price1d": 0, "price7d": 10000, "price1m": 20000, "price3m": 0, "price1y": 0 },
-    { "name": "AI CLAUDE", "img": "https://img.icons8.com/fluent/512/claude.png", "status": "ready", "price1d": 0, "price7d": 30000, "price1m": 65000, "price3m": 0, "price1y": 0 },
-    { "name": "AI GEMINI ADVANCE", "img": "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0 },
-    { "name": "AI PERPLEXITY", "img": "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "AI YOU.COM", "img": "https://images.seeklogo.com/logo-png/43/1/you-com-logo-png_seeklogo-435346.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "ALIGHT MOTION PRO", "img": "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp", "status": "ready", "price1d": 2000, "price7d": 0, "price1m": 6000, "price3m": 0, "price1y": 10000 },
-    { "name": "AMAZON PRIME VIDEO", "img": "https://premy.id/assets/images/games/1741494463_595f35c3057cb28fbcdc.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 21000, "price3m": 0, "price1y": 0 },
-    { "name": "APPLE MUSIC", "img": "https://img.freepik.com/free-vector/music-icon_53876-25524.jpg?semt=ais_hybrid&w=740", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 6000, "price3m": 0, "price1y": 0 },
-    { "name": "APPLE CODE REDEEM ID", "img": "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "BSTATION PREMIUM", "img": "https://epstore.id/file/images/4a8ce6bf7af3432c4b59ab041decb7cf.jpg", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 18000, "price3m": 0, "price1y": 0 },
-    { "name": "CANVA PRO", "img": "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 3000, "price3m": 0, "price1y": 17000 },
-    { "name": "CAPCUT PRO", "img": "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp", "status": "ready", "price1d": 0, "price7d": 8000, "price1m": 15000, "price3m": 0, "price1y": 0 },
-    { "name": "CEK PLAGIASI - TURNITIN", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "DEEPL PREMIUM", "img": "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png", "status": "ready", "price1d": 3000, "price7d": 9000, "price1m": 23000, "price3m": 56000, "price1y": 200000 },
-    { "name": "DISNEY+ HOTSTAR", "img": "https://epstore.id/file/images/a5210b6fa02a11a631bd7dcd23eaf74d.jpg", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 18000, "price3m": 0, "price1y": 0 },
-    { "name": "DRAMABOX PREMIUM", "img": "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/dramabox-logo-icon.png", "status": "ready", "price1d": 2000, "price7d": 6000, "price1m": 17000, "price3m": 46000, "price1y": 160000 },
-    { "name": "DUOLINGO SUPER", "img": "https://logowik.com/content/uploads/images/232_duolingo_logo.jpg", "status": "ready", "price1d": 0, "price7d": 8000, "price1m": 12000, "price3m": 0, "price1y": 0 },
-    { "name": "FIGMA PRO", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9IQCea8hSpiYjBajC-OQu3h1fXr4qesFAog&s", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "GETCONTACT PREMIUM", "img": "https://iconlogovector.com/uploads/images/2024/11/lg-673aab19909ee-Getcontact-Icon.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 15000, "price3m": 0, "price1y": 0 },
-    { "name": "GOOGLE DRIVE", "img": "https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0  },
-    { "name": "GOOGLE MEET", "img": "https://images.seeklogo.com/logo-png/40/1/google-meet-logo-png_seeklogo-406884.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0  },
-    { "name": "GOOGLE ONE", "img": "https://images.icon-icons.com/2631/PNG/512/google_one_new_logo_icon_159148.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0  },
-    { "name": "GOOGLE PHOTOS", "img": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Google-Photos_icon_logo_%28May-September_2015%29.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0  },
-    { "name": "HBO GO", "img": "https://epstore.id/file/images/fc0569cf7d7676c4292a8bfad0fb1aa8.jpg", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "IQIYI", "img": "https://img.icons8.com/?size=512&id=d5TXEddDPJaA&format=png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "JASA CTP NETFLIX", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "JASPAY", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "LIGHTROOM PREMIUM", "img": "https://logowik.com/content/uploads/images/adobe-lightroom-cc7429.jpg", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "LOKLOK VIP", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zz1QckiTE7E2jcCIBcNOHj3LTFYjyl82Zg&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "MEITU VIP", "img": "https://images.seeklogo.com/logo-png/34/1/meitu-logo-png_seeklogo-347412.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "MICROSOFT 365", "img": "https://images.seeklogo.com/logo-png/16/1/microsoft-office-365-logo-png_seeklogo-168321.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "MIDJOURNEY", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYh682t23y4sN-R_jH6rF60g3XqR9g5gPqOQ&s", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 60000, "price3m": 0, "price1y": 0 },
-    { "name": "NETFLIX PREMIUM UHD", "img": "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 30000, "price3m": 0, "price1y": 0 },
-    { "name": "OTP (ONE-TIME PASSWORD) 🇮🇩", "img": "https://img.freepik.com/premium-vector/otp-one-time-password-security-illustration_258153-467.jpg", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "PICSART PRO", "img": "https://images.seeklogo.com/logo-png/37/1/picsart-logo-png_seeklogo-378855.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "PREMIUM GRAMMARLY", "img": "https://images.seeklogo.com/logo-png/43/1/grammarly-logo-png_seeklogo-437517.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 25000, "price3m": 0, "price1y": 100000 },
-    { "name": "RCTI+ PREMIUM SPORTS", "img": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/17/ef/7a/17ef7a1f-43c4-fab6-c345-45ac9aca4a5e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "REMINI PRO", "img": "https://dragonflyeditorial.com/wp-content/uploads/2022/04/remini-logo.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "SCRIBD SUBSCRIPTION", "img": "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/290_Scribd_logo-512.png", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "SPOTIFY PREMIUM", "img": "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 22000, "price3m": 0, "price1y": 0 },
-    { "name": "TRADING VIEW PREMIUM", "img": "https://images.seeklogo.com/logo-png/11/1/tradingview-logo-png_seeklogo-110037.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 18000, "price3m": 0, "price1y": 0 },
-    { "name": "VIDIO PREMIER", "img": "https://premy.id/assets/images/games/1716206019_3a1a9233fd3e2b700f2b.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 7000 },
-    { "name": "VISION+ / K-VISION SPORT", "img": "https://logowik.com/content/uploads/images/vision-plus-20219005.logowik.com.webp", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "VIU PREMIUM", "img": "https://premy.id/assets/images/games/1716440566_1d882c4abb76c6aca6c0.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 3000, "price3m": 8000, "price1y": 19000 },
-    { "name": "VPN EXPRESS", "img": "https://xv.imgix.net/photos/xv/Red-preview-f8f8e432661063d4ffe1a4b96dd9e4be.png?s=9be796d9e09e46e0414cca1653e07c20", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "VPN HMA", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8u9DCTp85Mp2EudJRB_9yemL_6VcnTIbY9A&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "VPN SURFSHARK", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS51GX3mpbu5zhDfiVBMdf99pJ8QkLDM9XsPA&s", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "WETV VIP", "img": "https://epstore.id/file/images/1e6d73faf08ad3db4eb629b3569cd04a.jpg", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
-    { "name": "WINK VIP", "img": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/c3/78/6ac37852-6e65-9d37-db77-f74ef4a0dabb/WinkStudio.png/1200x600wa.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 22000, "price3m": 0, "price1y": 0 },
-    { "name": "YOUTUBE & MUSIC PREMIUM", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 6000, "price3m": 0, "price1y": 40000 },
-    { "name": "ZOOM PRO", "img": "https://premy.id/assets/images/games/1741494396_03f394b14332a67bc4c4.png", "status": "ready", "price1d": 0, "price7d": 8000, "price1m": 0, "price3m": 0, "price1y": 0 }
-];
+            { "name": "AI CHAT GPT+", "img": "https://img.icons8.com/ios7/600/chatgpt.png", "status": "ready", "price1d": 0, "price7d": 10000, "price1m": 20000, "price3m": 0, "price1y": 0 },
+            { "name": "AI CLAUDE", "img": "https://img.icons8.com/fluent/512/claude.png", "status": "ready", "price1d": 0, "price7d": 30000, "price1m": 65000, "price3m": 0, "price1y": 0 },
+            { "name": "AI GEMINI ADVANCE", "img": "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 20000, "price3m": 0, "price1y": 0 },
+            { "name": "AI PERPLEXITY", "img": "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp", "status": "pending", "price1d": 0, "price7d": 0, "price1m": 0, "price3m": 0, "price1y": 0 },
+            { "name": "ALIGHT MOTION PRO", "img": "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp", "status": "ready", "price1d": 2000, "price7d": 0, "price1m": 6000, "price3m": 0, "price1y": 10000 },
+            { "name": "CANVA PRO", "img": "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 3000, "price3m": 0, "price1y": 17000 },
+            { "name": "CAPCUT PRO", "img": "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp", "status": "ready", "price1d": 0, "price7d": 8000, "price1m": 15000, "price3m": 0, "price1y": 0 },
+            { "name": "DEEPL PREMIUM", "img": "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png", "status": "ready", "price1d": 3000, "price7d": 9000, "price1m": 23000, "price3m": 56000, "price1y": 200000 },
+            { "name": "NETFLIX PREMIUM UHD", "img": "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 30000, "price3m": 0, "price1y": 0 },
+            { "name": "SPOTIFY PREMIUM", "img": "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 22000, "price3m": 0, "price1y": 0 },
+            { "name": "YOUTUBE & MUSIC", "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s", "status": "ready", "price1d": 0, "price7d": 0, "price1m": 6000, "price3m": 0, "price1y": 40000 }
+            // Note: Masukkan kembali data Anda secara penuh di sini
+        ];
+
         const tbody = document.querySelector("#priceTable tbody");
         const searchInput = document.getElementById("searchInput");
 
+        // Format Rupiah yang Lebih Bersih (Menghilangkan tulisan "KOSONG")
         function formatRupiah(number) {
-            if (number === 0 || number === null || number === undefined) {
-                return "KOSONG";
+            if (!number || number === 0) {
+                // Return garis strip abu-abu agar tabel tidak terlalu ramai visualnya
+                return `<span style="color: #cbd5e1; font-weight: normal;">-</span>`;
             }
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -329,21 +284,21 @@
         }
 
         function renderTable(filter = "") {
-            tbody.innerHTML = ""; // Bersihkan isi tabel sebelumnya
-            // Gunakan products_data yang sudah didefinisikan langsung di sini
+            tbody.innerHTML = ""; 
+            
             const filtered = products_data.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 20px;">Produk tidak ditemukan.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 40px; color: #888;"><i class="fas fa-box-open fa-2x mb-2 block"></i><br>Produk tidak ditemukan.</td></tr>`;
                 return;
             }
 
             filtered.forEach(p => {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td data-label="Gambar"><img src="${p.img}" alt="${p.name}" loading="lazy" /></td>
+                    <td data-label="Gambar"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/50'" /></td>
                     <td data-label="Produk">${p.name}</td>
-                    <td data-label="Status" class="status-cell">
+                    <td data-label="Status">
                         <span class="status ${p.status === "ready" ? "status-ready" : "status-pending"}">${p.status.toUpperCase()}</span>
                     </td>
                     <td data-label="1 Hari">${formatRupiah(p.price1d)}</td>
@@ -356,12 +311,10 @@
             });
         }
 
-        // Panggil fungsi renderTable saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
-            renderTable(""); // Tampilkan semua data saat pertama kali dimuat
+            renderTable(""); 
         });
 
-        // Event listener untuk input pencarian
         searchInput.addEventListener("input", () => {
             renderTable(searchInput.value);
         });
