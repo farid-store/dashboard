@@ -63,10 +63,9 @@
         border-color: #7367f0;
     }
 
-    /* === Grid Produk (Diperbaiki agar Responsif) === */
+    /* === Grid Produk (Responsif) === */
     .grid {
         display: grid;
-        /* KUNCI RESPONSIVITAS: Otomatis mengisi kolom dengan lebar minimal 160px */
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
         gap: 20px;
     }
@@ -213,14 +212,56 @@
 </div>
 
 <script>
-    // Data produk (dipotong untuk contoh, silakan masukkan semua data Anda)
+    // DATA PRODUK LENGKAP FARID STORE
     const items = [
-        { name: "AI CHATGPT+", img: "https://img.icons8.com/ios7/600/chatgpt.png", status: "ready" },
-        { name: "AI CLAUDE", img: "https://img.icons8.com/fluent/512/claude.png", status: "ready" },
-        { name: "AI GEMINI ADVANCE", img: "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", status: "ready" },
-        { name: "CANVA PRO", img: "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", status: "ready" },
-        { name: "NETFLIX PREMIUM", img: "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", status: "ready" },
-        { name: "CEK PLAGIASI - TURNITIN", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s", status: "pending" }
+        { name: "AI CHATGPT+", img: "https://img.icons8.com/ios7/600/chatgpt.png", link: "#", status: "ready" },
+        { name: "AI CLAUDE", img: "https://img.icons8.com/fluent/512/claude.png", link: "#", status: "ready" },
+        { name: "AI GEMINI ADVANCE", img: "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", link: "#", status: "ready" },
+        { name: "AI PERPLEXITY", img: "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp", link: "#", status: "ready" },
+        { name: "AI YOU.COM", img: "https://images.seeklogo.com/logo-png/43/1/you-com-logo-png_seeklogo-435346.png", link: "#", status: "ready" },
+        { name: "ALIGHT MOTION PRO", img: "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp", link: "#", status: "ready" },
+        { name: "AMAZON PRIME VIDEO", img: "https://premy.id/assets/images/games/1741494463_595f35c3057cb28fbcdc.png", link: "#", status: "ready" },
+        { name: "APPLE MUSIC", img: "https://img.freepik.com/free-vector/music-icon_53876-25524.jpg?semt=ais_hybrid&w=740", link: "#", status: "ready" },
+        { name: "APPLE CODE REDEEM ID", img: "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png", link: "#", status: "ready" },
+        { name: "BSTATION PREMIUM", img: "https://epstore.id/file/images/4a8ce6bf7af3432c4b59ab041decb7cf.jpg", link: "#", status: "ready" },
+        { name: "CANVA PRO + DESIGNER", img: "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", link: "#", status: "ready" },
+        { name: "CAPCUT PRO", img: "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp", link: "#", status: "ready" },
+        { name: "CEK PLAGIASI - TURNITIN", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s", link: "#", status: "pending" },
+        { name: "DEEPL PREMIUM", img: "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png", link: "#", status: "ready" },
+        { name: "DISNEY+ HOTSTAR", img: "https://epstore.id/file/images/a5210b6fa02a11a631bd7dcd23eaf74d.jpg", link: "#", status: "pending" },
+        { name: "DRAMABOX PREMIUM", img: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/dramabox-logo-icon.png", link: "#", status: "ready" },
+        { name: "DUOLINGO SUPER", img: "https://logowik.com/content/uploads/images/232_duolingo_logo.jpg", link: "#", status: "ready" },
+        { name: "FIGMA PRO", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9IQCea8hSpiYjBajC-OQu3h1fXr4qesFAog&s", link: "#", status: "ready" },
+        { name: "GOOGLE DRIVE", img: "https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png", link: "#", status: "ready" },
+        { name: "GOOGLE MEET", img: "https://images.seeklogo.com/logo-png/40/1/google-meet-logo-png_seeklogo-406884.png", link: "#", status: "ready" },
+        { name: "GOOGLE ONE", img: "https://images.icon-icons.com/2631/PNG/512/google_one_new_logo_icon_159148.png", link: "#", status: "ready" },
+        { name: "GOOGLE PHOTOS", img: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Google-Photos_icon_logo_%28May-September_2015%29.png", link: "#", status: "ready" },
+        { name: "GETCONTACT PREMIUM", img: "https://iconlogovector.com/uploads/images/2024/11/lg-673aab19909ee-Getcontact-Icon.webp", link: "#", status: "pending" },
+        { name: "HBO GO", img: "https://epstore.id/file/images/fc0569cf7d7676c4292a8bfad0fb1aa8.jpg", link: "#", status: "ready" },
+        { name: "IQIYI", img: "https://img.icons8.com/?size=512&id=d5TXEddDPJaA&format=png", link: "#", status: "ready" },
+        { name: "JASA CTP NETFLIX", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+        { name: "JASPAY", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+        { name: "LIGHTROOM PREMIUM", img: "https://logowik.com/content/uploads/images/adobe-lightroom-cc7429.jpg", link: "#", status: "pending" },
+        { name: "LOKLOK VIP", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zz1QckiTE7E2jcCIBcNOHj3LTFYjyl82Zg&s", link: "#", status: "ready" },
+        { name: "MEITU VIP", img: "https://images.seeklogo.com/logo-png/34/1/meitu-logo-png_seeklogo-347412.png", link: "#", status: "ready" },
+        { name: "MICROSOFT 365", img: "https://images.seeklogo.com/logo-png/16/1/microsoft-office-365-logo-png_seeklogo-168321.png", link: "#", status: "pending" },
+        { name: "NETFLIX PREMIUM UHD", img: "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", link: "#", status: "ready" },
+        { name: "OTP (ONE-TIME PASSWORD) 🇮🇩", img: "https://img.freepik.com/premium-vector/otp-one-time-password-security-illustration_258153-467.jpg", link: "#", status: "pending" },
+        { name: "PICSART PRO", img: "https://images.seeklogo.com/logo-png/37/1/picsart-logo-png_seeklogo-378855.png", link: "#", status: "ready" },
+        { name: "RCTI+ PREMIUM SPORTS", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/17/ef/7a/17ef7a1f-43c4-fab6-c345-45ac9aca4a5e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png", link: "#", status: "pending" },
+        { name: "REMINI PRO", img: "https://dragonflyeditorial.com/wp-content/uploads/2022/04/remini-logo.png", link: "#", status: "ready" },
+        { name: "SCRIBD SUBSCRIPTION", img: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/290_Scribd_logo-512.png", link: "#", status: "ready" },
+        { name: "SPOTIFY PREMIUM", img: "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp", link: "#", status: "ready" },
+        { name: "VIDIO PREMIER", img: "https://premy.id/assets/images/games/1716206019_3a1a9233fd3e2b700f2b.webp", link: "#", status: "ready" },
+        { name: "VISION+ / K-VISION SPORT", img: "https://logowik.com/content/uploads/images/vision-plus-20219005.logowik.com.webp", link: "#", status: "ready" },
+        { name: "VIU PREMIUM", img: "https://premy.id/assets/images/games/1716440566_1d882c4abb76c6aca6c0.webp", link: "#", status: "ready" },
+        { name: "VPN EXPRESS", img: "https://xv.imgix.net/photos/xv/Red-preview-f8f8e432661063d4ffe1a4b96dd9e4be.png?s=9be796d9e09e46e0414cca1653e07c20", link: "#", status: "ready" },
+        { name: "VPN HMA", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8u9DCTp85Mp2EudJRB_9yemL_6VcnTIbY9A&s", link: "#", status: "ready" },
+        { name: "VPN SURFSHARK", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS51GX3mpbu5zhDfiVBMdf99pJ8QkLDM9XsPA&s", link: "#", status: "ready" },
+        { name: "WETV VIP", img: "https://epstore.id/file/images/1e6d73faf08ad3db4eb629b3569cd04a.jpg", link: "#", status: "ready" },
+        { name: "WINK VIP", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/c3/78/6ac37852-6e65-9d37-db77-f74ef4a0dabb/WinkStudio.png/1200x600wa.png", link: "#", status: "ready" },
+        { name: "YOUTUBE PREMIUM", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s", link: "#", status: "ready" },
+        { name: "ZOOM PRO", img: "https://premy.id/assets/images/games/1741494396_03f394b14332a67bc4c4.png", link: "#", status: "ready" }
     ];
 
     const productList = document.getElementById("productList");
@@ -268,7 +309,7 @@
         modalName.textContent = product.name;
         
         // Reset Form
-        periodSelect.value = "1bulan"; // Bug Fixed: Sebelumnya diset ke "1" yang tidak ada di opsi
+        periodSelect.value = "1bulan";
         quantityInput.value = 1;
         
         // Ambil kontak dari cache jika ada
@@ -317,7 +358,7 @@
         submitOrder.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
         statusMessage.textContent = "";
 
-        // PERINGATAN: Jangan taruh Token Bot di frontend pada produksi nyata!
+        // Token dan Chat ID Telegram
         const BOT_TOKEN = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";
         const CHAT_ID = "5775563021";
         
