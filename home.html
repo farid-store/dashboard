@@ -1,567 +1,312 @@
-
 <!DOCTYPE html>
-<!--
-
--->
-<html>
-    <head>
-               
-        <meta charset="UTF-8">
-        <title>Farid Store | Products</title>
-
-
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farid Store | Products</title>
     
-<style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden; /* Mencegah halaman bocor ke samping */
+        }
 
+        /* === NAVBAR UMUM === */
+        nav {
+            height: 65px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 22, 26, 0.9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-/* ANIMASI */
-@keyframes fadeSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {a
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fadeSlideUp {
-  animation: fadeSlideUp 1s ease-out forwards;
-}
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-/* TOMBOL STYLIST */
-.rounded-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.rounded-button:hover {
-  background-color: #45a049;
-}
+        .branding { display: flex; align-items: center; gap: 10px; }
+        .branding .bar { width: 5px; height: 35px; background-color: #b91c1c; border-radius: 2px;}
+        .branding .text { display: flex; flex-direction: column; color: #fff; }
+        .branding .text span { font-weight: 700; font-size: 13px; letter-spacing: 0.15em; line-height: 1.1; }
 
-/* SLIDER BANNER */
-.slides {
-  position: relative;
-  width: 100%;
-  max-height: 340px;
-  aspect-ratio: 16 / 6;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  background-color: #0f172a;
-}
-.slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1.2s ease-in-out;
-  filter: brightness(0.95);
-  border-radius: 20px;
-}
-.navigation a {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 2rem;
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
-  border-radius: 50%;
-  padding: 12px;
-  cursor: pointer;
-  z-index: 10;
-  transition: background 0.3s, transform 0.2s;
-}
-.navigation a:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-50%) scale(1.1);
-}
-.navigation .prev {
-  left: 16px;
-}
-.navigation .next {
-  right: 16px;
-}
+        .nav-menu {
+            display: none;
+            list-style: none;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
 
-/* CONTAINER & IKLAN */
-.container {
-  width: 80%;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  flex-grow: 1;
-  overflow-y: auto;
-}
-h1 {
-  margin: 0;
-  padding-bottom: 20px;
-  text-align: center;
-}
-.ad {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
-  box-sizing: border-box;
-}
-.thumbnail {
-  width: 100%;
-  max-width: 400px;
-  height: 400px;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 10px;
-}
-.thumbnail-1 { background-image: url('img/GOJEK.jpg'); }
-.thumbnail-2 { background-image: url('img/Traveloka.webp'); }
-.thumbnail-3 { background-image: url('img/3.jpg'); }
-.thumbnail-4 { background-image: url('img/4.jpg'); }
-.thumbnail-5 { background-image: url('img/5.jpg'); }
-.thumbnail-6 { background-image: url('img/6.jpg'); }
+        @media (min-width: 768px) { .nav-menu { display: flex; } }
 
-.content {
-  flex: 1;
-  padding-left: 10px;
-}
-.content h2 {
-  margin: 0 0 10px;
-}
-.content p {
-  margin: 0 0 10px;
-}
+        .nav-menu li a {
+            color: #fff; text-decoration: none; font-weight: 500; font-size: 13px;
+            text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.3s;
+        }
+        .nav-menu li a:hover { color: #facc15; }
 
-/* === NAVBAR UMUM === */
-  
-nav {
-  height: 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background: rgba(10, 22, 26, 0.8);
-  backdrop-filter: blur(8px);
-  padding: 12px 36px;
-}
+        /* === KARTU SELAMAT DATANG === */
+        .selamat-datang-card {
+            background: #1e293b;
+            border-left: 6px solid #facc15;
+            width: 100%; 
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            margin-top: 100px; /* Jarak dari navbar */
+        }
 
-/* === KONTENER FLEX UNTUK BRANDING DAN MENU === */
-.nav-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-}
+        /* === SLIDER === */
+        .slides {
+            position: relative; width: 100%; height: 350px;
+            border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background-color: #0f172a;
+        }
+        .slide { width: 100%; height: 100%; display: none; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+        .navigation a {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            color: white; font-size: 1.5rem; background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; text-decoration: none; transition: 0.3s;
+        }
+        .navigation a:hover { background: rgba(0, 0, 0, 0.8); }
+        .navigation .prev { left: 15px; }
+        .navigation .next { right: 15px; }
 
-/* === BRANDING KIRI === */
-.branding {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+        /* === KARTU PRODUK & IKLAN === */
+        .thumbnail-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+            height: 100%; display: flex; flex-direction: column;
+        }
+        .thumbnail-card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .thumbnail-card img { width: 100%; height: 200px; object-fit: cover; }
+        .thumbnail-card .caption { padding: 15px; text-align: center; font-weight: 600; color: #1e293b; }
 
-.branding .bar {
-  width: 6px;
-  height: 30px;
-  background-color: #b91c1c; /* merah */
-  flex-shrink: 0;
-}
-
-.branding .text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  color: #fff;
-}
-
-.branding .text span {
-  font-weight: 700;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  line-height: 1;
-}
-
-/* === MENU NAVIGASI KANAN === */
-.nav-menu {
-  display: none;
-  list-style: none;
-  gap: 1.5rem;
-  text-transform: uppercase;
-  font-weight: 5000;
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  margin: 0;
-  padding: 0;
-}
-
-@media (min-width: 640px) {
-  .nav-menu {
-    display: flex;
-  }
-}
-
-.nav-menu li {
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  padding-bottom: 2px;
-  transition: border-color 0.3s;
-}
-
-.nav-menu li:hover {
-  border-bottom-color: #b91c1c;
-  text-decoration: underline;
-}
-
-.nav-menu li.active {
-  border-bottom-color: #b91c1c;
-  cursor: default;
-  text-decoration: none;
-}
-
-.nav-menu li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-/* RESPONSIVE */
-@media (min-width: 768px) {
-  .ad {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .thumbnail {
-    width: 100%;
-    max-width: 600px;
-    height: 300px;
-  }
-}
-
-/* FOOTER */
-footer {
-  background-color: #333;
-  color: white;
-  text-align: center;
-  padding: 10px;
-}
-
-.animate-fade-in {
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: fadeIn 1s ease forwards;
-  }
-
-  .animate-slide-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideUp 1s ease forwards;
-  }
-
-  .delay-1 { animation-delay: 0.3s; }
-  .delay-2 { animation-delay: 0.6s; }
-
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-.selamat-datang-card {
-  background: #1e293b;
-  border-left: 6px solid #facc15;
-  width: 120%;
-  padding: 2rem 3rem;
-  font-size: 1.2rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.slogan-text {
-  color: #ffffff; /* Warna putih untuk teks */
-  font-size: 1.1rem;
-  line-height: 1.6;
-}
-
-
-
-</style>
-
+        .ad-container {
+            background: white; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; overflow: hidden; margin-bottom: 30px;
+        }
+        @media (min-width: 768px) { .ad-container { flex-direction: row; } }
+        .ad-img { width: 100%; height: 250px; background-size: cover; background-position: center; }
+        @media (min-width: 768px) { .ad-img { width: 40%; height: auto; min-height: 250px; } }
+        .ad-content { padding: 30px; display: flex; flex-direction: column; justify-content: center; width: 100%; }
         
-        
-    
+        /* Tombol */
+        .rounded-button {
+            background-color: #b91c1c; color: white; padding: 10px 24px;
+            border-radius: 8px; text-decoration: none; display: inline-block;
+            font-weight: 500; transition: all 0.3s; border: none; width: fit-content;
+        }
+        .rounded-button:hover { background-color: #991b1b; color: white; transform: scale(1.05); }
 
-         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <script type="text/javascript" src="bootstrap/js/jquery-3.5.0.min.js"></script>
-        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <link rel="stylesheet" href="css/style.css"/>
-          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+        /* Video YouTube Responsif */
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; 
+            border-radius: 12px; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    </style>
+</head>
+<body>
 
-    </head>
-    <body>
-
-    <nav>
-  <div class="nav-container">
-    <div class="branding">
-      <div class="bar"></div>
-      <div class="text">
-        <span>FARID</span>
-        <span>STORE</span>
-      </div>
-    </div>
-    <ul class="nav-menu">
-      <li><a href="#home">EXPLORE</a></li>
-      <li><a href="#populer">TERLARIS</a></li>
-      <li><a href="#produk">PRODUK</a></li>
-      <li><a href="https://farid-store.github.io/dashboard/index.html">STORE</a></li>
-      <li><a href="#promo">PROMO</a></li>
-      <li><a href="#akademi">AKADEMI</a></li>
-    </ul>
-  </div>
-</nav>
-        
-        <br><br><br>
-
-
-
-<section id="home"class="my-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8">
-        <div class="selamat-datang-card text-white">
-          <h2 class="fw-bold mb-3" style="color: #facc15;">Selamat Datang</h2>
-          <p class="slogan-text">
-            Nikmati berbagai layanan top-up game, aplikasi premium, dan produk digital terbaik hanya di Farid Store.
-          </p>
+<nav>
+    <div class="nav-container">
+        <div class="branding">
+            <div class="bar"></div>
+            <div class="text">
+                <span>FARID</span>
+                <span>STORE</span>
+            </div>
         </div>
-      </div>
+        <ul class="nav-menu">
+            <li><a href="#home">Explore</a></li>
+            <li><a href="#populer">Terlaris</a></li>
+            <li><a href="#produk">Produk</a></li>
+            <li><a href="https://farid-store.github.io/dashboard/index.html">Store</a></li>
+            <li><a href="#promo">Promo</a></li>
+            <li><a href="#akademi">Akademi</a></li>
+        </ul>
     </div>
-  </div>
+</nav>
+
+<section id="home" class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <div class="selamat-datang-card text-white">
+                <h2 class="fw-bold mb-3" style="color: #facc15;">Selamat Datang!</h2>
+                <p class="fs-5 m-0" style="line-height: 1.6;">
+                    <strong>Your Gadget Solution.</strong> Nikmati berbagai layanan top-up game, aplikasi premium, dan produk digital terbaik hanya di Farid Store.
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
 
-
-
-
-
-
-
-       <!-- Banner -->
-<div class="container px-0" style="background-color:#ECEBDE;padding-top:15px;padding-bottom:15px;">
-    <div class="slides px-4 mb-4 mt-4">
-        <div class="slide">
-            <img src="produk/banner1.webp" alt="" class="w-100">
-        </div>
-        <div class="slide">
-            <img src="produk/banner2.png" alt="" class="w-100">
-        </div>
-        <div class="slide">
-            <img src="produk/banner2.jpg" alt="" class="w-100">
-        </div>
-        <div class="slide">
-            <img src="produk/COKLAT APEL.jpg" alt="" class="w-100">
-        </div>
+<section class="container mb-5">
+    <div class="slides">
+        <div class="slide"><img src="produk/banner1.webp" alt="Banner 1"></div>
+        <div class="slide"><img src="produk/banner2.png" alt="Banner 2"></div>
+        <div class="slide"><img src="produk/banner2.jpg" alt="Banner 3"></div>
+        <div class="slide"><img src="produk/COKLAT APEL.jpg" alt="Banner 4"></div>
         <div class="navigation">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
     </div>
-</div>
+</section>
 
+<section id="populer" class="container mb-5">
+    <h2 class="text-center mb-4 fw-bold">Produk Terpopuler</h2>
+    <div class="row g-4 justify-content-center">
+        <div class="col-6 col-md-3">
+            <div class="thumbnail-card">
+                <img src="produk/ml.jpg" alt="Game Online">
+                <div class="caption">Game Online</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="thumbnail-card">
+                <img src="produk/ig.jpg" alt="Follower Sosmed">
+                <div class="caption">Follower Sosmed</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="thumbnail-card">
+                <img src="produk/capcut.jpg" alt="Editing">
+                <div class="caption">Editing</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="thumbnail-card">
+                <img src="produk/streaming.jpg" alt="Streaming">
+                <div class="caption">Streaming</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-5">
+        <a href="Products.php" class="rounded-button">Lihat Lebih Banyak</a>
+    </div>
+</section>
 
+<section id="produk" class="container mb-5">
+    <h2 class="text-center mb-4 fw-bold">Sedang Promo</h2>
+    <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+            <a href="game.php" class="text-decoration-none">
+                <div class="thumbnail-card">
+                    <img src="img/topup.png" alt="Top Up Game" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+                    <div class="caption">Top Up Game</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="emoney.php" class="text-decoration-none">
+                <div class="thumbnail-card">
+                    <img src="img/premium.jpg" alt="Produk Digital" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+                    <div class="caption">Produk Digital</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="sosmed.php" class="text-decoration-none">
+                <div class="thumbnail-card">
+                    <img src="img/sosmed.jpg" alt="Booster Sosmed" onerror="this.src='https://via.placeholder.com/400x200?text=Image+Not+Found'">
+                    <div class="caption">Booster Sosmed</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="promo" class="container mb-5">
+    <div class="ad-container">
+        <div class="ad-img" style="background-image: url('img/GOJEK.jpg');"></div>
+        <div class="ad-content">
+            <h3 class="fw-bold mb-3">Jelajahi Kuliner Spektakuler</h3>
+            <p class="text-muted mb-4">Nikmati kuliner andalanmu di sekitar Pekanbaru bersama GoFood, jadikan momen bersama keluarga lebih ceria. Nikmati promo hingga 30% dari kita untuk semua.</p>
+            <a href="https://gofood.co.id/pekanbaru/restaurants/near_me" class="rounded-button" target="_blank">Buka GoFood</a>
+        </div>
+    </div>
+
+    <div class="ad-container">
+        <div class="ad-img" style="background-image: url('img/Traveloka.webp');"></div>
+        <div class="ad-content">
+            <h3 class="fw-bold mb-3">Liburan Nyaman Bersama Traveloka</h3>
+            <p class="text-muted mb-4">Waktunya rehat sejenak. Temukan tiket pesawat dan hotel dengan penawaran terbaik untuk perjalanan Anda berikutnya tanpa ribet.</p>
+            <a href="https://www.traveloka.com/en-id" class="rounded-button" target="_blank">Pesan Sekarang</a>
+        </div>
+    </div>
+</section>
+
+<section id="akademi" class="container mb-5">
+    <div class="ad-container p-4 p-md-5 d-block">
+        <div class="row align-items-center g-4">
+            <div class="col-md-5">
+                <h3 class="fw-bold mb-3">Membangun Bisnis Dari Nol</h3>
+                <p class="text-muted">Ingin belajar keuangan dan Investasi saham? Gunakan kode promo: <strong class="text-dark">"RAYMOND"</strong> (Diskon 15%).</p>
+                <p class="text-muted mb-4">Jadi Member UsahaKita di <a href="http://ternakuang.id" target="_blank" class="text-danger fw-bold text-decoration-none">BelajarBisnis.Com</a></p>
+                <a href="https://www.youtube.com/@RaymondChins" class="rounded-button" target="_blank">Kunjungi Channel</a>
+            </div>
+            <div class="col-md-7">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/8g1H3ipDNOs" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <p class="mb-0 text-white-50">&copy; 2026 Farid Store. All Rights Reserved.</p>
+</footer>
 
 <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
+    let slideIndex = 1;
+    let slides = document.getElementsByClassName("slide");
+    
+    function showSlides(n) {
+        if (slides.length === 0) return;
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
 
     function plusSlides(n) {
         showSlides(slideIndex += n);
     }
 
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("slide");
-        
-        if (n > slides.length) {
-            slideIndex = 1;
-        } 
-        if (n < 1) {
-            slideIndex = slides.length;
-        }
-        
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none"; // Sembunyikan semua slide
-        }
-        
-        slides[slideIndex - 1].style.display = "block"; // Tampilkan slide saat ini
-    }
-
-    // Fungsi untuk otomatis mengganti slide setiap 3 detik
+    // Inisialisasi awal
+    showSlides(slideIndex);
+    
+    // Auto slide
     setInterval(function() {
-        plusSlides(1); // Pindah ke slide berikutnya
-    }, 3000); // Ganti setiap 3000 ms (3 detik)
-
+        plusSlides(1);
+    }, 3000);
 </script>
 
-  
-<section id="populer">
-        <h1>Produk Terpopuler</h1>
-
-
-<div class="container">
-              <div class="row text-center">
-                  <div class="col-md-3 col-sm-6">
-                      <div class="thumbnail">
-                          <img src="produk/ml.jpg" alt="Responsive image">
-                          <div class="caption">
-                              <h5>Game Online</h5>
-                             
-                            </div>
-                      </div>
-                  </div>
-                  
-                  
-                  <div class="col-md-3 col-sm-6">
-                      <div class="thumbnail">
-                          <img src="produk/ig.jpg" alt="Responsive image">
-                          <div class="caption">
-                              <h5>Follower Sosmed</h5>
-                              </div>
-                      </div>
-                  </div>
-                  
-                  
-                   <div class="col-md-3 col-sm-6">
-                      <div class="thumbnail">
-                          <img src="produk/capcut.jpg" alt="Responsive image">
-                          <div class="caption">
-                              <h5>Editing</h5>         
-                        </div>
-                      </div>
-                  </div>
-                  
-                  <div class="col-md-3 col-sm-6">
-                      <div class="thumbnail">
-                          <img src="produk/streaming.jpg" alt="Responsive image">
-                          <div class="caption">
-                              <h5>Streaming</h5>
-                              </div>
-                      </div>
-                  </div>
-
-                  <br><br><br>
-                      
-                  <div>
-                  <a href="Products.php" class="rounded-button">Lihat Lebih Banyak</a>
-                </div>
-                  
-              </div>
-             
-          </div><br><br><br>
-  </section>
-<section id="produk">
-  <h1>Sedang Promo</h1>
-
-          <div class="container">
-             <div class="row text-center">               
-                 <div class="col-md-4 col-sm-7"> 
-                     <div class="thumbnail">
-            <a href="game.php">
-                <image src="img/topup.png"/>
-             <div class="caption">
-                 <h4>Top Up Game</h4>
-             </div>
-            </a>
-                         </div>
-        </div>
-
-        <div class="col-md-4 col-sm-7"> 
-                     <div class="thumbnail">
-            <a href="emoney.php">
-             <image src="img/premium.jpg"/>
-             <div class="caption">
-                 <h4>Produk Digital</h4>
-             </div>
-            </a>
-                     </div>
-        </div>
-
-        <div class="col-md-4 col-sm-7"> 
-                     <div class="thumbnail">
-            <a href="sosmed.php">
-             <image src="img/sosmed.jpg"/>
-             <div class="caption">
-                 <h4>Booster Sosmed</h4>
-             </div>
-            </a>
-                     </div>
-        </div>
- 
-             </div>
-
-<br><br><br>
-<div>
-  </section>
-
-  <section id="promo">
-        <!-- Iklan 1 -->
-  <div class="ad">
-            <div class="thumbnail thumbnail-1"></div>
-            <div class="content">
-                <h2>Jelajahi Kuliner Spektakuler</h2>
-                <p>Nikmati kuliner andalanmu bersama GoFood, jadikan moment bersama keluarga jadi lebih ceria. Promo ceria hingga 30% dari kita untuk semua.</p>
-                <a href="https://gofood.co.id/pekanbaru/restaurants/near_me" class="rounded-button">Buka GoFood</a>
-            </div>
-        </div>
-
-      
-        <!-- Iklan 2 -->
-        <div class="ad">
-            <div class="thumbnail thumbnail-2"></div>
-            <div class="content">
-                <h2>Promo Liburan Bersama Traveloka</h2>
-                <p>Deskripsi singkat tentang produk B. Hubungi penjual untuk informasi lebih lanjut.</p>
-                <a href="https://www.traveloka.com/en-id?id" class="rounded-button">Pesan Sekarang</a>
-            </div>
-        </div>
-  </section>
-  <section id="akademi">
-        <!-- Apa Itu Bisnis -->
-        <div class="ad">
-        <div class="content">
-            <h2>Membangun Bisnis Dari Nol</h2>
-            <p>Shoutout ‪@ErikaRichardo‬ 2:05 buat bisnisnya @by.painters
-            </p>
-<p>Kalo kalian mau belajar keuangan + Investasi saham, pake kode promo gw : 
-“RAYMOND” ( Diskon 15% )
-</p>
-<p>Jadi Member UsahaKita di <a href=http://ternakuang.id> BelajarBisnis.Com </a> </p>
-            <a href="https://www.youtube.com/@RaymondChins" class="rounded-button">Kunjungi Channel</a>
-        </div>
-        <iframe width="540" height="280" src="https://www.youtube.com/embed/8g1H3ipDNOs" title="Cara Bangun Bisnis dari Nol - Mulai Dari Sini" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-        </section>
 </body>
 </html>
-        
