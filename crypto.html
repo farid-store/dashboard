@@ -1,312 +1,319 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deposit Crypto</title>
+    <title>Deposit Crypto | Farid Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .toast-transition { transition: all 0.3s ease; }
+    </style>
 </head>
 
 <body class="bg-gray-100 font-sans p-6">
 
 <div class="grid grid-cols-1 gap-6 max-w-5xl mx-auto">
     
-    <!-- Kiri Atas: Memilih Metode Pembayaran -->
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <div class="text-2xl font-semibold text-gray-700 mb-6">Deposit Crypto</div>
+    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+        <div class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Form Deposit Crypto</div>
 
-        <!-- Pilih Wallet atau Exchange -->
-        <label class="block text-gray-600 mb-3 font-medium">Pilih Metode Pembayaran</label>
-        <ul class="space-y-3">
-            <li>
-                <label class="flex items-center space-x-3 cursor-pointer text-gray-700">
-                    <input type="radio" name="wallet" value="exchange" class="form-radio text-blue-500" onclick="pilihMetode(this)"> 
-                    <span class="text-lg">Exchange</span>
-                </label>
-            </li>
-            <li>
-                <label class="flex items-center space-x-3 cursor-pointer text-gray-700">
-                    <input type="radio" name="wallet" value="wallet" class="form-radio text-blue-500" onclick="pilihMetode(this)"> 
-                    <span class="text-lg">Wallet</span>
-                </label>
-            </li>
-        </ul>
+        <label class="block text-gray-700 mb-3 font-semibold">Pilih Metode Transfer <span class="text-red-500">*</span></label>
+        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <label class="flex items-center space-x-3 cursor-pointer bg-gray-50 p-3 rounded-lg border border-gray-200 w-full hover:bg-gray-100 transition">
+                <input type="radio" name="tipe_crypto" value="exchange" class="form-radio w-5 h-5 text-blue-600 focus:ring-blue-500" onclick="pilihMetode(this)"> 
+                <span class="text-gray-800 font-medium">Exchange (UID)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer bg-gray-50 p-3 rounded-lg border border-gray-200 w-full hover:bg-gray-100 transition">
+                <input type="radio" name="tipe_crypto" value="wallet" class="form-radio w-5 h-5 text-blue-600 focus:ring-blue-500" onclick="pilihMetode(this)"> 
+                <span class="text-gray-800 font-medium">Crypto Wallet (On-Chain)</span>
+            </label>
+        </div>
 
-        <!-- Input Jaringan Exchange -->
-        <div id="exchange-options" class="hidden mt-4">
-            <label class="block text-gray-600 font-medium mb-2">Pilih Jaringan</label>
-            <select id="select-exchange" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
-                <option value="">Pilih Exchange</option>
-                <option value="binance">Binance</option>
-                <option value="bybit">Bybit</option>
-                <option value="bitget">Bitget</option>
-                <option value="mexc">MEXC</option>
-                <option value="gateio">GATE.IO</option>
-                <option value="okx">OKX</option>
+        <div id="exchange-options" class="hidden mt-4 transition-all">
+            <label class="block text-gray-700 font-semibold mb-2">Pilih Exchange <span class="text-red-500">*</span></label>
+            <select id="select-exchange" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="">-- Pilih Exchange --</option>
+                <option value="Binance">Binance</option>
+                <option value="Bybit">Bybit</option>
+                <option value="Bitget">Bitget</option>
+                <option value="MEXC">MEXC</option>
+                <option value="GATE.IO">GATE.IO</option>
+                <option value="OKX">OKX</option>
             </select>
         </div>
 
-        <!-- Input Jaringan Wallet -->
-        <div id="wallet-options" class="hidden mt-4">
-            <label class="block text-gray-600 font-medium mb-2">Pilih Jaringan</label>
-            <select id="wallet-network" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500">
-                <option value="">Pilih Jaringan</option>
-                <option value="wallet-bsc">Wallet - BSC</option>
-                <option value="wallet-ton">Wallet - TON</option>
-                <option value="wallet-avax">Wallet - AVAX</option>
-                <option value="wallet-base">Wallet - Base</option>
-                <option value="wallet-optimism">Wallet - Optimism</option>
-                <option value="wallet-polygon">Wallet - Polygon</option>
-                <option value="wallet-aptos">Wallet - Aptos</option>
-                <option value="wallet-solana">Wallet - Solana</option>
-                <option value="wallet-arbitrum">Wallet - Arbitrum</option>
+        <div id="wallet-options" class="hidden mt-4 transition-all">
+            <label class="block text-gray-700 font-semibold mb-2">Pilih Jaringan On-Chain <span class="text-red-500">*</span></label>
+            <select id="wallet-network" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="">-- Pilih Jaringan --</option>
+                <option value="BSC (BEP20)">BSC (BEP20)</option>
+                <option value="TON">TON</option>
+                <option value="Avalanche (AVAX)">Avalanche (AVAX)</option>
+                <option value="Base">Base</option>
+                <option value="Optimism">Optimism</option>
+                <option value="Polygon (MATIC)">Polygon</option>
+                <option value="Aptos">Aptos</option>
+                <option value="Solana">Solana</option>
+                <option value="Arbitrum One">Arbitrum One</option>
             </select>
         </div>
 
-        <!-- Input Alamat Wallet -->
-        <label class="block text-gray-600 font-medium mb-2 mt-6">Alamat Wallet <span class="text-red-500">*</span></label>
-        <input type="text" id="wallet-address" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Masukkan alamat wallet" disabled>
+        <label class="block text-gray-700 font-semibold mb-2 mt-6">Alamat Wallet / UID <span class="text-red-500">*</span></label>
+        <input type="text" id="wallet-address" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Pilih metode terlebih dahulu..." disabled>
 
-        <!-- Input Jumlah Deposit -->
-        <label class="block text-gray-600 font-medium mb-2 mt-6">Jumlah <span class="text-red-500">*</span></label>
-        <input type="text" id="jumlah" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500" placeholder="Jumlah Deposit" oninput="formatRupiah(this)">
+        <label class="block text-gray-700 font-semibold mb-2 mt-6">Jumlah Deposit (IDR) <span class="text-red-500">*</span></label>
+        <div class="relative">
+            <span class="absolute left-4 top-3 text-gray-500 font-semibold">Rp</span>
+            <input type="text" id="jumlah" class="w-full pl-12 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none" placeholder="0" oninput="formatRupiah(this)">
+        </div>
 
-        <div class="flex justify-between mt-6 gap-4 flex-col sm:flex-row">
-            <button class="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition-all duration-300" onclick="resetForm()">Ulangi</button>
-            <button class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-all duration-300" onclick="cekDanKirimDeposit()">Kirim Deposit</button>
+        <div class="flex justify-between mt-8 gap-4 flex-col sm:flex-row">
+            <button class="bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-lg hover:bg-gray-300 transition-all w-full sm:w-auto" onclick="resetForm()">Batal / Ulangi</button>
+            <button id="btn-submit" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-all w-full sm:flex-1" onclick="cekDanKirimDeposit()">Konfirmasi Deposit</button>
         </div>
     </div>
 
-    <!-- Data Exchange -->
-    <div id="data-exchange" class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center hidden mt-6">
-        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Detail Pembayaran</h2>
-        <img id="payment-image" src="" alt="" class="w-48 h-48 hidden object-contain cursor-pointer mb-4" onclick="bukaModal(this.src)">
-        <h3 class="text-gray-600 mb-4">Hanya a/n Farid Ja'far Siddiq</h3>
+    <div id="data-exchange" class="bg-white p-6 rounded-xl shadow-md border border-gray-200 hidden transition-all">
+        <h2 class="text-xl font-bold text-gray-800 mb-2 border-b pb-2">Tujuan Transfer</h2>
+        <h3 class="text-sm text-gray-600 mb-5">Pastikan nama penerima adalah <span class="font-bold text-gray-800">Farid Ja'far Siddiq</span></h3>
 
-        <!-- Data Exchange yang bisa disalin -->
-<div class="space-y-4 w-full">
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>Binance:</strong> 753964271</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('binance')">Salin</button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">Binance UID</p><p class="font-bold text-gray-800">753964271</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('753964271', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">Bybit UID</p><p class="font-bold text-gray-800">369816695</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('369816695', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">Bitget UID</p><p class="font-bold text-gray-800">6338607804</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('6338607804', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">MEXC UID</p><p class="font-bold text-gray-800">11632278</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('11632278', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">GATE.IO UID</p><p class="font-bold text-gray-800">20588127</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('20588127', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div><p class="text-xs text-gray-500 mb-1">OKX UID</p><p class="font-bold text-gray-800">588033787167427589</p></div>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-md text-sm font-semibold toast-transition" onclick="copyData('588033787167427589', this)"><i class="fas fa-copy mr-1"></i> Salin</button>
+            </div>
+            
+            <div class="flex justify-between items-center bg-yellow-50 p-3 rounded-lg border border-yellow-200 md:col-span-2 mt-2">
+                <div><p class="text-xs text-yellow-700 mb-1">Transfer On-Chain / Alternatif Email</p><p class="font-bold text-gray-800">farid04siddiq@gmail.com</p></div>
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-semibold toast-transition" onclick="copyData('farid04siddiq@gmail.com', this)"><i class="fas fa-copy mr-1"></i> Salin Email</button>
+            </div>
+        </div>
     </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>Bybit:</strong> 369816695</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('bybit')">Salin</button>
+
+    <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-2">
+        <div class="flex justify-between items-center mb-4 border-b pb-2">
+            <h2 class="text-xl font-bold text-gray-800">Riwayat Transaksi Crypto</h2>
+            <button class="text-sm bg-red-100 hover:bg-red-200 text-red-600 font-semibold px-3 py-1.5 rounded transition" onclick="hapusRiwayat()">
+                <i class="fas fa-trash-alt mr-1"></i> Bersihkan
+            </button>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-left text-sm whitespace-nowrap">
+                <thead>
+                    <tr class="bg-gray-50 text-gray-600">
+                        <th class="p-3 font-semibold border-b">Tanggal</th>
+                        <th class="p-3 font-semibold border-b">Jaringan / Metode</th>
+                        <th class="p-3 font-semibold border-b">Jumlah (IDR)</th>
+                        <th class="p-3 font-semibold border-b">Alamat / UID Anda</th>
+                    </tr>
+                </thead>
+                <tbody id="riwayat-pembayaran" class="divide-y divide-gray-100">
+                    </tbody>
+            </table>
+        </div>
     </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>Bitget:</strong> 6338607804</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('bitget')">Salin</button>
-    </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>MEXC:</strong> 11632278</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('mexc')">Salin</button>
-    </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>GATE.IO:</strong> 20588127</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('gateio')">Salin</button>
-    </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>OKX:</strong> 588033787167427589</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('okx')">Salin</button>
-    </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>On-Chain:</strong> [harap konfirmasi ke admin]</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('onchain')">Salin</button>
-    </div>
-    <div class="w-full flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300">
-        <p class="font-semibold text-gray-800"><strong>ALTERNATIF:</strong> farid04siddiq@gmail.com</p>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg" onclick="copyText('alternatif')">Salin</button>
-    </div>
+
 </div>
 
 <script>
-    function copyText(id) {
-        var text = '';
-        switch (id) {
-            case 'binance': text = '753964271'; break;
-            case 'bybit': text = '369816695'; break;
-            case 'bitget': text = '6338607804'; break;
-            case 'mexc': text = '11632278'; break;
-            case 'gateio': text = '20588127'; break;
-            case 'okx': text = '588033787167427589'; break;
-            case 'onchain': text = '[harap konfirmasi ke admin]'; break;
-            case 'alternatif': text = 'farid04siddiq@gmail.com'; break;
+    let tipeDipilih = "";
+
+    // Fungsi Format Rupiah
+    function formatRupiah(input) {
+        let angka = input.value.replace(/[^0-9]/g, "");
+        input.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Fungsi Toggle Metode (Exchange vs Wallet)
+    function pilihMetode(elemen) {
+        tipeDipilih = elemen.value;
+        const walletOptions = document.getElementById("wallet-options");
+        const exchangeOptions = document.getElementById("exchange-options");
+        const addressField = document.getElementById("wallet-address");
+        const dataExchange = document.getElementById("data-exchange");
+
+        addressField.disabled = false;
+        addressField.value = "";
+
+        if (tipeDipilih === "wallet") {
+            walletOptions.classList.remove("hidden");
+            exchangeOptions.classList.add("hidden");
+            addressField.placeholder = "Masukkan Alamat Crypto Wallet Anda...";
+        } else {
+            walletOptions.classList.add("hidden");
+            exchangeOptions.classList.remove("hidden");
+            addressField.placeholder = "Masukkan UID Exchange Anda...";
         }
-        navigator.clipboard.writeText(text).then(function() {
-            alert('Teks berhasil disalin: ' + text);
-        }).catch(function(err) {
-            alert('Gagal menyalin teks: ', err);
+
+        // Tampilkan informasi tujuan transfer
+        dataExchange.classList.remove("hidden");
+    }
+
+    // Fungsi Copy Text Dinamis dengan Efek UI
+    function copyData(text, btnElement) {
+        navigator.clipboard.writeText(text).then(() => {
+            const originalHTML = btnElement.innerHTML;
+            const originalClasses = btnElement.className;
+            
+            // Ubah tampilan jadi sukses
+            btnElement.innerHTML = '<i class="fas fa-check"></i> Tersalin';
+            btnElement.className = "bg-green-500 text-white px-3 py-1.5 rounded-md text-sm font-semibold toast-transition";
+            
+            // Kembalikan ke semula setelah 2 detik
+            setTimeout(() => {
+                btnElement.innerHTML = originalHTML;
+                btnElement.className = originalClasses;
+            }, 2000);
+        }).catch(err => {
+            alert('Gagal menyalin teks: ' + err);
         });
     }
-</script>
 
-
-        <!-- Kanan Atas: Data Exchange (Hanya Tampil Setelah Metode Dipilih) -->
+    // Fungsi Reset Form
+    function resetForm() {
+        document.getElementById("wallet-address").value = "";
+        document.getElementById("jumlah").value = "";
+        document.getElementById("wallet-network").value = "";
+        document.getElementById("select-exchange").value = "";
         
-
-        <!-- Riwayat Pembayaran dan Pengumuman -->
-        <div id="riwayat-pembayaran-section" class="bg-white p-6 rounded-lg shadow-lg col-span-2 md:col-span-1 mt-6 ">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-6">Riwayat Pembayaran</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border p-4 text-gray-700">Tanggal</th>
-                            <th class="border p-4 text-gray-700">Metode</th>
-                            <th class="border p-4 text-gray-700">Jumlah</th>
-                            <th class="border p-4 text-gray-700">Alamat Wallet</th>
-                        </tr>
-                    </thead>
-                    <tbody id="riwayat-pembayaran"></tbody>
-                </table>
-            </div>
-            <button class="mt-6 bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600" onclick="hapusRiwayat()">Hapus Riwayat</button>
-        </div>
-
-    </div>
-</body>
-
-
-
-
-</body>
-
-
-    <script>
-        // Fungsi untuk format Rupiah
-        function formatRupiah(input) {
-            let angka = input.value.replace(/[^0-9]/g, "");
-            let angkaFormatted = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            input.value = angkaFormatted;
-        }
-
-        // Fungsi Pilih Metode Pembayaran
-function pilihMetode(metode) {
-    let walletAddressField = document.getElementById("wallet-address");
-    let walletOptions = document.getElementById("wallet-options");
-    let dataExchange = document.getElementById("data-exchange");
-    let exchangeOptions = document.getElementById("exchange-options"); // Ambil elemen exchange-options
-    let exchange = document.querySelector('input[name="wallet"]:checked').value;
-
-    // Menyembunyikan atau menampilkan opsi wallet
-    if (metode.value === "wallet") {
-        walletOptions.classList.remove("hidden");
-        walletAddressField.disabled = false;
-        walletAddressField.placeholder = "Masukkan alamat wallet untuk jaringan yang dipilih";
-        exchangeOptions.classList.add("hidden"); // Sembunyikan dropdown exchange
-    } else {
-        walletOptions.classList.add("hidden");
-        walletAddressField.disabled = false;
-        walletAddressField.placeholder = "Masukkan UID Exchange Anda";
-        exchangeOptions.classList.remove("hidden"); // Tampilkan dropdown exchange
-    }
-
-    // Tampilkan data exchange jika metode dipilih
-    if (exchange === "exchange" || exchange === "wallet") {
-        document.getElementById("data-exchange").classList.remove("hidden");
-    } else {
+        document.querySelectorAll('input[name="tipe_crypto"]').forEach(radio => radio.checked = false);
+        
+        document.getElementById("wallet-options").classList.add("hidden");
+        document.getElementById("exchange-options").classList.add("hidden");
         document.getElementById("data-exchange").classList.add("hidden");
-    }
-}
-
-
-        // Fungsi untuk menyalin teks
-        function copyText(id) {
-            var copyText = document.getElementById(id);
-            var textArea = document.createElement("textarea");
-            textArea.value = copyText.innerText || copyText.textContent;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textArea);
-            alert("Data telah disalin ke clipboard.");
-        }
-
-        // Fungsi untuk reset form
-        function resetForm() {
-            document.getElementById("wallet-address").value = "";
-            document.getElementById("jumlah").value = "";
-            document.getElementById("wallet-network").value = "";
-        }
-
-        // Fungsi untuk menghapus riwayat pembayaran
-function hapusRiwayat() {
-    const riwayatTable = document.getElementById("riwayat-pembayaran");
-
-    // Hapus semua baris dalam tabel, kecuali header
-    while (riwayatTable.rows.length > 0) {
-        riwayatTable.deleteRow(0);
-    }
-}
-
-
-        // Fungsi untuk mengecek dan mengirim deposit
-        function cekDanKirimDeposit() {
-            const walletAddress = document.getElementById("wallet-address").value;
-            const jumlah = document.getElementById("jumlah").value;
-
-            if (!jumlah) {
-                alert("Alamat Wallet dan Jumlah Deposit harus diisi!");
-                return;
-            }
-
-            rekamRiwayat();  // Panggil fungsi untuk rekam riwayat dan kirim ke Telegram
-        }
-
-        // Fungsi untuk merekam riwayat deposit
-function rekamRiwayat() {
-    let jumlah = document.getElementById("jumlah").value;
-    let walletAddress = document.getElementById("wallet-address").value;
-    let walletNetwork = document.getElementById("wallet-network").value; // Ambil nilai jaringan wallet
-    let exchange = document.getElementById("select-exchange").value; // Ambil nilai dari dropdown select-exchange
-
-    if (!walletNetwork && !exchange) { // Pastikan jaringan wallet atau exchange dipilih
-        alert("Pilih jaringan wallet atau exchange terlebih dahulu!");
-        return;
+        document.getElementById("wallet-address").disabled = true;
+        document.getElementById("wallet-address").placeholder = "Pilih metode terlebih dahulu...";
+        
+        tipeDipilih = "";
     }
 
-    // Menambah riwayat ke tabel
-    const riwayatTable = document.getElementById("riwayat-pembayaran");
-    const row = riwayatTable.insertRow();
-    row.innerHTML = `
-        <td class="border p-4">${new Date().toLocaleString()}</td>
-        <td class="border p-4">${walletNetwork ? `Wallet (${walletNetwork})` : `Exchange (${exchange})`}</td> <!-- Tampilkan jaringan yang dipilih atau exchange -->
-        <td class="border p-4">${jumlah}</td>
-        <td class="border p-4">${walletAddress}</td>
-    `;
+    // Validasi dan Eksekusi Deposit
+    async function cekDanKirimDeposit() {
+        const address = document.getElementById("wallet-address").value.trim();
+        const jumlah = document.getElementById("jumlah").value.trim();
+        const network = document.getElementById("wallet-network").value;
+        const exchange = document.getElementById("select-exchange").value;
+        const btnSubmit = document.getElementById("btn-submit");
 
-    // Kirim pesan ke Telegram
-    kirimTelegram(walletAddress, jumlah, walletNetwork, exchange);  // Kirim informasi jaringan atau exchange ke Telegram
-}
+        if (!tipeDipilih) {
+            alert("Harap pilih metode transfer (Exchange / Wallet) terlebih dahulu!");
+            return;
+        }
 
-// Fungsi untuk mengirim pesan ke Telegram
-function kirimTelegram(walletAddress, jumlah, walletNetwork, exchange) {
-    // Tentukan apakah kita mengirimkan data wallet atau exchange
-    let networkOrExchange = walletNetwork ? walletNetwork : exchange;
-    
-    const telegramAPI = `https://api.telegram.org/bot7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8/sendMessage?chat_id=5775563021&text=Deposit%20Diterima%0A%0AAlamat%20Wallet%20%3A%20${walletAddress}%0AJumlah%3A%20Rp. ${jumlah}%0AJaringan%20%3A%20${networkOrExchange}`; // Tambahkan informasi jaringan atau exchange
-    
-    // Pastikan URL valid
-    fetch(telegramAPI)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Telegram API Error');
-        })
-        .then(data => {
-            alert("Deposit berhasil dikirim ke Telegram!");
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Gagal mengirim data ke Telegram. Periksa koneksi bot atau token Anda.");
-        });
-}
+        if (tipeDipilih === "wallet" && !network) {
+            alert("Harap pilih Jaringan On-Chain!");
+            return;
+        }
 
+        if (tipeDipilih === "exchange" && !exchange) {
+            alert("Harap pilih Exchange asal Anda!");
+            return;
+        }
 
-    </script>
+        if (!address || !jumlah) {
+            alert("Alamat Wallet/UID dan Jumlah Deposit wajib diisi!");
+            return;
+        }
+
+        // Mode Loading
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...`;
+
+        const namaMetode = tipeDipilih === "wallet" ? `On-Chain (${network})` : `Exchange (${exchange})`;
+
+        // Rekam History & Kirim Telegram
+        await rekamRiwayat(jumlah, namaMetode, address);
+
+        alert("Berhasil! Konfirmasi deposit Crypto telah dikirim ke admin.");
+        resetForm();
+
+        // Kembalikan Tombol
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = `Konfirmasi Deposit`;
+    }
+
+    // Simpan ke LocalStorage dan Panggil API Telegram
+    async function rekamRiwayat(jumlah, metode, address) {
+        const tanggal = new Date().toLocaleString("id-ID", { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+        
+        // Simpan LocalStorage
+        let riwayat = JSON.parse(localStorage.getItem("riwayat_crypto")) || [];
+        riwayat.unshift({ tanggal, metode, jumlah, address });
+        if(riwayat.length > 10) riwayat.pop(); // Maksimal simpan 10 agar tidak penuh
+        localStorage.setItem("riwayat_crypto", JSON.stringify(riwayat));
+
+        // Tampilkan di Tabel UI
+        tampilkanRiwayat();
+
+        // Panggil Bot Telegram (Gunakan metode POST agar aman dari karakter khusus)
+        const TOKEN_BOT = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";
+        const CHAT_ID = "5775563021";
+        const pesan = `🚀 *DEPOSIT CRYPTO BARU*\n━━━━━━━━━━━━━━━━━━━━\n📅 *Waktu:* ${tanggal}\n💰 *Jumlah:* Rp ${jumlah}\n🔗 *Metode:* ${metode}\n💳 *UID/Address Pengirim:*\n\`${address}\``;
+
+        try {
+            await fetch(`https://api.telegram.org/bot${TOKEN_BOT}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: "Markdown" })
+            });
+        } catch (error) {
+            console.error("Gagal notif admin: ", error);
+        }
+    }
+
+    // Tampilkan Data ke Tabel HTML
+    function tampilkanRiwayat() {
+        const riwayat = JSON.parse(localStorage.getItem("riwayat_crypto")) || [];
+        const tbody = document.getElementById("riwayat-pembayaran");
+
+        if (riwayat.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-400 italic">Belum ada transaksi crypto</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = riwayat.map(p => `
+            <tr class="hover:bg-gray-50 transition">
+                <td class="p-3 border-b border-gray-100 text-gray-600">${p.tanggal}</td>
+                <td class="p-3 border-b border-gray-100 font-medium text-blue-600">${p.metode}</td>
+                <td class="p-3 border-b border-gray-100 font-bold text-gray-800">Rp ${p.jumlah}</td>
+                <td class="p-3 border-b border-gray-100 text-gray-600 truncate max-w-[150px]" title="${p.address}">${p.address}</td>
+            </tr>
+        `).join('');
+    }
+
+    // Hapus Riwayat
+    function hapusRiwayat() {
+        if(confirm("Apakah Anda yakin ingin menghapus seluruh riwayat crypto di perangkat ini?")) {
+            localStorage.removeItem("riwayat_crypto");
+            tampilkanRiwayat();
+        }
+    }
+
+    // Load Pertama Kali
+    window.onload = tampilkanRiwayat;
+
+</script>
 </body>
-
 </html>
