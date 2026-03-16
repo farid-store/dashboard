@@ -1,372 +1,406 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Deposit Page | Farid Store</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <style>
-        /* Transisi halus untuk notifikasi copy */
-        .fade-out {
-            opacity: 0;
-            transition: opacity 1s ease-out;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Produk Premium | Farid Store</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 0;
+        margin: 0;
+        background: #f4f6f9;
+        color: #333;
+    }
+
+    /* === Header & Breadcrumb === */
+    header {
+        background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
+        padding: 30px 20px;
+        color: white;
+        box-shadow: 0 4px 12px rgba(115, 103, 240, 0.2);
+    }
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .header-content h2 { margin: 0; font-size: 1.8rem; }
+    .breadcrumb { opacity: 0.9; font-size: 0.9rem; margin-top: 8px; }
+
+    /* === Main Container === */
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+
+    /* === Search Bar === */
+    .search-wrapper {
+        position: relative;
+        max-width: 400px;
+        margin-bottom: 25px;
+    }
+    .search-wrapper i {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #888;
+    }
+    .search-input {
+        padding: 12px 15px 12px 40px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .search-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.2);
+        border-color: #7367f0;
+    }
+
+    /* === Grid Produk (Responsif) === */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+        gap: 20px;
+    }
+    .no-results {
+        text-align: center; color: #888; font-style: italic; grid-column: 1 / -1; padding: 40px 0;
+    }
+
+    /* === Card Animasi === */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .card {
+        animation: fadeInUp 0.5s ease forwards;
+        background: white; border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        padding: 15px; text-align: center;
+        display: flex; flex-direction: column; justify-content: space-between;
+        cursor: pointer; transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(115, 103, 240, 0.15);
+        border-color: rgba(115, 103, 240, 0.3);
+    }
+    .card img {
+        width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+        border-radius: 8px; background: #f8f9fa; margin-bottom: 12px;
+    }
+    .card h4 {
+        margin: 0 0 12px 0; font-size: 0.95rem; flex-grow: 1;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .status {
+        padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+    }
+    .status.ready { background-color: #e8f5e9; color: #2e7d32; }
+    .status.pending { background-color: #fff8e1; color: #f57f17; }
+
+    /* === Modal === */
+    .modal {
+        display: none; position: fixed; inset: 0;
+        background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+        justify-content: center; align-items: center;
+        padding: 20px; z-index: 1000; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .modal.show { display: flex; opacity: 1; }
+    
+    .modal-content {
+        background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto;
+        padding: 30px; position: relative; transform: scale(0.95); transition: transform 0.3s ease;
+    }
+    .modal.show .modal-content { transform: scale(1); }
+
+    .modal-close {
+        position: absolute; top: 15px; right: 20px; font-size: 24px;
+        background: none; border: none; cursor: pointer; color: #888;
+    }
+    .modal-close:hover { color: #d32f2f; }
+
+    .modal-body { display: flex; gap: 30px; flex-wrap: wrap; }
+    .modal-image-wrapper { flex: 1 1 250px; }
+    .modal-image-wrapper img { width: 100%; border-radius: 12px; object-fit: contain; background: #f8f9fa; }
+    
+    .modal-details { flex: 1 1 300px; display: flex; flex-direction: column; }
+    .modal-details h3 { margin: 0 0 20px 0; font-size: 1.4rem; color: #333; }
+    .modal-details label { font-weight: 600; margin-top: 15px; color: #555; font-size: 0.9rem; }
+    .modal-details select, .modal-details input {
+        margin-top: 8px; padding: 12px; font-size: 1rem;
+        border-radius: 8px; border: 1px solid #ccc; transition: all 0.3s;
+        box-sizing: border-box; width: 100%;
+    }
+    .modal-details select:focus, .modal-details input:focus {
+        outline: none; border-color: #7367f0; box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.2);
+    }
+
+    .btn-submit {
+        margin-top: 25px; padding: 14px; font-size: 1rem; font-weight: 700;
+        background: #7367f0; color: white; border: none; border-radius: 8px;
+        cursor: pointer; transition: background 0.3s ease;
+    }
+    .btn-submit:hover:not(:disabled) { background: #5a4fcc; }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    .status-message { margin-top: 15px; font-weight: 600; text-align: center; font-size: 0.9rem; }
+
+    /* Responsive Modal Mobile */
+    @media (max-width: 600px) {
+        .modal-body { flex-direction: column; gap: 15px; }
+        .modal-content { padding: 20px; }
+    }
+</style>
 </head>
+<body>
 
-<body class="bg-gray-100 p-6">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <h1 class="text-xl font-bold text-gray-800 mb-5 border-b pb-2">Form Deposit</h1>
-
-            <label class="block text-gray-700 font-semibold mb-3">Tipe Pembayaran <span class="text-red-500">*</span></label>
-            <div class="flex items-center mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                <input type="radio" id="otomatis" name="tipe" class="mr-2 w-4 h-4 text-blue-600 focus:ring-blue-500" onclick="pilihTipe('otomatis')" />
-                <label for="otomatis" class="mr-6 cursor-pointer select-none">Otomatis (QRIS)</label>
-
-                <input type="radio" id="manual" name="tipe" class="mr-2 w-4 h-4 text-blue-600 focus:ring-blue-500" onclick="pilihTipe('manual')" />
-                <label for="manual" class="cursor-pointer select-none">Transfer Manual</label>
-            </div>
-
-            <div id="dropdown-payment" class="hidden mb-4 transition-all">
-                <label for="payment-method" class="block text-gray-700 font-semibold mb-2">
-                    Pilih Metode Manual <span class="text-red-500">*</span>
-                </label>
-                <select id="payment-method" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" onchange="tampilkanGambar()">
-                    <option value="">-- Pilih Metode --</option>
-                    <option value="seabank">SeaBank</option>
-                    <option value="gopay">Gopay</option>
-                    <option value="dana">Dana</option>
-                    <option value="ovo">OVO</option>
-                    <option value="shopee-pay">ShopeePay</option>
-                    <option value="bank-bsi">Bank BSI</option>
-                    <option value="bank-jago">Bank Jago</option>
-                    <option value="bank-mandiri">Bank Mandiri</option>
-                    <option value="usdt">USDT / Crypto</option>
-                </select>
-            </div>
-
-            <label for="jumlah" class="block text-gray-700 font-semibold mb-2">Jumlah Deposit <span class="text-red-500">*</span></label>
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-2.5 text-gray-500 font-semibold">Rp</span>
-                <input type="text" id="jumlah" class="w-full pl-10 p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="0" oninput="formatRupiah(this)" />
-            </div>
-
-            <label for="user-contact" class="block text-gray-700 font-semibold mb-2">Email / No. WhatsApp <span class="text-red-500">*</span></label>
-            <input type="text" id="user-contact" class="w-full p-2.5 border border-gray-300 rounded-lg mb-6 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="Contoh: 0812xxxx atau email@anda.com" />
-
-            <div class="flex justify-between gap-3">
-                <button class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-4 py-2.5 rounded-lg flex-1 transition" onclick="resetForm()">Batal</button>
-                <button id="btn-submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-lg flex-1 transition" onclick="cekDanKirimDeposit()">Kirim Deposit</button>
-            </div>
-        </section>
-
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center justify-center text-center">
-            <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2 w-full">Detail Pembayaran</h2>
-            
-            <div id="payment-placeholder" class="text-gray-400 my-8 flex flex-col items-center">
-                <i class="fas fa-wallet text-5xl mb-3"></i>
-                <p>Silakan pilih metode pembayaran di samping</p>
-            </div>
-
-            <img id="payment-image" src="" alt="Metode Pembayaran" class="w-56 h-56 hidden object-contain cursor-pointer border rounded-lg p-2 shadow-sm hover:shadow-md transition" onclick="bukaModal(this.src)" />
-            
-            <div id="rekening-container" class="hidden mt-4">
-                <h3 class="text-sm text-gray-600 mb-1">Hanya a/n <span class="font-bold text-gray-800">Farid Ja'far Siddiq</span></h3>
-                <div class="flex items-center justify-center mt-2 bg-blue-50 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-100 transition relative" onclick="copyRekening()">
-                    <p id="rekening-number" class="font-bold text-blue-800 text-lg tracking-wider"></p>
-                    <i class="fas fa-copy text-blue-500 ml-3"></i>
-                    <span id="copy-toast" class="absolute -top-6 text-xs bg-gray-800 text-white px-2 py-1 rounded opacity-0">Tersalin!</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 col-span-1 lg:col-span-2 overflow-hidden">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h2 class="text-lg font-bold text-gray-800">Riwayat Transaksi</h2>
-                <button class="text-sm bg-red-100 hover:bg-red-200 text-red-600 font-semibold px-3 py-1.5 rounded transition" onclick="hapusRiwayat()">
-                    <i class="fas fa-trash-alt mr-1"></i> Bersihkan
-                </button>
-            </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse text-left text-sm">
-                    <thead>
-                        <tr class="bg-gray-50 text-gray-600 border-b">
-                            <th class="p-3 font-semibold">Tanggal</th>
-                            <th class="p-3 font-semibold">Metode</th>
-                            <th class="p-3 font-semibold">Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody id="riwayat-pembayaran" class="divide-y divide-gray-100">
-                        </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-t-yellow-400 lg:col-span-1">
-            <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
-                <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i> Perhatian
-            </h2>
-            <ul class="text-sm space-y-3 text-gray-600">
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Kesalahan Transfer Nominal Akan <strong>Dipotong Rp 1.000</strong>. Pastikan sesuai nominal!</span></li>
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Maksimal <strong>3 permintaan pending</strong>. Jangan spam form deposit.</span></li>
-                <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i> <span>Permintaan batal otomatis jika tidak dibayar dalam <strong>24 Jam</strong>.</span></li>
-            </ul>
-        </section>
+<header>
+    <div class="header-content">
+        <h2>Aplikasi Premium</h2>
+        <p class="breadcrumb">Prabayar &gt; Aplikasi & Jasa Premium</p>
     </div>
+</header>
 
-    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center hidden z-50 p-4 transition-opacity" onclick="tutupModal()">
-        <div class="bg-white p-2 rounded-xl shadow-2xl max-w-md relative" onclick="event.stopPropagation()">
-            <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-700 absolute -top-3 -right-3 hover:bg-red-500 hover:text-white transition" onclick="tutupModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <img id="modal-image" src="" alt="Preview" class="w-full h-auto rounded-lg" />
+<div class="container">
+    <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Cari aplikasi atau layanan..." id="searchInput" class="search-input" />
+    </div>
+    
+    <div id="productList" class="grid"></div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <button id="closeModal" class="modal-close"><i class="fas fa-times"></i></button>
+        <div class="modal-body">
+            <div class="modal-image-wrapper">
+                <img id="modalImage" src="" alt="Produk" />
+            </div>
+            <div class="modal-details">
+                <h3 id="modalName">Nama Produk</h3>
+
+                <label for="periodSelect">Periode Langganan:</label>
+                <select id="periodSelect">
+                    <option value="1hari">1 Hari</option>
+                    <option value="7hari">7 Hari</option>
+                    <option value="1bulan">1 Bulan</option>
+                    <option value="3bulan">3 Bulan</option>
+                    <option value="12bulan">12 Bulan</option>
+                </select>
+
+                <label for="quantityInput">Jumlah Pesanan:</label>
+                <input type="number" id="quantityInput" min="1" value="1" />
+
+                <label for="contactInput">Kontak Anda (WA/Telegram):</label>
+                <input type="text" id="contactInput" placeholder="Contoh: 0812xxx atau @username" />
+
+                <button id="submitOrder" class="btn-submit">Pesan Sekarang</button>
+                <p id="statusMessage" class="status-message"></p>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Data pembayaran
-        const paymentData = {
-            "dana": { img: "bank.png", rekening: "081233014523" },
-            "bank-bsi": { img: "bank.png", rekening: "7211388627" },
-            "bank-jago": { img: "bank.png", rekening: "105140476589" },
-            "bank-mandiri": { img: "bank.png", rekening: "1080028958644" },
-            "seabank": { img: "bank.png", rekening: "901203701880" },
-            "shopee-pay": { img: "bank.png", rekening: "081233014523" },
-            "gopay": { img: "bank.png", rekening: "081233014523" },
-            "ovo": { img: "bank.png", rekening: "Coming Soon" },
-            "qris": { img: "qris.png", rekening: "Klik QRIS Untuk Memperbesar" },
-            "usdt": { img: "crypto.jpg", rekening: "HUBUNGI ADMIN" }
-        };
+<script>
+    // DATA PRODUK LENGKAP FARID STORE
+    const items = [
+        { name: "AI CHATGPT+", img: "https://img.icons8.com/ios7/600/chatgpt.png", link: "#", status: "ready" },
+        { name: "AI CLAUDE", img: "https://img.icons8.com/fluent/512/claude.png", link: "#", status: "ready" },
+        { name: "AI GEMINI ADVANCE", img: "https://static.vecteezy.com/system/resources/previews/046/861/646/non_2x/gemini-icon-on-a-transparent-background-free-png.png", link: "#", status: "ready" },
+        { name: "AI PERPLEXITY", img: "https://play.ht/blog/wp-content/uploads/2024/05/perplexityai-logo.webp", link: "#", status: "ready" },
+        { name: "AI YOU.COM", img: "https://images.seeklogo.com/logo-png/43/1/you-com-logo-png_seeklogo-435346.png", link: "#", status: "ready" },
+        { name: "ALIGHT MOTION PRO", img: "https://premy.id/assets/images/games/1741494001_7de345014f2295f78c0b.webp", link: "#", status: "ready" },
+        { name: "AMAZON PRIME VIDEO", img: "https://premy.id/assets/images/games/1741494463_595f35c3057cb28fbcdc.png", link: "#", status: "ready" },
+        { name: "APPLE MUSIC", img: "https://img.freepik.com/free-vector/music-icon_53876-25524.jpg?semt=ais_hybrid&w=740", link: "#", status: "ready" },
+        { name: "APPLE CODE REDEEM ID", img: "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png", link: "#", status: "ready" },
+        { name: "BSTATION PREMIUM", img: "https://epstore.id/file/images/4a8ce6bf7af3432c4b59ab041decb7cf.jpg", link: "#", status: "ready" },
+        { name: "CANVA PRO + DESIGNER", img: "https://premy.id/assets/images/games/1741494656_3685111874317a0d0b81.webp", link: "#", status: "ready" },
+        { name: "CAPCUT PRO", img: "https://premy.id/assets/images/games/1741406710_2def8b55162ab3c31a7d.webp", link: "#", status: "ready" },
+        { name: "CEK PLAGIASI - TURNITIN", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkDw1_dR800p9Sqb8bLIDGoCNIaCMLwAKOg&s", link: "#", status: "pending" },
+        { name: "DEEPL PREMIUM", img: "https://images.seeklogo.com/logo-png/50/2/deepl-logo-png_seeklogo-506973.png", link: "#", status: "ready" },
+        { name: "DISNEY+ HOTSTAR", img: "https://epstore.id/file/images/a5210b6fa02a11a631bd7dcd23eaf74d.jpg", link: "#", status: "pending" },
+        { name: "DRAMABOX PREMIUM", img: "https://pnghdpro.com/wp-content/themes/pnghdpro/download/social-media-and-brands/dramabox-logo-icon.png", link: "#", status: "ready" },
+        { name: "DUOLINGO SUPER", img: "https://logowik.com/content/uploads/images/232_duolingo_logo.jpg", link: "#", status: "ready" },
+        { name: "FIGMA PRO", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9IQCea8hSpiYjBajC-OQu3h1fXr4qesFAog&s", link: "#", status: "ready" },
+        { name: "GOOGLE DRIVE", img: "https://upload.wikimedia.org/wikipedia/commons/d/da/Google_Drive_logo.png", link: "#", status: "ready" },
+        { name: "GOOGLE MEET", img: "https://images.seeklogo.com/logo-png/40/1/google-meet-logo-png_seeklogo-406884.png", link: "#", status: "ready" },
+        { name: "GOOGLE ONE", img: "https://images.icon-icons.com/2631/PNG/512/google_one_new_logo_icon_159148.png", link: "#", status: "ready" },
+        { name: "GOOGLE PHOTOS", img: "https://upload.wikimedia.org/wikipedia/commons/f/fb/Google-Photos_icon_logo_%28May-September_2015%29.png", link: "#", status: "ready" },
+        { name: "GETCONTACT PREMIUM", img: "https://iconlogovector.com/uploads/images/2024/11/lg-673aab19909ee-Getcontact-Icon.webp", link: "#", status: "pending" },
+        { name: "HBO GO", img: "https://epstore.id/file/images/fc0569cf7d7676c4292a8bfad0fb1aa8.jpg", link: "#", status: "ready" },
+        { name: "IQIYI", img: "https://img.icons8.com/?size=512&id=d5TXEddDPJaA&format=png", link: "#", status: "ready" },
+        { name: "JASA CTP NETFLIX", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+        { name: "JASPAY", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp7jIWax21mkx_QnhalZsb-yar--ChsKP1yQ&s", link: "#", status: "pending" },
+        { name: "LIGHTROOM PREMIUM", img: "https://logowik.com/content/uploads/images/adobe-lightroom-cc7429.jpg", link: "#", status: "pending" },
+        { name: "LOKLOK VIP", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8zz1QckiTE7E2jcCIBcNOHj3LTFYjyl82Zg&s", link: "#", status: "ready" },
+        { name: "MEITU VIP", img: "https://images.seeklogo.com/logo-png/34/1/meitu-logo-png_seeklogo-347412.png", link: "#", status: "ready" },
+        { name: "MICROSOFT 365", img: "https://images.seeklogo.com/logo-png/16/1/microsoft-office-365-logo-png_seeklogo-168321.png", link: "#", status: "pending" },
+        { name: "NETFLIX PREMIUM UHD", img: "https://premy.id/assets/images/games/1741494608_13916cad116dd700e814.png", link: "#", status: "ready" },
+        { name: "OTP (ONE-TIME PASSWORD) 🇮🇩", img: "https://img.freepik.com/premium-vector/otp-one-time-password-security-illustration_258153-467.jpg", link: "#", status: "pending" },
+        { name: "PICSART PRO", img: "https://images.seeklogo.com/logo-png/37/1/picsart-logo-png_seeklogo-378855.png", link: "#", status: "ready" },
+        { name: "RCTI+ PREMIUM SPORTS", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/17/ef/7a/17ef7a1f-43c4-fab6-c345-45ac9aca4a5e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/1200x630wa.png", link: "#", status: "pending" },
+        { name: "REMINI PRO", img: "https://dragonflyeditorial.com/wp-content/uploads/2022/04/remini-logo.png", link: "#", status: "ready" },
+        { name: "SCRIBD SUBSCRIPTION", img: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/290_Scribd_logo-512.png", link: "#", status: "ready" },
+        { name: "SPOTIFY PREMIUM", img: "https://premy.id/assets/images/games/1741494763_ff055ddde1a95919e310.webp", link: "#", status: "ready" },
+        { name: "VIDIO PREMIER", img: "https://premy.id/assets/images/games/1716206019_3a1a9233fd3e2b700f2b.webp", link: "#", status: "ready" },
+        { name: "VISION+ / K-VISION SPORT", img: "https://logowik.com/content/uploads/images/vision-plus-20219005.logowik.com.webp", link: "#", status: "ready" },
+        { name: "VIU PREMIUM", img: "https://premy.id/assets/images/games/1716440566_1d882c4abb76c6aca6c0.webp", link: "#", status: "ready" },
+        { name: "VPN EXPRESS", img: "https://xv.imgix.net/photos/xv/Red-preview-f8f8e432661063d4ffe1a4b96dd9e4be.png?s=9be796d9e09e46e0414cca1653e07c20", link: "#", status: "ready" },
+        { name: "VPN HMA", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8u9DCTp85Mp2EudJRB_9yemL_6VcnTIbY9A&s", link: "#", status: "ready" },
+        { name: "VPN SURFSHARK", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS51GX3mpbu5zhDfiVBMdf99pJ8QkLDM9XsPA&s", link: "#", status: "ready" },
+        { name: "WETV VIP", img: "https://epstore.id/file/images/1e6d73faf08ad3db4eb629b3569cd04a.jpg", link: "#", status: "ready" },
+        { name: "WINK VIP", img: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/6a/c3/78/6ac37852-6e65-9d37-db77-f74ef4a0dabb/WinkStudio.png/1200x600wa.png", link: "#", status: "ready" },
+        { name: "YOUTUBE PREMIUM", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U8mQXb6RVzVWjE4nRS6DDNWcpUFyLuSOqA&s", link: "#", status: "ready" },
+        { name: "ZOOM PRO", img: "https://premy.id/assets/images/games/1741494396_03f394b14332a67bc4c4.png", link: "#", status: "ready" }
+    ];
 
-        let metodeTerpilih = "";
+    const productList = document.getElementById("productList");
+    const searchInput = document.getElementById("searchInput");
+    const modal = document.getElementById("modal");
+    
+    // Elemen Input Modal
+    const modalImage = document.getElementById("modalImage");
+    const modalName = document.getElementById("modalName");
+    const periodSelect = document.getElementById("periodSelect");
+    const quantityInput = document.getElementById("quantityInput");
+    const contactInput = document.getElementById("contactInput");
+    const submitOrder = document.getElementById("submitOrder");
+    const statusMessage = document.getElementById("statusMessage");
 
-        // Fungsi mengatur pilihan Otomatis / Manual agar tidak bentrok
-        function pilihTipe(tipe) {
-            const dropdown = document.getElementById('dropdown-payment');
-            const paymentMethodSelect = document.getElementById('payment-method');
-            
-            if (tipe === 'otomatis') {
-                dropdown.classList.add('hidden');
-                paymentMethodSelect.value = ""; // Reset dropdown manual
-                metodeTerpilih = "QRIS";
-                tampilkanInfoPembayaran("qris");
-            } else if (tipe === 'manual') {
-                dropdown.classList.remove('hidden');
-                metodeTerpilih = ""; // Reset sampai user pilih dari dropdown
-                sembunyikanInfoPembayaran();
-            }
+    let currentProduct = null;
+
+    // Render List Produk
+    function renderProducts(filter = "") {
+        productList.innerHTML = "";
+        const filtered = items.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+        
+        if (filtered.length === 0) {
+            productList.innerHTML = '<p class="no-results"><i class="fas fa-box-open fa-2x mb-2 block"></i><br>Produk tidak ditemukan.</p>';
+            return;
+        }
+        
+        filtered.forEach((item) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'" />
+                <h4>${item.name}</h4>
+                <div><span class="status ${item.status}">${item.status === "ready" ? "Ready" : "Pending"}</span></div>
+            `;
+            card.addEventListener("click", () => openModal(item));
+            productList.appendChild(card);
+        });
+    }
+
+    // Buka Modal
+    function openModal(product) {
+        currentProduct = product;
+        modalImage.src = product.img;
+        modalName.textContent = product.name;
+        
+        // Reset Form
+        periodSelect.value = "1bulan";
+        quantityInput.value = 1;
+        
+        // Ambil kontak dari cache jika ada
+        const savedContact = localStorage.getItem("user_contact_app");
+        contactInput.value = savedContact ? savedContact : "";
+        
+        statusMessage.textContent = "";
+        submitOrder.innerHTML = "Pesan Sekarang";
+        submitOrder.disabled = false;
+        
+        modal.classList.add("show");
+    }
+
+    // Tutup Modal
+    function closeModalFunc() {
+        modal.classList.remove("show");
+    }
+
+    document.getElementById("closeModal").addEventListener("click", closeModalFunc);
+    window.addEventListener("click", e => { if (e.target === modal) closeModalFunc(); });
+
+    // Format Periode String
+    function parsePeriod(value) {
+        const match = value.match(/^(\d+)([a-zA-Z]+)$/);
+        if (!match) return value;
+        return `${match[1]} ${match[2].charAt(0).toUpperCase() + match[2].slice(1)}`;
+    }
+
+    // Kirim Order ke Telegram
+    submitOrder.addEventListener("click", async () => {
+        const period = periodSelect.value;
+        const quantity = quantityInput.value;
+        const contact = contactInput.value.trim();
+
+        if (!contact) {
+            statusMessage.style.color = "#d32f2f";
+            statusMessage.innerHTML = "<i class='fas fa-exclamation-circle'></i> Mohon isi kontak Anda.";
+            return;
         }
 
-        // Tampilkan detail gambar & rekening
-        function tampilkanGambar() {
-            const method = document.getElementById("payment-method").value;
-            metodeTerpilih = method;
-            
-            if (method && paymentData[method]) {
-                tampilkanInfoPembayaran(method);
+        // Simpan kontak agar user tidak perlu mengetik ulang nanti
+        localStorage.setItem("user_contact_app", contact);
+
+        // Ubah tombol jadi loading
+        submitOrder.disabled = true;
+        submitOrder.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+        statusMessage.textContent = "";
+
+        // Token dan Chat ID Telegram
+        const BOT_TOKEN = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";
+        const CHAT_ID = "5775563021";
+        
+        const message = 
+            `🛒 *PESANAN APLIKASI BARU*\n` +
+            `━━━━━━━━━━━━━━━━━━━━\n` +
+            `📦 *Produk:* ${currentProduct.name}\n` +
+            `⏳ *Periode:* ${parsePeriod(period)}\n` + 
+            `🔢 *Jumlah:* ${quantity}\n` +
+            `📞 *Kontak:* \`${contact}\``;
+
+        try {
+            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "Markdown" })
+            });
+            const data = await res.json();
+
+            if (data.ok) {
+                statusMessage.style.color = "#2e7d32";
+                statusMessage.innerHTML = "<i class='fas fa-check-circle'></i> Pesanan terkirim! Admin akan segera menghubungi.";
+                setTimeout(() => closeModalFunc(), 2500);
             } else {
-                sembunyikanInfoPembayaran();
+                throw new Error("Gagal dari server Telegram");
             }
+        } catch (error) {
+            statusMessage.style.color = "#d32f2f";
+            statusMessage.innerHTML = "<i class='fas fa-times-circle'></i> Gagal mengirim pesanan. Cek koneksi Anda.";
+            submitOrder.disabled = false;
+            submitOrder.innerHTML = "Coba Lagi";
         }
+    });
 
-        function tampilkanInfoPembayaran(kunci) {
-            document.getElementById("payment-placeholder").classList.add("hidden");
-            
-            const img = document.getElementById("payment-image");
-            const rekContainer = document.getElementById("rekening-container");
-            const rekNumber = document.getElementById("rekening-number");
+    // Inisialisasi awal
+    renderProducts();
+    
+    // Pencarian
+    searchInput.addEventListener("input", () => {
+        renderProducts(searchInput.value);
+    });
+</script>
 
-            img.src = paymentData[kunci].img;
-            img.classList.remove("hidden");
-            
-            rekNumber.textContent = paymentData[kunci].rekening;
-            rekContainer.classList.remove("hidden");
-        }
-
-        function sembunyikanInfoPembayaran() {
-            document.getElementById("payment-placeholder").classList.remove("hidden");
-            document.getElementById("payment-image").classList.add("hidden");
-            document.getElementById("rekening-container").classList.add("hidden");
-        }
-
-        // Reset semua input form
-        function resetForm() {
-            document.getElementById("jumlah").value = "";
-            document.getElementById("user-contact").value = "";
-            document.getElementById("payment-method").value = "";
-            
-            document.getElementById("otomatis").checked = false;
-            document.getElementById("manual").checked = false;
-            document.getElementById('dropdown-payment').classList.add('hidden');
-            
-            metodeTerpilih = "";
-            sembunyikanInfoPembayaran();
-        }
-
-        // Format input rupiah dengan titik ribuan
-        function formatRupiah(input) {
-            let angka = input.value.replace(/[^0-9]/g, ""); 
-            input.value = angka.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        // Cek input dan kirim deposit (Diubah jadi Async agar UX lebih mulus)
-        async function cekDanKirimDeposit() {
-            const jumlah = document.getElementById("jumlah").value.trim();
-            const userContact = document.getElementById("user-contact").value.trim();
-            const btnSubmit = document.getElementById("btn-submit");
-
-            if (!metodeTerpilih) {
-                alert("Mohon pilih metode pembayaran terlebih dahulu!");
-                return;
-            }
-
-            if (!jumlah || !userContact) {
-                alert("Silakan lengkapi nominal jumlah dan kontak Anda!");
-                return;
-            }
-
-            // Ubah state tombol saat loading
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...`;
-            btnSubmit.classList.add("opacity-75", "cursor-not-allowed");
-
-            // Simpan kontak ke memory sementara browser
-            localStorage.setItem("user_contact", userContact);
-
-            // Rekam ke sistem (dan tunggu Telegram selesai)
-            await rekamRiwayat(jumlah, metodeTerpilih, userContact);
-
-            // Berhasil
-            alert("Berhasil! Deposit Anda sedang dikonfirmasi.");
-            resetForm();
-
-            // Kembalikan state tombol
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = `Kirim Deposit`;
-            btnSubmit.classList.remove("opacity-75", "cursor-not-allowed");
-        }
-
-        // Copy nomor rekening ke clipboard dengan animasi Toast kecil
-        function copyRekening() {
-            const rekeningText = document.getElementById("rekening-number").textContent;
-            if (rekeningText && rekeningText !== "Klik QRIS Untuk Memperbesar" && rekeningText !== "HUBUNGI ADMIN") {
-                navigator.clipboard.writeText(rekeningText).then(() => {
-                    const toast = document.getElementById("copy-toast");
-                    toast.classList.remove("opacity-0", "fade-out");
-                    toast.classList.add("opacity-100");
-                    
-                    setTimeout(() => {
-                        toast.classList.remove("opacity-100");
-                        toast.classList.add("fade-out", "opacity-0");
-                    }, 1500);
-                });
-            }
-        }
-
-        // Mendapatkan IP user dari API
-        async function getUserIP() {
-            try {
-                const response = await fetch("https://api64.ipify.org?format=json");
-                const data = await response.json();
-                return data.ip;
-            } catch (error) {
-                console.warn("Gagal mendapatkan IP:", error);
-                return "IP Tersembunyi";
-            }
-        }
-
-        // Simpan riwayat ke localStorage dan kirim notifikasi Telegram
-        async function rekamRiwayat(jumlah, metode, contact) {
-            const tanggal = new Date().toLocaleString("id-ID", { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-            const ip = await getUserIP();
-
-            // Format nama metode agar lebih rapi
-            const namaMetode = metode.toUpperCase().replace("-", " ");
-
-            let riwayat = JSON.parse(localStorage.getItem("riwayat_pembayaran")) || [];
-            
-            // Simpan ke array (maksimal simpan 10 riwayat terakhir agar storage tidak penuh)
-            riwayat.unshift({ tanggal, metode: namaMetode, jumlah, ip, contact });
-            if(riwayat.length > 10) riwayat.pop(); 
-            
-            localStorage.setItem("riwayat_pembayaran", JSON.stringify(riwayat));
-
-            // Kirim ke Telegram
-            await kirimKeTelegram(jumlah, namaMetode, tanggal, ip, contact);
-            
-            // Perbarui UI tabel
-            tampilkanRiwayat();
-        }
-
-        // Tampilkan riwayat pembayaran dari localStorage
-        function tampilkanRiwayat() {
-            const riwayat = JSON.parse(localStorage.getItem('riwayat_pembayaran')) || [];
-            const tbody = document.getElementById('riwayat-pembayaran');
-            
-            if(riwayat.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-400 italic">Belum ada transaksi</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = riwayat.map(p => `
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="p-3 border-b border-gray-100 text-gray-700">${p.tanggal}</td>
-                    <td class="p-3 border-b border-gray-100 font-medium text-blue-600">${p.metode}</td>
-                    <td class="p-3 border-b border-gray-100 font-bold text-gray-800">Rp ${p.jumlah}</td>
-                </tr>
-            `).join('');
-        }
-
-        // Hapus riwayat pembayaran
-        function hapusRiwayat() {
-            if (confirm("Apakah Anda yakin ingin menghapus riwayat di perangkat ini?")) {
-                localStorage.removeItem('riwayat_pembayaran');
-                tampilkanRiwayat();
-            }
-        }
-
-        // Modal preview gambar
-        function bukaModal(src) {
-            if (src && !src.endsWith("unknown")) {
-                document.getElementById("modal-image").src = src;
-                document.getElementById("image-modal").classList.remove("hidden");
-            }
-        }
-
-        function tutupModal() {
-            document.getElementById("image-modal").classList.add("hidden");
-        }
-
-        // Kirim pesan ke Telegram Bot
-        async function kirimKeTelegram(jumlah, metode, tanggal, ip, contact) {
-            // PERINGATAN: Idealnya eksekusi bot Telegram dilakukan di Backend (PHP/NodeJS)
-            const TOKEN_BOT = "7819700390:AAEO8_9_5Xr8msBPZd2hOQ4CkxDnlHVS3b8";
-            const CHAT_ID = "5775563021";
-
-            const pesan = `📌 *Deposit Baru (Farid Store)* 📌\n────────────────────\n📅 *Waktu*: ${tanggal}\n💰 *Jumlah*: Rp ${jumlah}\n🏦 *Metode*: ${metode}\n📞 *Kontak*: \`${contact}\`\n🌍 *IP Address*: ${ip}`;
-
-            const url = `https://api.telegram.org/bot${TOKEN_BOT}/sendMessage`;
-            try {
-                await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: pesan, parse_mode: "Markdown" })
-                });
-            } catch (error) {
-                console.error("Gagal mengirim notifikasi ke admin.", error);
-            }
-        }
-
-        // Load kontak tersimpan & riwayat saat halaman pertama kali dibuka
-        window.onload = function() {
-            const savedContact = localStorage.getItem("user_contact");
-            if(savedContact) document.getElementById("user-contact").value = savedContact;
-            tampilkanRiwayat();
-        }
-    </script>
 </body>
 </html>
