@@ -3,84 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-Money</title>
+  <title>E-Money | Farid Store</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <style>
-    .header {
-      background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
-      padding: 20px;
-      border-radius: 8px 8px 0 0;
-      color: white;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f6f9;
+        color: #333;
     }
 
-    .header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
+    /* Container Utama */
     .game-container {
-      padding: 20px;
-      background-color: #ffffff;
-      max-width: 1100px;
-      margin: auto;
-      border-left: 4px solid #7367f0;
-      min-height: 100vh;
-    }
-
-    .main-content {
       max-width: 1100px;
       margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #7367f0 0%, #9b8cfb 100%);
+      padding: 25px 30px;
+      color: white;
+      text-align: left;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .breadcrumb {
+      opacity: 0.9;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+
+    /* Konten Utama */
+    .main-content {
       background: #ffffff;
-      border-radius: 15px;
-      padding: 30px 25px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      min-height: calc(100vh - 150px);
     }
 
     h1 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: #4a4a4a;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-top: 0;
       margin-bottom: 25px;
+      border-bottom: 2px solid #f0f2f5;
+      padding-bottom: 15px;
     }
 
+    /* Styling Search Bar dengan Icon */
+    .search-wrapper {
+        position: relative;
+        max-width: 350px;
+        margin-bottom: 30px;
+    }
+    .search-wrapper i {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #888;
+    }
+    #search {
+        width: 100%; 
+        padding: 12px 15px 12px 45px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 1px solid #dcdde1;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+    #search:focus {
+        outline: none;
+        border-color: #7367f0;
+        background-color: #fff;
+        box-shadow: 0 0 0 3px rgba(115, 103, 240, 0.15);
+    }
+
+    /* Grid Layout */
     #product-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 25px 20px;
     }
 
+    /* Efek Animasi Muncul */
     .fade-in {
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      transform: translateY(15px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
     }
-
     .fade-in.show {
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Styling Card E-Money */
     .product-card {
       text-align: center;
+      cursor: pointer;
+    }
+    .product-card a {
+      text-decoration: none;
+      color: inherit;
+      display: block; 
+    }
+
+    .image-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      background-color: #fff; /* Diubah putih agar logo E-money terlihat bersih */
+      border: 1px solid #f0f2f5;
     }
 
     .product-card img {
       width: 100%;
       aspect-ratio: 1 / 1;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      object-fit: contain; /* Menggunakan contain agar logo tidak terpotong */
+      display: block;
+      transition: transform 0.3s ease;
+      padding: 10px; /* Memberi ruang bernapas untuk logo */
+      box-sizing: border-box;
     }
 
-    .product-card img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    /* Efek Hover Keren */
+    .product-card:hover .image-wrapper {
+      box-shadow: 0 8px 20px rgba(115, 103, 240, 0.25);
+      border-color: rgba(115, 103, 240, 0.3);
+    }
+    .product-card:hover img {
+      transform: scale(1.08);
+    }
+    .product-card:hover p {
+      color: #7367f0;
+      font-weight: 700;
     }
 
     .product-card p {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #555;
+      margin-top: 12px;
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4a4a4a;
+      transition: color 0.3s ease;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #888;
+      grid-column: 1 / -1;
+      padding: 40px 0;
+    }
+
+    /* Penyesuaian Mobile */
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      #product-list { grid-template-columns: repeat(3, 1fr); gap: 15px 10px;}
+      .product-card p { font-size: 0.75rem; }
+      .header { padding: 20px; }
+      .main-content { padding: 20px 15px; }
+    }
+    @media (max-width: 380px) {
+      #product-list { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -90,22 +185,25 @@
       <h2>E-Money</h2>
       <p class="breadcrumb">Prabayar &gt; E-Money</p>
     </div>
+    
     <div class="main-content">
       <h1>Pilih Layanan E-Money</h1>
+      
+      <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="Cari layanan e-money..." autocomplete="off" />
+      </div>
+
       <div id="product-list"></div>
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        showProducts();
-      });
-
-      function showProducts() {
         const products = [
-          { name: "OVO", image: "https://epstore.id/file/images/bd9870e2be9e54c80ec7d834b4910b19.jpg", link: "#" },
-          { name: "DANA", image: "https://epstore.id/file/images/1526107e6e37b6cb05eb5aad516e8bca.jpg", link: "#" },
-          { name: "GO PAY", image: "https://epstore.id/file/images/bb62c562bf85b58509be9cfb319c8f67.jpg", link: "#" },
-          { name: "SHOOPE PAY", image: "https://epstore.id/file/images/927cde0aaeaf674cf218c75573a48c2b.jpg", link: "#" },
+          { name: "OVO", image: "https://epstore.id/file/images/bd9870e2be9e54c80ec7d834b4910b19.jpg", link: "ovo.html" },
+          { name: "DANA", image: "https://epstore.id/file/images/1526107e6e37b6cb05eb5aad516e8bca.jpg", link: "dana.html" },
+          { name: "GO PAY", image: "https://epstore.id/file/images/bb62c562bf85b58509be9cfb319c8f67.jpg", link: "gopay.html" },
+          { name: "SHOPEE PAY", image: "https://epstore.id/file/images/927cde0aaeaf674cf218c75573a48c2b.jpg", link: "shopeepay.html" }, // Typo diperbaiki
           { name: "GRAB (PENUMPANG)", image: "https://epstore.id/file/images/894003bdde2dd916fec75336dd36d4ca.jpg", link: "#" },
           { name: "DOKU", image: "https://epstore.id/file/images/437fe434aa8688ebc60dfaf93c736aa5.jpg", link: "#" },
           { name: "SAKUKU", image: "https://epstore.id/file/images/7bb8c47720938103b1b987d4cd001093.png", link: "#" },
@@ -116,23 +214,50 @@
         ];
 
         const productList = document.getElementById("product-list");
+        const searchInput = document.getElementById("search");
 
-        products.forEach((product, index) => {
-          const productHTML = `
-            <div class="product-card fade-in">
+        function renderProducts(list) {
+          productList.innerHTML = "";
+          
+          if (list.length === 0) {
+            productList.innerHTML = `<p class="no-results"><i class="fas fa-wallet fa-2x mb-2 block"></i><br>Layanan tidak ditemukan.</p>`;
+            return;
+          }
+
+          list.forEach((product, index) => {
+            const card = document.createElement("div");
+            card.className = "product-card fade-in";
+            
+            // Penggunaan innerHTML yang benar: menyusun string untuk satu elemen baru
+            card.innerHTML = `
               <a href="${product.link}">
-                <img src="${product.image}" alt="${product.name}" />
+                <div class="image-wrapper">
+                  <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150'" />
+                </div>
+                <p>${product.name}</p>
               </a>
-              <p>${product.name}</p>
-            </div>
-          `;
-          productList.innerHTML += productHTML;
+            `;
+            
+            // Append elemen ke kontainer utama
+            productList.appendChild(card);
 
-          setTimeout(() => {
-            document.querySelectorAll(".fade-in")[index].classList.add("show");
-          }, index * 150);
+            // Animasi muncul bergiliran
+            setTimeout(() => {
+              card.classList.add("show");
+            }, index * 40); 
+          });
+        }
+
+        // Event Listener untuk Search
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.trim().toLowerCase();
+          const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+          renderProducts(filtered);
         });
-      }
+
+        // Eksekusi render pertama kali
+        renderProducts(products);
+      });
     </script>
   </section>
 </body>
